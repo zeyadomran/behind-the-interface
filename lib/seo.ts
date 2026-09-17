@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   absoluteURL,
   AUTHOR,
@@ -19,7 +18,7 @@ export function pageMetadata({
   description,
   path,
   article = false,
-}: PageSEO): Metadata {
+}: PageSEO) {
   const fullTitle = `${title} | ${SITE_NAME}`;
   const image = {
     url: absoluteURL(SOCIAL_IMAGE),
@@ -139,3 +138,5 @@ export function researchSchema({
     ],
   };
 }
+
+export type PageMetadata = ReturnType<typeof pageMetadata>;

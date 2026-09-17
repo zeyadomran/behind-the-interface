@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import { StudyStoryExperience } from "@/components/study-story";
 import { getStudyStory, studyStories } from "@/lib/study-stories";
 import { source } from "@/lib/source";
@@ -8,21 +7,9 @@ import { pageMetadata, researchSchema } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 import "@/app/stories.css";
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return studyStories
-    .filter((story) => source.getPage([story.slug]))
-    .map(({ slug }) => ({ slug }));
-}
-
-type Props = { params: Promise<{ slug: string }> };
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+export function getStoryMetadata(slug: string) {
   const story = getStudyStory(slug);
-  const research = source.getPage([slug]);
-  if (!story || !research) notFound();
+  if (!story || !source.getPage([slug])) return undefined;
   return pageMetadata({
     title: `${story.name} Design Story`,
     description: story.subtitle,
@@ -31,11 +18,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function StudyPage({ params }: Props) {
-  const { slug } = await params;
+export default function StudyPage({ slug }: { slug: string }) {
   const story = getStudyStory(slug);
   const research = source.getPage([slug]);
-  if (!story || !research) notFound();
+  if (!story || !research) return <NotFound />;
   const publishedStories = studyStories.filter((item) =>
     source.getPage([item.slug]),
   );

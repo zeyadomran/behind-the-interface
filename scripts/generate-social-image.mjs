@@ -1,7 +1,7 @@
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { createElement as h } from "react";
-import { ImageResponse } from "next/og.js";
+import { ImageResponse } from "@vercel/og";
 
 const font = await readFile(resolve("assets/fonts/PPNeueMontreal-Regular.otf"));
 const ink = "#183d2b";

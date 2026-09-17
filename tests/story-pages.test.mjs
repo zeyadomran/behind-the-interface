@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { test } from "node:test";
 
-const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
+const base = (process.env.VITE_BASE_PATH || "").replace(/\/+$/, "");
 const chapterIDs = ["idea", "type", "motion", "mobile", "takeaways"];
 const stories = [
   {
@@ -86,10 +86,10 @@ function elements(html, tag) {
 }
 
 function builtRoute(route) {
-  const file = resolve("out", route, "index.html");
+  const file = resolve("dist", route, "index.html");
   assert.ok(
     existsSync(file),
-    `Run pnpm build before these tests: missing ${file}`,
+    `Run yarn build before these tests: missing ${file}`,
   );
   // The test must inspect the reading surface, not React's serialized payload.
   return readFileSync(file, "utf8").replace(

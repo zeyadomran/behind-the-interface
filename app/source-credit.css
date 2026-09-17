@@ -1,56 +1,26 @@
+@reference "./globals.css";
+
 .source-credit {
-  margin-block: 24px;
-  padding-block: 16px;
-  border-block: 1px solid var(--story-line, var(--color-line));
-  color: var(--story-ink, var(--color-ink));
+  @apply my-[24px] py-[16px] border-y border-solid border-y-[var(--story-line,_var(--color-line))] text-[var(--story-ink,_var(--color-ink))];
 }
 .source-credit .source-credit-label {
-  margin: 0 0 8px;
-  font-size: 10px;
-  line-height: 1.5;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--story-muted, var(--color-muted));
+  @apply mt-0 mx-0 mb-[8px] text-[length:10px] leading-[1.5] tracking-[0.08em] uppercase text-[var(--story-muted,_var(--color-muted))];
 }
 .source-credit-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
+  @apply flex flex-wrap gap-y-[8px] gap-x-[18px];
 }
 .source-credit .source-credit-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 44px;
-  min-width: 0;
-  max-width: 100%;
-  gap: 18px;
-  padding: 10px 12px;
-  border: 1px solid var(--story-line, var(--color-line));
-  color: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
-  text-decoration: none;
-  overflow-wrap: anywhere;
+  @apply inline-flex items-center justify-between min-h-[44px] min-w-0 max-w-full gap-[18px] py-[10px] px-[12px] border border-solid border-[var(--story-line,_var(--color-line))] text-inherit text-[length:14px] font-medium leading-[1.4] no-underline wrap-anywhere;
 }
 .source-credit .source-credit-links a:hover {
-  background: var(--story-panel, var(--color-fd-muted));
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  @apply bg-[var(--story-panel,_var(--color-fd-muted))] underline underline-offset-[4px];
 }
 .source-credit .source-credit-note {
-  margin: 10px 0 0;
-  max-width: 65ch;
-  font-size: 12px;
-  line-height: 1.55;
-  color: var(--story-muted, var(--color-muted));
+  @apply mt-[10px] mx-0 mb-0 max-w-[65ch] text-[length:12px] leading-[1.55] text-[var(--story-muted,_var(--color-muted))];
 }
 .source-credit.story-source-credit {
-  max-width: 38rem;
-  margin-top: 24px;
-  margin-bottom: 0;
+  @apply max-w-[38rem] mt-[24px] mb-0;
 }
 .story-source-credit + .story-start {
-  margin-top: 24px;
+  @apply mt-[24px];
 }

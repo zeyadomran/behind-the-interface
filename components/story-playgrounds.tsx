@@ -359,8 +359,8 @@ function ArkonMotion() {
                 return (
                   <circle
                     key={index}
-                    cx={Math.cos(angle) * radius}
-                    cy={Math.sin(angle) * radius}
+                    cx={(Math.cos(angle) * radius).toFixed(4)}
+                    cy={(Math.sin(angle) * radius).toFixed(4)}
                     r={index % 4 === 0 ? 3.5 : 1.9}
                   />
                 );

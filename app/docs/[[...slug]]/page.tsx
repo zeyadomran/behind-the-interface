@@ -1,14 +1,13 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import NotFound from "@/app/not-found";
+import Link from "@/components/link";
 import { ArrowUpRight } from "lucide-react";
-import type { Metadata } from "next";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
 } from "fumadocs-ui/page";
-import { source } from "@/lib/source";
+import { readResearchContent, source } from "@/lib/source";
 import { getMDXComponents } from "@/components/mdx";
 import { ArticleExplorer } from "@/components/article-explorer";
 import { getStudyStory } from "@/lib/study-stories";
@@ -19,20 +18,12 @@ import { pageMetadata, researchSchema } from "@/lib/seo";
 import "@/app/article-visuals.css";
 
 interface PageProps {
-  params: Promise<{ slug?: string[] }>;
+  slug?: string[];
 }
 
-export const dynamicParams = false;
-export function generateStaticParams() {
-  return source.generateParams();
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+export function getResearchMetadata(slug?: string[]) {
   const page = source.getPage(slug);
-  if (!page) notFound();
+  if (!page) return undefined;
   return pageMetadata({
     title:
       page.data.kind === "study"
@@ -46,17 +37,17 @@ export async function generateMetadata({
   });
 }
 
-export default async function ResearchPage({ params }: PageProps) {
-  const { slug } = await params;
+export default function ResearchPage({ slug }: PageProps) {
   const page = source.getPage(slug);
-  if (!page) notFound();
-  const MDX = page.data.body;
+  if (!page) return <NotFound />;
+  const content = readResearchContent(page);
+  const MDX = content.body;
   const story = getStudyStory((slug ?? []).join("/"));
   const sites = getResearchSites(page.data.sites);
 
   return (
     <DocsPage
-      toc={page.data.toc.filter((item) => item.depth === 2)}
+      toc={content.toc.filter((item) => item.depth === 2)}
       tableOfContent={{ style: "normal" }}
     >
       <StructuredData

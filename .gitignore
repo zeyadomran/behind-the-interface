@@ -30,3 +30,7 @@ playwright-report/
 test-results/
 
 .vercel/
+
+# Vite production and temporary server render bundles
+dist/
+.prerender/

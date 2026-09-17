@@ -4,8 +4,8 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join, relative } from "node:path";
 import { staticClient } from "fumadocs-core/search/client/orama-static";
 
-const output = resolve("out");
-const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
+const output = resolve("dist");
+const base = (process.env.VITE_BASE_PATH || "").replace(/\/+$/, "");
 const researchPath = "/docs";
 const websites = [
   {
@@ -82,8 +82,9 @@ function decodeEntities(text) {
 
 function readHTML(file) {
   return readFileSync(file, "utf8").replace(
-    /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-    "",
+    /<script\b([^>]*)>[\s\S]*?<\/script>/gi,
+    (_, attributes) =>
+      /\bsrc="/.test(attributes) ? `<script${attributes}></script>` : "",
   );
 }
 
@@ -119,10 +120,34 @@ test("all published research has readable static HTML and navigation", () => {
   assert.match(report, /65 additional route requests/);
 });
 
+test("prerendered pages finish suspended content without client-only fallbacks", () => {
+  const pages = filesIn(output).filter((file) => file.endsWith(".html"));
+  assert.ok(
+    pages.length > 0,
+    "Build the published pages before checking prerendering",
+  );
+  for (const file of pages) {
+    // Check the raw response: removing templates or hydration data can hide an
+    // aborted Suspense boundary even when the surrounding article is readable.
+    const html = readFileSync(file, "utf8");
+    assert.doesNotMatch(
+      html,
+      /<!--\$!-->|<template\b[^>]*\bdata-(?:msg|dgst)=|The server used (?:&quot;|["'])?renderToString/i,
+      `${relative(output, file)}: prerendering must await suspended content instead of exporting a client-only fallback`,
+    );
+  }
+});
+
 test("the library publishes exactly six independent research entries with no former supplements", () => {
   const sourceDirectory = resolve("content/docs");
   const researchFiles = filesIn(sourceDirectory)
     .filter((file) => /\.mdx?$/.test(file))
+    .filter(
+      (file) =>
+        !/^draft:\s*true\s*$/m.test(
+          readFileSync(file, "utf8").split("---")[1] ?? "",
+        ),
+    )
     .filter((file) =>
       /^kind:\s*["']?(?:study|report)["']?\s*$/m.test(
         readFileSync(file, "utf8").split("---")[1] ?? "",
@@ -362,12 +387,14 @@ test("internal document links, screenshots, scripts, styles, and fonts exist", (
     anchorsChecked > 20,
     "Check heading links as well as page destinations",
   );
-  const media = filesIn(join(output, "_next/static/media"));
+  const media = filesIn(join(output, "assets"));
   assert.equal(media.filter((name) => name.endsWith(".otf")).length, 4);
 });
 
 test("static full-text search finds evidence on every website report", async () => {
-  const index = JSON.parse(readFileSync(join(output, "api/search"), "utf8"));
+  const index = JSON.parse(
+    readFileSync(join(output, "api/search.json"), "utf8"),
+  );
   const json = JSON.stringify(index);
   assert.match(json, /MONOLOG/);
   assert.match(json, /640px/);

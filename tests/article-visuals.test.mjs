@@ -7,7 +7,7 @@ import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
 
 const studyDirectory = resolve("content/docs");
-const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
+const basePath = (process.env.VITE_BASE_PATH || "").replace(/\/+$/, "");
 const sites = {
   ace: "ace",
   "arkon-digital": "arkon",
@@ -129,10 +129,10 @@ function textContent(html) {
 }
 
 function builtArticle(slug) {
-  const file = resolve("out/docs", slug, "index.html");
+  const file = resolve("dist/docs", slug, "index.html");
   assert.ok(
     existsSync(file),
-    `Run pnpm build before these tests: missing ${file}`,
+    `Run yarn build before these tests: missing ${file}`,
   );
   return readFileSync(file, "utf8").replace(
     /<script\b[^>]*>[\s\S]*?<\/script>/gi,

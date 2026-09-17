@@ -1,219 +1,133 @@
+@reference "./globals.css";
+
 .hero-study {
-  min-width: 0;
-  width: 100%;
-  max-width: 660px;
-  margin: 0;
-  justify-self: center;
-  align-self: center;
-  isolation: isolate;
+  @apply min-w-0 w-full max-w-[660px] m-0 justify-self-center self-center isolate;
   container-type: inline-size;
-  color: var(--color-body);
-  font-family: var(--font-neue-reading), Arial, sans-serif;
-  font-weight: 375;
+  @apply text-body font-[family-name:var(--font-neue-reading),_Arial,_sans-serif] font-[375];
 }
 
 .hero-study-stage {
   --study-tilt-x: 0deg;
   --study-tilt-y: 0deg;
-  position: relative;
-  padding: 60px 10% 110px;
+  @apply relative pt-[60px] px-[10%] pb-[110px];
   perspective: 1000px;
-  isolation: isolate;
+  @apply isolate;
 }
 
 .hero-study-coordinate {
-  position: absolute;
-  top: 0;
-  left: 10%;
-  font-size: 8px;
-  line-height: 1.4;
-  letter-spacing: 0.07em;
-  color: var(--color-muted);
+  @apply absolute top-0 left-[10%] text-[length:8px] leading-[1.4] tracking-[0.07em] text-muted;
 }
 
 /* The overlapping cards remain grid items so the entire stack owns its space. */
 .hero-study-stack {
-  display: grid;
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+  @apply grid relative w-full max-w-[500px] my-0 mx-auto;
   transform: rotateX(var(--study-tilt-x)) rotateY(var(--study-tilt-y));
   transition: transform 0.35s ease-out;
 }
 
 .hero-study-plane {
-  position: relative;
+  @apply relative;
   grid-area: 1 / 1;
-  align-self: start;
-  width: 76%;
-  min-width: 0;
-  aspect-ratio: 1.38;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
+  @apply [align-self:start] w-[76%] min-w-0 aspect-[1.38] p-[16px] flex flex-col;
   transition:
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.6s;
-  box-shadow: 0 8px 18px #1435210a;
+  @apply shadow-[0_8px_18px_#1435210a];
 }
 
 .hero-study-structure {
-  z-index: 1;
-  justify-self: end;
-  border: 1px solid #839e89;
-  background: #dce5dc;
+  @apply z-[1] justify-self-end border border-solid border-[#839e89] bg-[#dce5dc];
   transform: rotate(8deg);
 }
 
 .hero-study-interaction {
-  z-index: 2;
-  margin-top: 43px;
-  margin-left: 9%;
-  border: 1px solid #b9c9ba;
-  background: #fbfcfa;
+  @apply z-[2] mt-[43px] ml-[9%] border border-solid border-[#b9c9ba] bg-[#fbfcfa];
   transform: rotate(-8deg);
-  box-shadow: 0 22px 40px #15362112;
+  @apply shadow-[0_22px_40px_#15362112];
 }
 
 .hero-study-typography {
-  z-index: 3;
-  margin-top: 105px;
-  color: #f4f8f1;
-  background: var(--color-green);
+  @apply z-[3] mt-[105px] text-[#f4f8f1] bg-green;
   transform: rotate(-2deg);
-  box-shadow: 0 20px 35px #193f2920;
+  @apply shadow-[0_20px_35px_#193f2920];
 }
 
 .hero-study-plane-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 8px;
-  line-height: 1.4;
-  letter-spacing: 0.07em;
+  @apply flex items-center justify-between gap-[8px] text-[length:8px] leading-[1.4] tracking-[0.07em];
 }
 
 .hero-study-plane-label svg {
-  width: 1.25em;
-  height: 1.25em;
+  @apply w-[1.25em] h-[1.25em];
 }
 
 .hero-study-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentColor;
+  @apply w-[5px] h-[5px] rounded-[50%] bg-current;
 }
 
 .hero-study-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(5px, 1.4cqw, 8px);
-  margin: auto 0;
-  padding: 16px 0;
+  @apply grid grid-cols-[repeat(4,_minmax(0,_1fr))] gap-[clamp(5px,_1.4cqw,_8px)] my-auto mx-0 py-[16px] px-0;
 }
 
 .hero-study-grid i {
-  display: block;
-  aspect-ratio: 1.8;
-  border: 1px solid #9cb09d;
+  @apply block aspect-[1.8] border border-solid border-[#9cb09d];
 }
 
 .hero-study-baseline {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: clamp(6px, 1.5cqw, 9px);
-  line-height: 1.3;
-  color: #506953;
+  @apply flex justify-between gap-[8px] text-[length:clamp(6px,_1.5cqw,_9px)] leading-[1.3] text-[#506953];
 }
 
 .hero-study-layout {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(5px, 1.5cqw, 9px);
-  margin: auto 0;
-  padding: 14px 0;
+  @apply grid grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[clamp(5px,_1.5cqw,_9px)] my-auto mx-0 py-[14px] px-0;
 }
 
 .hero-study-layout i {
-  display: block;
-  aspect-ratio: 1.45;
-  background: #dce4da;
+  @apply block aspect-[1.45] bg-[#dce4da];
 }
 
 .hero-study-layout i:first-child {
-  grid-column: span 2;
-  aspect-ratio: auto;
-  background: #c3d3c3;
+  @apply [grid-column:span_2] aspect-[auto] bg-[#c3d3c3];
 }
 
 .hero-study-path {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 70%;
-  margin-top: auto;
+  @apply flex items-center gap-[8px] w-[70%] mt-auto;
 }
 
 .hero-study-path i {
-  width: 7px;
-  height: 7px;
-  border: 1px solid #7d977e;
-  border-radius: 50%;
+  @apply w-[7px] h-[7px] border border-solid border-[#7d977e] rounded-[50%];
 }
 
 .hero-study-path i:last-child {
-  background: #7d977e;
+  @apply bg-[#7d977e];
 }
 
 .hero-study-path span {
-  flex: 1;
-  border-top: 1px solid #9cb09d;
+  @apply flex-1 border-t border-solid border-t-[#9cb09d];
 }
 
 .hero-study-glyph {
-  margin: auto 0;
-  padding: 10px 0 4px;
-  font-family: var(--font-neue-display), Arial, sans-serif;
-  font-weight: 400;
-  font-size: clamp(58px, 22cqw, 136px);
-  line-height: 0.96;
-  letter-spacing: -0.07em;
+  @apply my-auto mx-0 pt-[10px] px-0 pb-[4px] font-[family-name:var(--font-neue-display),_Arial,_sans-serif] font-normal text-[length:clamp(58px,_22cqw,_136px)] leading-[0.96] tracking-[-0.07em];
 }
 
 .hero-study-glyph > span {
-  color: #b0c6aa;
+  @apply text-[#b0c6aa];
 }
 
 .hero-study-type-detail {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: clamp(8px, 2cqw, 12px);
-  line-height: 1.3;
+  @apply flex [align-items:end] justify-between gap-[10px] text-[length:clamp(8px,_2cqw,_12px)] leading-[1.3];
 }
 
 .hero-study-type-detail svg {
-  width: clamp(22px, 6cqw, 36px);
-  height: clamp(22px, 6cqw, 36px);
+  @apply w-[clamp(22px,_6cqw,_36px)] h-[clamp(22px,_6cqw,_36px)];
 }
 
 .hero-study-cross {
-  position: absolute;
-  right: 12%;
-  bottom: 0;
-  width: 24px;
-  height: 24px;
+  @apply absolute right-[12%] bottom-0 w-[24px] h-[24px];
 }
 
 .hero-study-stage[data-layer="1"] .hero-study-interaction {
-  z-index: 4;
+  @apply z-[4];
   transform: translate(13px, -17px) rotate(0deg);
-  box-shadow: 0 25px 45px #15362120;
+  @apply shadow-[0_25px_45px_#15362120];
 }
 
 .hero-study-stage[data-layer="1"] .hero-study-typography {
@@ -221,9 +135,9 @@
 }
 
 .hero-study-stage[data-layer="2"] .hero-study-structure {
-  z-index: 4;
+  @apply z-[4];
   transform: translate(18px, -20px) rotate(3deg);
-  box-shadow: 0 25px 45px #15362120;
+  @apply shadow-[0_25px_45px_#15362120];
 }
 
 .hero-study-stage[data-layer="2"] .hero-study-interaction {
@@ -235,123 +149,99 @@
 }
 
 .hero-study-controls {
-  display: flex;
-  gap: 8px;
-  padding-top: 10px;
-  border-top: 1px solid var(--color-line);
+  @apply flex gap-[8px] pt-[10px] border-t border-solid border-t-line;
 }
 
 .hero-study-controls button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  min-height: 44px;
-  padding: 8px 10px;
-  border: 0;
-  background: none;
-  color: var(--color-muted);
-  font: inherit;
-  font-size: 12px;
-  line-height: 1.4;
-  letter-spacing: 0;
+  @apply flex items-center gap-[8px] min-w-0 min-h-[44px] py-[8px] px-[10px] border-0;
+  @apply [background:none];
+  @apply text-muted;
+  @apply [font:inherit];
+  @apply text-[length:12px] leading-[1.4] tracking-[0];
   transition: background-color 0.2s ease;
 }
 
 .hero-study-controls button[aria-pressed="true"] {
-  color: var(--color-ink);
+  @apply text-ink;
 }
 
 .hero-study-controls button:is(:hover, :focus-visible) {
-  background-color: color-mix(in srgb, currentColor 8%, transparent);
+  @apply bg-[color-mix(in_srgb,_currentColor_8%,_transparent)];
 }
 
 .hero-study-controls button:focus-visible {
-  outline: 2px solid var(--focus-color);
-  outline-offset: 3px;
+  @apply outline-2 outline-solid outline-[var(--focus-color)] outline-offset-[3px];
 }
 
 .hero-study-control-number {
-  flex-shrink: 0;
-  font-size: 9px;
+  @apply shrink-0 text-[length:9px];
 }
 
 .hero-study-controls button[aria-pressed="true"] .hero-study-control-number {
-  color: var(--color-green);
+  @apply text-green;
 }
 
 .hero-study-caption {
-  min-height: 36px;
-  margin: 0;
-  color: #516151;
-  font-size: 12px;
-  line-height: 1.4;
-  letter-spacing: 0;
+  @apply min-h-[36px] m-0 text-[#516151] text-[length:12px] leading-[1.4] tracking-[0];
 }
 
 @media (min-width: 1600px) {
   .hero-study-typography {
-    margin-top: 125px;
+    @apply mt-[125px];
   }
   .hero-study-interaction {
-    margin-top: 55px;
+    @apply mt-[55px];
   }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {
   .hero-study-stage {
-    padding-inline: 8% 12%;
+    @apply ps-[8%] pe-[12%];
   }
   .hero-study-plane {
-    width: 83%;
-    padding: 13px;
+    @apply w-[83%] p-[13px];
   }
   .hero-study-typography {
-    margin-top: 90px;
+    @apply mt-[90px];
   }
   .hero-study-interaction {
-    margin-top: 37px;
+    @apply mt-[37px];
   }
   .hero-study-controls button {
-    font-size: 11px;
+    @apply text-[length:11px];
   }
 }
 
 @media (max-width: 767px) {
   .hero-study {
-    max-width: 490px;
+    @apply max-w-[490px];
   }
   .hero-study-stage {
-    padding: 38px 12% 68px;
+    @apply pt-[38px] px-[12%] pb-[68px];
   }
   .hero-study-plane {
-    width: 80%;
-    padding: 13px;
+    @apply w-[80%] p-[13px];
   }
   .hero-study-typography {
-    margin-top: 77px;
+    @apply mt-[77px];
   }
   .hero-study-interaction {
-    margin-top: 34px;
+    @apply mt-[34px];
   }
   .hero-study-plane-label {
-    font-size: 7px;
+    @apply text-[length:7px];
   }
   .hero-study-coordinate {
-    left: 0;
-    top: 7px;
+    @apply left-0 top-[7px];
   }
   .hero-study-cross {
-    right: 0;
+    @apply right-0;
   }
   .hero-study-controls {
-    justify-content: space-between;
-    gap: 4px;
-    padding-top: 5px;
+    @apply justify-between gap-[4px] pt-[5px];
   }
   .hero-study-caption {
-    min-height: 30px;
-    font-size: 11px;
+    @apply min-h-[30px] text-[length:11px];
   }
   .hero-study-stage[data-layer="2"] .hero-study-typography {
     transform: translate(-10px, 6px) rotate(-7deg);
@@ -360,18 +250,16 @@
 
 @media (max-width: 360px) {
   .hero-study-stage {
-    padding-inline: 9% 14%;
+    @apply ps-[9%] pe-[14%];
   }
   .hero-study-typography {
-    margin-top: 74px;
+    @apply mt-[74px];
   }
 }
 
 @container (max-width: 300px) {
   .hero-study-controls button {
-    gap: 5px;
-    padding: 8px 4px;
-    font-size: 11px;
+    @apply gap-[5px] py-[8px] px-[4px] text-[length:11px];
   }
 }
 

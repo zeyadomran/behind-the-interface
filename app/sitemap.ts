@@ -1,11 +1,8 @@
-import type { MetadataRoute } from "next";
 import { source } from "@/lib/source";
 import { studyStories } from "@/lib/study-stories";
 import { absoluteURL } from "@/lib/site";
 
-export const dynamic = "force-static";
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default function sitemap() {
   const paths = [
     "/",
     ...source

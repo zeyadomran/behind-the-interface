@@ -1,18 +1,20 @@
 # Authoring research
 
-Behind the Interface keeps its complete research in [`content/docs`](../content/docs/). Write and maintain findings and evidence in Markdown or MDX. Fumadocs supplies the page tree and article structure; Next.js generates the HTML during the build. Optional story pages summarize and link to that research through the registry in [`lib/study-stories.ts`](../lib/study-stories.ts).
+Behind the Interface keeps its complete research in [`content/docs`](../content/docs/). Write and maintain findings and evidence in Markdown or MDX. Fumadocs supplies the page tree and article structure; Vite builds the application, and the prerender step generates readable HTML for each published route. Optional story pages summarize and link to that research through the registry in [`lib/study-stories.ts`](../lib/study-stories.ts).
 
 ## Create a study
 
 From the repository root:
 
 ```sh
-pnpm new:study interface-study "An interface study"
+yarn new:study interface-study "An interface study"
 ```
 
 The command creates a single `content/docs/interface-study.md` file, with today's date and `draft: true`. Use a short lowercase slug with hyphens. Choose a title that describes the website or research subject. An existing Markdown file, MDX file, or folder with the same slug prevents creation, so a new study cannot overwrite a document or compete for its route.
 
 The generated page is intentionally a draft. Draft pages are excluded from the generated routes, sidebar, homepage index, search, and sitemap, in development and production. A registered story is published only when its underlying research document is published. Review the source until ready to make it visible, then set `draft: false` or remove that field.
+
+After adding or removing a content file, or changing its `draft` status, stop and restart `yarn dev` so the published-content allowlist refreshes. `yarn build` regenerates that list automatically. The development allowlist is created when the server starts.
 
 For a fuller outline, adapt [`templates/research-entry.md`](../templates/research-entry.md). Replace its placeholders and date before placing it in the content collection.
 
@@ -167,40 +169,40 @@ Name the tested viewports and inputs. Distinguish responsive browser inspection 
 Before marking a study ready, replace placeholders, check sources and asset paths, and preserve the scope and unresolved questions. Then run:
 
 ```sh
-pnpm typecheck
-pnpm build
-pnpm test
-pnpm preview
+yarn typecheck
+yarn build
+yarn test
+yarn preview
 ```
 
 The Node test suite checks the study-creation workflow, story exports and reading links, and static-build link and asset invariants. Build before running it. Inspect the study in a browser at desktop and narrow widths, including tables, images, navigation, search results, and heading anchors. For story changes, also review chapter tracking, each demonstration, keyboard controls, reduced motion, and reading without JavaScript. A passing automated check is not a substitute for reviewing the research itself.
 
 ## Static builds and base paths
 
-`pnpm build` exports the website to `out/`; `pnpm preview` serves that output locally. The archive, templates, and repository guidance are not active research routes.
+`yarn build` compiles the browser assets and server-rendering bundle, prerenders every published page into `dist/`, and checks the TypeScript types. `yarn preview` serves that output locally with proper 404 responses. The archive, templates, and repository guidance are not active research routes.
 
-For a root-domain deployment, leave `NEXT_PUBLIC_BASE_PATH` unset. For a project deployment under `/behind-the-interface`, use the same value at build and preview time.
+For a root-domain deployment, leave `VITE_BASE_PATH` unset. For a project deployment under `/behind-the-interface`, use the same value at build and preview time.
 
 PowerShell:
 
 ```powershell
-$env:NEXT_PUBLIC_BASE_PATH = '/behind-the-interface'
-pnpm build
-pnpm preview
+$env:VITE_BASE_PATH = '/behind-the-interface'
+yarn build
+yarn preview
 ```
 
 POSIX shell:
 
 ```sh
-NEXT_PUBLIC_BASE_PATH=/behind-the-interface pnpm build
-NEXT_PUBLIC_BASE_PATH=/behind-the-interface pnpm preview
+VITE_BASE_PATH=/behind-the-interface yarn build
+VITE_BASE_PATH=/behind-the-interface yarn preview
 ```
 
-Changing the base path requires a rebuild. To return to a root build in PowerShell, remove the session variable with `Remove-Item Env:NEXT_PUBLIC_BASE_PATH`, then rebuild.
+Changing the base path requires a rebuild. To return to a root build in PowerShell, remove the session variable with `Remove-Item Env:VITE_BASE_PATH`, then rebuild.
 
-Keep article links and asset paths unprefixed in source. Next.js `Link` adds the configured base path to application routes. [`withBasePath`](../lib/paths.ts) prefixes raw asset and fetch URLs, including Markdown images and measurement downloads. Adding `/behind-the-interface` by hand in frontmatter or Markdown would duplicate it.
+Keep article links and asset paths unprefixed in source. The shared [`Link`](../components/link.tsx) component and router add the configured base path to application routes. [`withBasePath`](../lib/paths.ts) prefixes raw asset and fetch URLs, including Markdown images and measurement downloads. Adding `/behind-the-interface` by hand in frontmatter or Markdown would duplicate it.
 
-The static host must serve the directory-index routes and all files emitted in `out/`. The default canonical origin is `https://design.zeyadomran.com`, configured in [`lib/site.ts`](../lib/site.ts). Set `NEXT_PUBLIC_SITE_URL` before building to use another HTTP(S) origin. It must not contain a path, query, or fragment; subdirectory hosting belongs in `NEXT_PUBLIC_BASE_PATH`. [`.env.example`](../.env.example) shows both settings. A canonical origin is metadata configuration; domain attachment, DNS, and deployment must still be completed with the host.
+The static host must serve the directory-index routes and all files emitted in `dist/`. The default canonical origin is `https://design.zeyadomran.com`, configured in [`lib/site.ts`](../lib/site.ts). Set `VITE_SITE_URL` before building to use another HTTP(S) origin. It must not contain a path, query, or fragment; subdirectory hosting belongs in `VITE_BASE_PATH`. [`.env.example`](../.env.example) shows both settings. A canonical origin is metadata configuration; domain attachment, DNS, and deployment must still be completed with the host.
 
 ## Search metadata and sharing
 
@@ -211,7 +213,7 @@ Write a distinct, accurate `title` and `description` for each page. These feed p
 The social preview image lives at [`public/og/behind-the-interface.png`](../public/og/behind-the-interface.png). Regenerate it after relevant branding changes with:
 
 ```sh
-pnpm generate:og
+yarn generate:og
 ```
 
 The generator uses the supplied local fonts. Rebuild afterward so the exported site includes the updated image. After connecting the production domain and deploying, inspect a story and an article's canonical URL, check the social image, and open `/sitemap.xml` and `/robots.txt` under the configured base path. You can submit that sitemap URL to your search console; accurate metadata and a sitemap do not guarantee indexing or rankings.
@@ -220,4 +222,4 @@ The generator uses the supplied local fonts. Rebuild afterward so the exported s
 
 The original September 2026 bundle is preserved in [`archive/2026-09-five-websites`](../archive/2026-09-five-websites/README.md). It is not deployed or kept synchronized with new edits. Maintain the active Markdown pages rather than updating both Markdown and archived HTML.
 
-The four supplied font files live in [`assets/fonts`](../assets/fonts/) alongside their [original EULA](../assets/fonts/EULA-PangramPangram-FreeForPersonalUse-MAY2021.pdf). Keep those terms with the files. Font use is configured in [`app/layout.tsx`](../app/layout.tsx); typography and color roles are documented in the [design direction](design-direction.md).
+The four supplied font files live in [`assets/fonts`](../assets/fonts/) alongside their [original EULA](../assets/fonts/EULA-PangramPangram-FreeForPersonalUse-MAY2021.pdf). Keep those terms with the files. The local `@font-face` declarations are configured in [`app/fonts.css`](../app/fonts.css); typography and color roles are documented in the [design direction](design-direction.md).

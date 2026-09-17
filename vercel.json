@@ -1,0 +1,7 @@
+{
+  "framework": "vite",
+  "installCommand": "node .yarn/releases/yarn-1.22.22.cjs install --frozen-lockfile",
+  "buildCommand": "node .yarn/releases/yarn-1.22.22.cjs build",
+  "outputDirectory": "dist",
+  "trailingSlash": true
+}

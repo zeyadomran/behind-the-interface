@@ -3,8 +3,6 @@ import { absoluteURL, AUTHOR, SITE_NAME } from "@/lib/site";
 import { source, type ResearchPage } from "@/lib/source";
 import { studyStories } from "@/lib/study-stories";
 
-export const dynamic = "force-static";
-
 // Keep metadata on one Markdown line, even when future frontmatter uses
 // multiline descriptions or punctuation with special Markdown meaning.
 function inline(value: string): string {

@@ -60,7 +60,7 @@ if (
     );
   } catch (error) {
     console.error(error.message);
-    console.error('Usage: pnpm new:study study-slug "Study title"');
+    console.error('Usage: yarn new:study study-slug "Study title"');
     process.exitCode = 1;
   }
 }

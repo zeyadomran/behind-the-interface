@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import defaultComponents from "fumadocs-ui/mdx";
-import Link from "next/link";
+import Link from "@/components/link";
 import { withBasePath } from "@/lib/paths";
 
 export function getMDXComponents(): MDXComponents {

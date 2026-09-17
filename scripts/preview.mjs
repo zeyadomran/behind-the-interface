@@ -2,15 +2,20 @@ import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { resolve, extname, sep } from "node:path";
 
-const root = resolve("out");
+const root = resolve("dist");
 const port = Number(process.env.PORT || 3000);
-const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
+const basePath = (
+  process.env.VITE_BASE_PATH ||
+  process.env.NEXT_PUBLIC_BASE_PATH ||
+  ""
+).replace(/\/+$/, "");
 const types = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".json": "application/json",
   ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
   ".svg": "image/svg+xml",
   ".jpg": "image/jpeg",
   ".png": "image/png",
@@ -20,7 +25,7 @@ const types = {
 };
 
 if (!existsSync(resolve(root, "index.html")))
-  throw new Error("Run pnpm build before previewing.");
+  throw new Error("Run yarn build before previewing.");
 
 createServer((request, response) => {
   if (!["GET", "HEAD"].includes(request.method || "")) {
@@ -61,10 +66,7 @@ createServer((request, response) => {
     response.writeHead(404).end("Not found");
     return;
   }
-  const type =
-    pathname === "/api/search"
-      ? "application/json"
-      : types[extname(file)] || "application/octet-stream";
+  const type = types[extname(file)] || "application/octet-stream";
   response.writeHead(status, {
     "Content-Type": type,
     "X-Content-Type-Options": "nosniff",

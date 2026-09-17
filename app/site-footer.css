@@ -1,100 +1,59 @@
+@reference "./globals.css";
+
 .bti-contact-screen {
-  display: flex;
-  flex-direction: column;
+  @apply flex flex-col;
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  padding-top: var(--site-header-height, 88px);
-  color: var(--color-ink);
-  font-family: var(--font-neue-reading), Arial, sans-serif;
-  font-weight: 375;
+  @apply pt-[var(--site-header-height,_88px)] text-ink font-[family-name:var(--font-neue-reading),_Arial,_sans-serif] font-[375];
 }
 
 .bti-contact,
 .bti-footer {
-  width: 100%;
-  max-width: 1800px;
-  margin-inline: auto;
-  padding-inline: var(--gutter);
+  @apply w-full max-w-[1800px] mx-auto px-[var(--gutter)];
 }
 
 .bti-contact {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: clamp(24px, 4svh, 60px);
-  padding-bottom: clamp(20px, 3svh, 48px);
+  @apply flex flex-1 flex-col justify-center pt-[clamp(24px,_4svh,_60px)] pb-[clamp(20px,_3svh,_48px)];
   scroll-margin-top: calc(
     var(--site-header-height, 88px) - var(--site-scroll-offset, 100px)
   );
 }
 
 .bti-contact-label {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  @apply flex items-center gap-[14px] text-[length:11px] font-normal leading-[1.5] tracking-[0.07em] uppercase;
 }
 
 .bti-contact-label > span:last-child {
-  margin-left: 6px;
+  @apply ml-[6px];
 }
 
 .bti-contact-intro {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  align-items: end;
-  gap: clamp(30px, 4.2vw, 60px);
-  margin-top: clamp(20px, 3svh, 40px);
+  @apply grid grid-cols-[1.5fr_1fr] [align-items:end] gap-[clamp(30px,_4.2vw,_60px)] mt-[clamp(20px,_3svh,_40px)];
 }
 
 .bti-contact-intro h2 {
-  font-family: var(--font-neue-display), Arial, sans-serif;
-  font-size: clamp(40px, min(5.1vw, 6svh), 76px);
-  font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 1.05;
+  @apply font-[family-name:var(--font-neue-display),_Arial,_sans-serif] text-[length:clamp(40px,_min(5.1vw,_6svh),_76px)] font-normal tracking-[-0.05em] leading-[1.05];
 }
 
 .bti-contact-intro h2 > span {
-  color: var(--color-muted);
+  @apply text-muted;
 }
 
 .bti-contact-intro > p {
-  max-width: 390px;
-  padding-bottom: 5px;
-  color: var(--color-body);
-  font-size: 18px;
-  line-height: 1.5;
+  @apply max-w-[390px] pb-[5px] text-body text-[length:18px] leading-[1.5];
 }
 
 .bti-contact-email {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  border-bottom: 1px solid var(--color-ink);
-  padding: clamp(16px, 2.5svh, 32px) 0 clamp(14px, 2svh, 24px);
-  margin-top: clamp(10px, 1.5svh, 20px);
-  font-family: var(--font-neue-display), Arial, sans-serif;
-  font-size: clamp(25px, min(4.6vw, 5svh), 68px);
-  color: var(--color-body);
-  letter-spacing: -0.045em;
-  line-height: 1.5;
+  @apply flex items-center justify-between gap-[20px] border-b border-solid border-b-ink pt-[clamp(16px,_2.5svh,_32px)] px-0 pb-[clamp(14px,_2svh,_24px)] mt-[clamp(10px,_1.5svh,_20px)] font-[family-name:var(--font-neue-display),_Arial,_sans-serif] text-[length:clamp(25px,_min(4.6vw,_5svh),_68px)] text-body tracking-[-0.045em] leading-[1.5];
 }
 
 .bti-contact-email > span {
-  min-width: 0;
+  @apply min-w-0;
 }
 
 .bti-contact-email > svg {
-  width: 50px;
-  height: 50px;
+  @apply w-[50px] h-[50px];
   transition: transform 0.3s;
 }
 
@@ -105,242 +64,173 @@
 .bti-contact-bottom,
 .bti-contact-actions,
 .bti-contact-links {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  @apply flex items-center flex-wrap;
 }
 
 .bti-contact-bottom {
-  justify-content: space-between;
-  gap: 12px 30px;
-  margin-top: 15px;
-  color: var(--color-body);
-  font-size: 12px;
-  font-weight: 375;
-  line-height: 1.4;
-  letter-spacing: 0.035em;
+  @apply justify-between gap-y-[12px] gap-x-[30px] mt-[15px] text-body text-[length:12px] font-[375] leading-[1.4] tracking-[0.035em];
 }
 
 .bti-contact-actions {
-  gap: 12px 24px;
+  @apply gap-y-[12px] gap-x-[24px];
 }
 
 .bti-contact-links {
-  gap: 30px;
+  @apply gap-[30px];
 }
 
 .bti-contact-copy button,
 .bti-contact-bottom a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 13px;
-  line-height: 1.4;
+  @apply inline-flex items-center min-h-[44px] text-[length:13px] leading-[1.4];
 }
 
 .bti-contact-copy button {
-  gap: 25px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font-family: inherit;
-  font-weight: inherit;
-  letter-spacing: normal;
+  @apply gap-[25px] p-0 border-0;
+  @apply [background:none];
+  @apply text-inherit font-[family-name:inherit] [font-weight:inherit] tracking-[normal];
 }
 
 .bti-contact-copy button:disabled {
-  cursor: wait;
+  @apply cursor-wait;
 }
 
 .bti-contact-copy-icon {
-  width: 0.6em;
-  height: 1em;
+  @apply w-[0.6em] h-[1em];
 }
 
 .bti-contact-bottom a {
-  gap: 20px;
+  @apply gap-[20px];
 }
 
 .bti-contact-bottom a > svg {
-  width: 14px;
-  height: 14px;
+  @apply w-[14px] h-[14px];
 }
 
 .bti-contact-bottom .bti-contact-portfolio {
-  gap: 10px;
-  padding: 0 14px;
-  border: 1px solid var(--color-line);
+  @apply gap-[10px] py-0 px-[14px] border border-solid border-line;
 }
 
 .bti-contact-portfolio:hover {
-  color: var(--color-paper);
-  background: var(--color-ink);
-  border-color: var(--color-ink);
+  @apply text-paper bg-ink border-ink;
 }
 
 .bti-contact :is(a, button):focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 6px;
+  @apply outline-2 outline-solid outline-current outline-offset-[6px];
 }
 
 .bti-contact .bti-contact-portfolio:focus-visible {
-  outline-color: var(--color-ink);
+  @apply outline-ink;
 }
 
 .bti-footer-meta a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  gap: 16px;
-  line-height: 1.4;
+  @apply inline-flex items-center min-h-[44px] gap-[16px] leading-[1.4];
 }
 
 .bti-footer-meta a:hover {
-  text-decoration: underline;
-  text-underline-offset: 5px;
+  @apply underline underline-offset-[5px];
 }
 
 .bti-contact-copy-error {
-  display: block;
-  max-width: 35ch;
-  margin-top: 4px;
-  color: var(--color-muted);
-  font-size: 13px;
-  line-height: 1.5;
+  @apply block max-w-[35ch] mt-[4px] text-muted text-[length:13px] leading-[1.5];
 }
 
 .bti-footer {
-  flex: none;
-  border-top: 1px solid var(--color-line);
-  padding-top: clamp(18px, 2.5svh, 30px);
-  padding-bottom: clamp(18px, 2.5svh, 25px);
+  @apply flex-none border-t border-solid border-t-line pt-[clamp(18px,_2.5svh,_30px)] pb-[clamp(18px,_2.5svh,_25px)];
 }
 
 .bti-footer-name {
-  font-family: var(--font-neue-display), Arial, sans-serif;
-  font-size: clamp(48px, min(8.7vw, 12svh), 154px);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.065em;
-  white-space: nowrap;
+  @apply font-[family-name:var(--font-neue-display),_Arial,_sans-serif] text-[length:clamp(48px,_min(8.7vw,_12svh),_154px)] font-normal leading-[1.1] tracking-[-0.065em] whitespace-nowrap;
 }
 
 .bti-footer-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  margin-top: clamp(16px, 2.5svh, 30px);
-  color: var(--color-muted);
-  font-size: 11px;
-  line-height: 1.4;
+  @apply flex items-center justify-between flex-wrap gap-y-[8px] gap-x-[24px] mt-[clamp(16px,_2.5svh,_30px)] text-muted text-[length:11px] leading-[1.4];
 }
 
 .bti-footer-meta a {
-  font-size: inherit;
+  @apply text-[length:inherit];
 }
 
 .bti-footer-meta .bti-footer-top {
-  gap: 8px;
+  @apply gap-[8px];
 }
 
 @media (max-width: 767px) {
   .bti-contact {
-    padding-top: clamp(24px, 4svh, 40px);
-    padding-bottom: clamp(20px, 3svh, 32px);
+    @apply pt-[clamp(24px,_4svh,_40px)] pb-[clamp(20px,_3svh,_32px)];
   }
 
   .bti-contact-intro {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: clamp(20px, 3svh, 30px);
+    @apply grid-cols-[1fr] gap-[24px] mt-[clamp(20px,_3svh,_30px)];
   }
 
   .bti-contact-intro h2 {
-    max-width: 15ch;
-    font-size: 42px;
+    @apply max-w-[15ch] text-[length:42px];
   }
 
   .bti-contact-intro > p {
-    max-width: 33ch;
-    font-size: 17px;
+    @apply max-w-[33ch] text-[length:17px];
   }
 
   .bti-contact-email {
-    gap: 12px;
-    padding: 26px 0 20px;
-    margin-top: 10px;
-    font-size: clamp(25px, 6.8vw, 43px);
+    @apply gap-[12px] pt-[26px] px-0 pb-[20px] mt-[10px] text-[length:clamp(25px,_6.8vw,_43px)];
   }
 
   .bti-contact-email > svg {
-    width: 27px;
-    height: 27px;
+    @apply w-[27px] h-[27px];
   }
 
   .bti-contact-bottom {
-    margin-top: 10px;
+    @apply mt-[10px];
   }
 
   .bti-contact-links {
-    gap: 17px;
+    @apply gap-[17px];
   }
 
   .bti-contact-bottom a {
-    gap: 5px;
-    font-size: 12px;
+    @apply gap-[5px] text-[length:12px];
   }
 
   .bti-contact-copy button {
-    gap: 10px;
-    font-size: 12px;
+    @apply gap-[10px] text-[length:12px];
   }
 
   .bti-footer {
-    padding-top: 22px;
-    padding-bottom: 20px;
+    @apply pt-[22px] pb-[20px];
   }
 
   .bti-footer-name {
-    font-size: clamp(44px, min(13vw, 10svh), 100px);
-    letter-spacing: -0.06em;
-    line-height: 0.98;
-    white-space: normal;
+    @apply text-[length:clamp(44px,_min(13vw,_10svh),_100px)] tracking-[-0.06em] leading-[0.98] whitespace-normal;
   }
 
   .bti-footer-name > span {
-    display: block;
+    @apply block;
   }
 
   .bti-footer-meta {
-    gap: 4px 16px;
-    margin-top: 22px;
-    font-size: 10px;
+    @apply gap-y-[4px] gap-x-[16px] mt-[22px] text-[length:10px];
   }
 
   .bti-footer-meta > span {
-    flex-basis: 100%;
+    @apply basis-full;
   }
 
   .bti-footer-top {
-    margin-left: auto;
+    @apply ml-auto;
   }
 }
 
 @media (max-width: 360px) {
   .bti-contact-intro h2 {
-    font-size: 36px;
+    @apply text-[length:36px];
   }
 
   .bti-contact-email {
-    font-size: 24px;
+    @apply text-[length:24px];
   }
 
   .bti-contact-email > svg {
-    width: 23px;
-    height: 23px;
+    @apply w-[23px] h-[23px];
   }
 }
 
@@ -352,12 +242,11 @@
 
 @media print {
   .bti-contact-screen {
-    min-height: 0;
-    padding-top: 0;
+    @apply min-h-0 pt-0;
   }
 
   .bti-contact-copy,
   .bti-footer-top {
-    display: none;
+    @apply hidden;
   }
 }

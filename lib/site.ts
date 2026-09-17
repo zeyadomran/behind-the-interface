@@ -6,7 +6,7 @@ export const SITE_DESCRIPTION =
 export const AUTHOR = { name: "Zeyad Omran", url: "https://zeyadomran.com" };
 
 const configuredURL = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL || "https://design.zeyadomran.com",
+  __SITE_CONFIG__.origin || "https://design.zeyadomran.com",
 );
 if (
   !["http:", "https:"].includes(configuredURL.protocol) ||
@@ -17,12 +17,12 @@ if (
   configuredURL.password
 ) {
   throw new Error(
-    "NEXT_PUBLIC_SITE_URL must be an HTTP(S) origin with no path. Use NEXT_PUBLIC_BASE_PATH for a subdirectory.",
+    "VITE_SITE_URL must be an HTTP(S) origin with no path. Use VITE_BASE_PATH for a subdirectory.",
   );
 }
 
 export const SITE_ORIGIN = configuredURL.origin;
-export const IS_PREVIEW = process.env.VERCEL_ENV === "preview";
+export const IS_PREVIEW = __SITE_CONFIG__.preview;
 export const SOCIAL_IMAGE = "/og/behind-the-interface.png";
 
 /** Source paths are unprefixed; add the hosting base path exactly once. */

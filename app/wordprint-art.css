@@ -1,18 +1,15 @@
+@reference "./globals.css";
+
 /* The enclosing .study-wordprint supplies the four palette variables and state.
    All motion has an endpoint. Pointer movement belongs to the parent wrapper. */
 .wordprint-art {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  fill: var(--wp-ink);
-  color: var(--wp-ink);
-  font-family: inherit;
-  font-weight: 400;
+  @apply block w-full h-auto overflow-hidden fill-[var(--wp-ink)] text-[color:var(--wp-ink)];
+  @apply font-[family-name:inherit];
+  @apply font-normal;
   text-rendering: geometricPrecision;
 }
 .wordprint-art text {
-  font-family: inherit;
+  @apply font-[family-name:inherit];
 }
 .wordprint-art g,
 .wordprint-art .wp-pixel {
@@ -24,49 +21,44 @@
 }
 .wordprint-art .wp-registration,
 .wordprint-art .wp-annotation {
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 1.2px;
+  @apply text-[length:10px] font-normal tracking-[1.2px];
 }
 .wordprint-art .wp-rule {
-  fill: none;
-  stroke: var(--wp-line);
-  stroke-width: 1;
+  @apply fill-none stroke-[var(--wp-line)];
+  @apply stroke-[1];
 }
 .wordprint-art .wp-accent-fill {
-  fill: var(--wp-accent);
+  @apply fill-[var(--wp-accent)];
 }
 .wordprint-art .wp-accent-stroke {
-  fill: none;
-  stroke: var(--wp-accent);
-  stroke-width: 1.2;
+  @apply fill-none stroke-[var(--wp-accent)];
+  @apply stroke-[1.2];
 }
 
 /* ACE: a raster grid resolves into a continuous letterform. */
 .wp-ace-grid {
-  opacity: 0.45;
+  @apply opacity-[0.45];
 }
 .wp-ace-raster {
   transform: translate(64px, 118px);
 }
 .wp-ace-type {
-  opacity: 0;
+  @apply opacity-[0];
   transform: translateY(22px);
-  font-weight: 600;
-  letter-spacing: -17px;
+  @apply font-semibold tracking-[-17px];
 }
 .wp-ace-cross {
   transform-origin: 544px 92px;
 }
 .study-wordprint[data-active="true"] .wp-ace-grid {
-  opacity: 0.15;
+  @apply opacity-[0.15];
 }
 .study-wordprint[data-active="true"] .wp-ace-raster {
-  opacity: 0;
+  @apply opacity-[0];
   transform: translate(64px, 96px) scale(1, 0.82);
 }
 .study-wordprint[data-active="true"] .wp-ace-type {
-  opacity: 1;
+  @apply opacity-[1];
   transform: translateY(0);
 }
 .study-wordprint[data-active="true"] .wp-ace-cross {
@@ -78,21 +70,21 @@
   transform: translate(300px, 219px) rotate(-12deg);
 }
 .wp-arkon-axis {
-  opacity: 0.45;
+  @apply opacity-[0.45];
 }
 .wp-arkon-title {
   transform: translate(31px, 193px);
-  letter-spacing: -6px;
+  @apply tracking-[-6px];
   paint-order: stroke fill;
-  stroke: var(--wp-paper);
-  stroke-width: 1.5px;
+  @apply stroke-[var(--wp-paper)];
+  @apply stroke-[1.5px];
 }
 .wp-arkon-subtitle {
   transform: translate(286px, 317px);
-  letter-spacing: -2px;
+  @apply tracking-[-2px];
   paint-order: stroke fill;
-  stroke: var(--wp-paper);
-  stroke-width: 1.5px;
+  @apply stroke-[var(--wp-paper)];
+  @apply stroke-[1.5px];
 }
 .study-wordprint[data-active="true"] .wp-arkon-orbit {
   transform: translate(465px, 271px) rotate(38deg) scale(0.58);
@@ -106,11 +98,11 @@
 
 /* NEUE: the specimen becomes the caption, and the caption becomes the specimen. */
 .wp-neue-guides {
-  opacity: 0.62;
+  @apply opacity-[0.62];
 }
 .wp-neue-specimen {
   transform: translate(22px, 282px);
-  fill: var(--wp-accent);
+  @apply fill-[var(--wp-accent)];
 }
 .wp-neue-first {
   transform: translate(31px, 344px) scale(0.64);
@@ -119,71 +111,64 @@
   transform: translate(229px, 344px) scale(0.635);
 }
 .wp-neue-note {
-  opacity: 0.8;
+  @apply opacity-[0.8];
 }
 .study-wordprint[data-active="true"] .wp-neue-specimen {
   transform: translate(406px, 132px) scale(0.38);
-  font-weight: 600;
+  @apply font-semibold;
 }
 .study-wordprint[data-active="true"] .wp-neue-first {
   transform: translate(31px, 229px);
-  font-weight: 600;
+  @apply font-semibold;
 }
 .study-wordprint[data-active="true"] .wp-neue-last {
   transform: translate(32px, 329px);
 }
 .study-wordprint[data-active="true"] .wp-neue-note {
-  opacity: 0;
+  @apply opacity-[0];
   transform: translateY(-10px);
 }
 .study-wordprint[data-active="true"] .wp-neue-guides {
-  opacity: 0.24;
+  @apply opacity-[0.24];
 }
 
 /* MONOLOG: hierarchy changes without changing the words. */
 .wp-monolog-row {
-  letter-spacing: -5px;
-  stroke-width: 1;
+  @apply tracking-[-5px] stroke-[1];
 }
 .wp-monolog-row--1 {
   transform: translate(31px, 149px);
 }
 .wp-monolog-row--2 {
   transform: translate(31px, 245px);
-  fill: transparent;
-  stroke: var(--wp-ink);
+  @apply fill-transparent stroke-[var(--wp-ink)];
 }
 .wp-monolog-row--3 {
   transform: translate(31px, 341px);
-  fill: var(--wp-accent);
-  opacity: 0.48;
+  @apply fill-[var(--wp-accent)] opacity-[0.48];
 }
 .wordprint-art .wp-monolog-marks {
-  font-size: 8px;
+  @apply text-[length:8px];
 }
 .study-wordprint[data-active="true"] .wp-monolog-row--1 {
   transform: translate(31px, 142px) scale(0.82);
-  fill: transparent;
-  stroke: var(--wp-ink);
+  @apply fill-transparent stroke-[var(--wp-ink)];
 }
 .study-wordprint[data-active="true"] .wp-monolog-row--2 {
-  fill: var(--wp-ink);
-  stroke: transparent;
+  @apply fill-[var(--wp-ink)] stroke-transparent;
 }
 .study-wordprint[data-active="true"] .wp-monolog-row--3 {
   transform: translate(126px, 329px) scale(0.82);
-  fill: transparent;
-  stroke: var(--wp-ink);
-  opacity: 0.65;
+  @apply fill-transparent stroke-[var(--wp-ink)] opacity-[0.65];
 }
 
 /* LAMA: a deliberately loose pixel identity clicks into alignment. */
 .wp-lama-grid {
-  opacity: 0.42;
+  @apply opacity-[0.42];
 }
 .wp-lama-pixels {
   transform: translate(60px, 111px);
-  fill: var(--wp-accent);
+  @apply fill-[var(--wp-accent)];
 }
 .wp-pixel--0 {
   transform: translate(-8px, -13px);
@@ -201,7 +186,7 @@
   transform: translate(9px, 3px);
 }
 .wp-lama-type {
-  letter-spacing: -6px;
+  @apply tracking-[-6px];
 }
 .wp-lama-detail {
   transform-origin: 548px 90px;
@@ -216,34 +201,32 @@
   transform: rotate(90deg);
 }
 .study-wordprint[data-active="true"] .wp-lama-grid {
-  opacity: 0.75;
+  @apply opacity-[0.75];
 }
 
 /* SYNTHESIS: scattered observations become a readable typographic index. */
 .wp-synthesis-links {
-  opacity: 0.8;
+  @apply opacity-[0.8];
 }
 .wp-synthesis-index,
 .wp-synthesis-numbers {
-  opacity: 0;
+  @apply opacity-[0];
 }
 .wp-synthesis-type {
   transform: translate(43px, 148px) rotate(-8deg);
-  letter-spacing: -4px;
+  @apply tracking-[-4px];
 }
 .wp-synthesis-space {
   transform: translate(294px, 193px) rotate(8deg);
-  letter-spacing: -3px;
-  fill: var(--wp-accent);
+  @apply tracking-[-3px] fill-[var(--wp-accent)];
 }
 .wp-synthesis-motion {
   transform: translate(43px, 294px) rotate(-5deg);
-  letter-spacing: -3px;
+  @apply tracking-[-3px];
 }
 .wp-synthesis-intent {
   transform: translate(341px, 346px) rotate(4deg);
-  letter-spacing: -2px;
-  fill: var(--wp-accent);
+  @apply tracking-[-2px] fill-[var(--wp-accent)];
 }
 .study-wordprint[data-active="true"] .wp-synthesis-type {
   transform: translate(34px, 119px) scale(0.72);
@@ -258,11 +241,11 @@
   transform: translate(34px, 344px) scale(1.31);
 }
 .study-wordprint[data-active="true"] .wp-synthesis-links {
-  opacity: 0;
+  @apply opacity-[0];
 }
 .study-wordprint[data-active="true"] .wp-synthesis-index,
 .study-wordprint[data-active="true"] .wp-synthesis-numbers {
-  opacity: 1;
+  @apply opacity-[1];
 }
 
 /* New studies inherit a title-derived monogram without a hand-authored motif. */
@@ -274,7 +257,7 @@
 }
 .wp-generic-last {
   transform: translate(414px, 317px) rotate(9deg);
-  fill: var(--wp-accent);
+  @apply fill-[var(--wp-accent)];
 }
 .study-wordprint[data-active="true"] .wp-generic-geometry {
   transform: rotate(90deg) scale(0.88);

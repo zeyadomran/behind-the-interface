@@ -1,10 +1,7 @@
-import type { MetadataRoute } from "next";
 import { absoluteURL, IS_PREVIEW } from "@/lib/site";
 import { withBasePath } from "@/lib/paths";
 
-export const dynamic = "force-static";
-
-export default function robots(): MetadataRoute.Robots {
+export default function robots() {
   return {
     rules: IS_PREVIEW
       ? { userAgent: "*", disallow: "/" }

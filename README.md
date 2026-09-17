@@ -2,7 +2,7 @@
 
 A growing research library by **Zeyad Omran**, exploring the decisions behind digital experiences: typography, layout, motion, navigation, and the details that make an interface easier to use.
 
-Built with **Fumadocs, Next.js, and Tailwind CSS**, with PP Neue Montreal typography and an editorial theme drawn from [my portfolio](https://zeyadomran.com).
+Built with **React, Vite, Fumadocs, and Tailwind CSS**, using **Yarn Classic 1.22.22**. PP Neue Montreal typography and an editorial theme connect it to [my portfolio](https://zeyadomran.com).
 
 [Read the research findings](content/docs/research-findings.md) · [Research methodology](content/docs/methodology.md) · [Add a study](docs/authoring.md) · [Design direction](docs/design-direction.md)
 
@@ -30,55 +30,59 @@ Original source screenshots remain inside the articles as evidence and appear in
 
 ## Run locally
 
-Use **Node.js 22 or later** and **pnpm 11.19.0**, as specified in [package.json](package.json).
+Use **Node.js 22.12 or later** and **Yarn Classic 1.22.22**, as specified in [package.json](package.json). Keep `yarn.lock` in version control and use `yarn install --frozen-lockfile` in CI.
 
 ```sh
-pnpm install
-pnpm dev
+yarn install
+yarn dev
 ```
 
 Open [localhost:3000](http://127.0.0.1:3000). To inspect the static production build:
 
 ```sh
-pnpm build
-pnpm preview
+yarn build
+yarn preview
 ```
 
-The generated website is in `out/`. The preview server serves that folder on port 3000; it does not publish it.
+Vite builds the browser assets and a server-rendering bundle; the prerender step writes readable HTML for every published route to `dist/`. The preview server serves that folder on port 3000, including the generated 404 page for missing routes. It does not publish the site.
 
 ## Add research
 
 ```sh
-pnpm new:study interface-study "An interface study"
+yarn new:study interface-study "An interface study"
 ```
 
 This creates one dated draft at `content/docs/interface-study.md`. Add the website's findings and supporting assets, then remove `draft: true` or set it to `false` when ready. The root sidebar metadata includes new documents automatically. Drafts are excluded from pages, navigation, the library, and search, including in development.
+
+After adding or removing a content file, or changing its `draft` status, stop and restart `yarn dev` so the published-content allowlist refreshes. `yarn build` regenerates that list automatically.
 
 See the [authoring guide](docs/authoring.md) for frontmatter, website documents, shared findings, links, images, and publication checks. The [research template](templates/research-entry.md) provides a fuller structure for recording evidence and limitations.
 
 ## Validate changes
 
 ```sh
-pnpm typecheck
-pnpm build
-pnpm test
+yarn typecheck
+yarn build
+yarn test
 ```
 
 The Node test suite checks the study-creation workflow, readable story exports, chapter and research links, and static-build asset invariants. Build first. Review the resulting pages in a browser for responsive layout, keyboard navigation, reduced motion, and interaction changes.
 
 ## Static hosting
 
-Deploy the contents of `out/` to a static host. For a project URL under `/behind-the-interface`, set the same base path when building and previewing. In PowerShell:
+Deploy the contents of `dist/` to a static host. For a project URL under `/behind-the-interface`, set the same base path when building and previewing. In PowerShell:
 
 ```powershell
-$env:NEXT_PUBLIC_BASE_PATH = '/behind-the-interface'
-pnpm build
-pnpm preview
+$env:VITE_BASE_PATH = '/behind-the-interface'
+yarn build
+yarn preview
 ```
 
 Then preview [localhost:3000/behind-the-interface/](http://127.0.0.1:3000/behind-the-interface/). A root-domain deployment uses no base path. The [authoring guide](docs/authoring.md#static-builds-and-base-paths) explains how links and assets resolve.
 
-The default public origin is `https://design.zeyadomran.com`, configured in [`lib/site.ts`](lib/site.ts). To use another domain, set `NEXT_PUBLIC_SITE_URL` before building; it accepts an HTTP(S) origin without a path. Keep any subdirectory in `NEXT_PUBLIC_BASE_PATH`. See [`.env.example`](.env.example). Domain attachment, DNS, and deployment still need to be configured with the host.
+The checked-in `vercel.json` selects Vite, installs with the bundled Yarn 1.22.22 and frozen lockfile, and publishes `dist/`. The `.prerender/` server bundle is only a build tool and is never published. Existing `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_BASE_PATH` deployment values remain supported as fallbacks; prefer the `VITE_*` names for new configuration.
+
+The default public origin is `https://design.zeyadomran.com`, configured in [`vite.config.ts`](vite.config.ts). To use another domain, set `VITE_SITE_URL` before building; it accepts an HTTP(S) origin without a path. Keep any subdirectory in `VITE_BASE_PATH`. See [`.env.example`](.env.example). The existing production domain remains `design.zeyadomran.com`; these repository changes take effect on the next deployment.
 
 ## Search and sharing
 
@@ -86,11 +90,11 @@ Published pages include descriptive titles, descriptions, canonical URLs, Open G
 
 [`/llms.txt`](https://design.zeyadomran.com/llms.txt) gives agents a reading path through the methodology, findings, individual research articles, and interactive stories, with guidance on evidence, dates, citations, and original website credits. It follows the [llms.txt proposal](https://llmstxt.org/) and links to the site's readable HTML pages. The route regenerates from published content during every build, uses the configured public origin and base path, and excludes drafts. Add or publish research normally; no separate agent index needs updating. `robots.txt` remains the source of crawling directives.
 
-The shared social image is [`public/og/behind-the-interface.png`](public/og/behind-the-interface.png). Run `pnpm generate:og` to regenerate it from the local font files. After connecting the production domain and deploying, verify the canonical URLs and sitemap; the sitemap can then be submitted to your search console. These settings make the site easier to discover and share but do not guarantee search rankings.
+The shared social image is [`public/og/behind-the-interface.png`](public/og/behind-the-interface.png). Run `yarn generate:og` to regenerate it from the local font files. After connecting the production domain and deploying, verify the canonical URLs and sitemap; the sitemap can then be submitted to your search console. These settings make the site easier to discover and share but do not guarantee search rankings.
 
 Vercel Web Analytics is included. For a Vercel deployment, enable Web Analytics in the project's **Analytics** dashboard before the next deployment; visitor data is collected after deployment. See the [Vercel Web Analytics quickstart](https://vercel.com/docs/analytics/quickstart).
 
-Vercel Speed Insights is also included in the root layout. After deploying to Vercel and receiving visits, view performance metrics in the project's **Speed Insights** dashboard. See the [Vercel Speed Insights quickstart](https://vercel.com/docs/speed-insights/quickstart).
+Vercel Speed Insights is also included in the application shell. After deploying to Vercel and receiving visits, view performance metrics in the project's **Speed Insights** dashboard. See the [Vercel Speed Insights quickstart](https://vercel.com/docs/speed-insights/quickstart).
 
 ## Project map
 
@@ -98,10 +102,11 @@ Vercel Speed Insights is also included in the root layout. After deploying to Ve
 content/docs/       Research pages and sidebar metadata
 public/research/    Screenshots and measurement data served by the site
 assets/fonts/      Four supplied font files and their original EULA
-app/               Next.js pages, layouts, and Tailwind theme
+src/               Vite entry points, routing, and metadata rendering
+app/               React application shell and Tailwind styles
 components/        Library, stories, navigation, and article presentation
 lib/               Content loading, story registry, and base-path helpers
-scripts/           Study creation and local static preview
+scripts/           Prerendering, study creation, and local static preview
 templates/         Research entry template
 docs/              Authoring and design guidance
 archive/           Preserved original research bundle; not deployed

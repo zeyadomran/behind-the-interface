@@ -1,8 +1,9 @@
+@reference "./globals.css";
+
 @import "./wordprint-art.css";
 
 .wordprint-figure {
-  min-width: 0;
-  margin: 0 0 0 14px;
+  @apply min-w-0 mt-0 mr-0 mb-0 ml-[14px];
 }
 .study-wordprint {
   --wp-paper: #e5ebdf;
@@ -11,18 +12,10 @@
   --wp-line: #bccbb5;
   --wp-x: 0;
   --wp-y: 0;
-  position: relative;
-  display: block;
-  width: 100%;
-  padding: 0;
-  overflow: hidden;
-  background: var(--wp-paper);
-  color: var(--wp-ink);
-  border: 1px solid var(--wp-line);
-  text-align: left;
-  cursor: pointer;
+  @apply relative block w-full p-0 overflow-hidden bg-[var(--wp-paper)] text-[color:var(--wp-ink)];
+  @apply border-[1px] border-solid border-[color:var(--wp-line)] text-left cursor-pointer;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  @apply touch-manipulation;
 }
 .study-wordprint[data-motif="ace"] {
   --wp-paper: #14271e;
@@ -62,46 +55,26 @@
 }
 .wordprint-topline,
 .wordprint-footer {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 0 20px;
-  padding: 16px 0;
-  font-size: 10px;
-  line-height: 1.4;
-  letter-spacing: 0.065em;
-  text-transform: uppercase;
+  @apply relative z-[1] flex items-center justify-between gap-[16px] my-0 mx-[20px] py-[16px] px-0;
+  @apply text-[length:10px] leading-[1.4] tracking-[0.065em] uppercase;
 }
 .wordprint-topline {
-  border-bottom: 1px solid var(--wp-line);
+  @apply border-b-[1px] border-solid border-b-[color:var(--wp-line)];
 }
 .wordprint-state {
-  font-variant-numeric: tabular-nums;
+  @apply tabular-nums;
 }
 .wordprint-scene {
-  display: block;
-  width: 100%;
+  @apply block w-full;
 }
 .wordprint-art {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
+  @apply block w-full h-auto overflow-hidden;
 }
 .wordprint-footer {
-  border-top: 1px solid var(--wp-line);
+  @apply border-t-[1px] border-solid border-t-[color:var(--wp-line)];
 }
 .wordprint-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 12px;
+  @apply inline-flex items-center gap-[8px] whitespace-nowrap tracking-[0] normal-case text-[length:12px];
 }
 .wordprint-action svg {
   transition: transform 500ms ease;
@@ -110,15 +83,11 @@
   transform: rotate(180deg);
 }
 .study-wordprint:focus-visible {
-  outline: 2px solid var(--color-green);
-  outline-offset: 5px;
+  @apply outline-[2px] outline-solid outline-green;
+  @apply outline-offset-[5px];
 }
 .wordprint-figure > figcaption {
-  max-width: 52ch;
-  margin-top: 10px;
-  font-size: 11px;
-  line-height: 1.5;
-  color: var(--color-muted);
+  @apply max-w-[52ch] mt-[10px] text-[length:11px] leading-[1.5] text-muted;
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .wordprint-scene {
@@ -130,21 +99,19 @@
 }
 @media (max-width: 1100px) {
   .wordprint-figure {
-    margin-left: 0;
+    @apply ml-0;
   }
 }
 @media (max-width: 767px) {
   .wordprint-figure {
-    margin-top: 24px;
+    @apply mt-[24px];
   }
   .wordprint-topline,
   .wordprint-footer {
-    margin: 0 16px;
-    padding: 14px 0;
-    font-size: 9px;
+    @apply my-0 mx-[16px] py-[14px] px-0 text-[length:9px];
   }
   .wordprint-action {
-    font-size: 11px;
+    @apply text-[length:11px];
   }
 }
 @media (prefers-reduced-motion: reduce) {

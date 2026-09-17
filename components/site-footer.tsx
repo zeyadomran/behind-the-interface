@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { ArrowUp } from "lucide-react";
 import { CopyContactEmail } from "./copy-contact-email";
 import "@/app/site-footer.css";

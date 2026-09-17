@@ -3,11 +3,11 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { test } from "node:test";
 
-const output = resolve("out");
+const output = resolve("dist");
 const content = resolve("content/docs");
-const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
+const base = (process.env.VITE_BASE_PATH || "").replace(/\/+$/, "");
 const origin = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL || "https://design.zeyadomran.com",
+  process.env.VITE_SITE_URL || "https://design.zeyadomran.com",
 ).origin;
 const brand = "Behind the Interface";
 const preview = process.env.VERCEL_ENV === "preview";
@@ -79,7 +79,7 @@ function textContent(markup) {
 
 function readPage(route) {
   const file = join(output, route, "index.html");
-  assert.ok(existsSync(file), `Run pnpm build first: missing ${file}`);
+  assert.ok(existsSync(file), `Run yarn build first: missing ${file}`);
   const raw = readFileSync(file, "utf8");
   const head = raw.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1];
   assert.ok(head, `${route}: missing a static document head`);

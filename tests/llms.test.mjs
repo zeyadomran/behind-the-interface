@@ -3,10 +3,10 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { test } from "node:test";
 
-const output = resolve("out");
-const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
+const output = resolve("dist");
+const base = (process.env.VITE_BASE_PATH || "").replace(/\/+$/, "");
 const origin = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL || "https://design.zeyadomran.com",
+  process.env.VITE_SITE_URL || "https://design.zeyadomran.com",
 ).origin;
 
 test("the exported agent guide discovers every published page through valid canonical links", () => {

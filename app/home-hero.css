@@ -1,88 +1,55 @@
+@reference "./globals.css";
+
 .bti-hero {
-  display: flex;
-  flex-direction: column;
+  @apply flex flex-col;
   min-height: calc(100vh - var(--site-header-height));
   min-height: calc(100svh - var(--site-header-height));
   min-height: calc(100dvh - var(--site-header-height));
-  padding-top: 32px;
-  font-family: var(--font-neue-reading), Arial, sans-serif;
-  font-weight: 375;
+  @apply pt-[32px] font-[family-name:var(--font-neue-reading),_Arial,_sans-serif] font-[375];
 }
 
 .bti-hero-topline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  color: var(--color-muted);
+  @apply flex items-center justify-between flex-wrap gap-y-[8px] gap-x-[24px] text-muted;
 }
 
 .bti-hero-topline .eyebrow {
-  font-size: 10px;
-  font-weight: 375;
-  line-height: 1.4;
+  @apply text-[length:10px] font-[375] leading-[1.4];
 }
 
 .bti-hero-composition {
-  display: grid;
-  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
-  flex: 1;
-  align-items: center;
-  gap: 24px;
-  min-height: 615px;
-  padding: 36px 0 22px;
+  @apply grid grid-cols-[minmax(0,_1.18fr)_minmax(0,_1fr)] flex-1 items-center gap-[24px] min-h-[615px] pt-[36px] px-0 pb-[22px];
 }
 
 .bti-hero-copy {
-  min-width: 0;
+  @apply min-w-0;
 }
 
 .bti-hero-copy h1 {
-  font-family: var(--font-neue-display), Arial, sans-serif;
-  font-size: clamp(68px, 8.8vw, 150px);
-  font-weight: 400;
-  line-height: 0.96;
-  letter-spacing: -0.065em;
+  @apply font-[family-name:var(--font-neue-display),_Arial,_sans-serif] text-[length:clamp(68px,_8.8vw,_150px)] font-normal leading-[0.96] tracking-[-0.065em];
 }
 
 .bti-hero-copy h1 > span {
-  color: var(--color-green);
+  @apply text-green;
 }
 
 .bti-hero-intro {
-  max-width: 400px;
-  margin: 42px 0 0 4px;
+  @apply max-w-[400px] mt-[42px] mr-0 mb-0 ml-[4px];
 }
 
 .bti-hero-intro p {
-  color: var(--color-body);
-  font-size: 22px;
-  line-height: 1.4;
-  letter-spacing: -0.012em;
+  @apply text-body text-[length:22px] leading-[1.4] tracking-[-0.012em];
 }
 
 .bti-hero-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px 28px;
-  margin-top: 18px;
+  @apply flex items-center flex-wrap gap-y-[10px] gap-x-[28px] mt-[18px];
 }
 
 .bti-hero-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 44px;
-  min-height: 44px;
-  padding: 14px 0 10px;
-  font-size: 15px;
-  line-height: 1.5;
+  @apply inline-flex items-center justify-between gap-[44px] min-h-[44px] pt-[14px] px-0 pb-[10px] text-[length:15px] leading-[1.5];
 }
 
 .bti-hero-link {
-  border-bottom: 1px solid currentColor;
+  @apply border-b border-solid border-b-current;
 }
 
 .bti-hero-link svg {
@@ -94,117 +61,90 @@
 }
 
 .bti-hero-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px 32px;
-  padding: 18px 0;
-  border-block: 1px solid var(--color-line);
-  color: var(--color-muted);
+  @apply flex items-center justify-between flex-wrap gap-y-[20px] gap-x-[32px] py-[18px] px-0 border-y border-solid border-y-line text-muted;
 }
 
 .bti-hero-stats {
-  display: flex;
-  gap: 42px;
+  @apply flex gap-[42px];
 }
 
 .bti-hero-stats > span {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @apply flex items-baseline gap-[10px] text-[length:10px] uppercase tracking-[0.06em];
 }
 
 .bti-hero-stats b {
-  font-size: 25px;
-  font-weight: 400;
-  color: var(--color-ink);
-  letter-spacing: -0.035em;
+  @apply text-[length:25px] font-normal text-ink tracking-[-0.035em];
 }
 
 @media (max-width: 1100px) {
   .bti-hero-composition {
-    min-height: 550px;
+    @apply min-h-[550px];
   }
 
   .bti-hero-copy h1 {
-    font-size: 8.8vw;
+    @apply text-[length:8.8vw];
   }
 
   .bti-hero-intro p {
-    font-size: 20px;
+    @apply text-[length:20px];
   }
 }
 
 @media (max-width: 767px) {
   .bti-hero {
-    padding-top: 26px;
+    @apply pt-[26px];
   }
 
   .bti-hero-topline .eyebrow {
-    font-size: 10px;
+    @apply text-[length:10px];
   }
 
   .bti-hero-topline .eyebrow:last-child {
-    display: none;
+    @apply hidden;
   }
 
   .bti-hero-composition {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 42px;
-    min-height: 0;
-    padding: 34px 0 30px;
+    @apply grid-cols-[minmax(0,_1fr)] gap-[42px] min-h-0 pt-[34px] px-0 pb-[30px];
   }
 
   .bti-hero-copy h1 {
-    font-size: clamp(52px, 13vw, 98px);
-    line-height: 1;
-    letter-spacing: -0.06em;
+    @apply text-[length:clamp(52px,_13vw,_98px)] leading-[1] tracking-[-0.06em];
   }
 
   .bti-hero-intro {
-    margin: 25px 0 0;
+    @apply mt-[25px] mx-0 mb-0;
   }
 
   .bti-hero-intro p {
-    font-size: 19px;
-    max-width: 29ch;
+    @apply text-[length:19px] max-w-[29ch];
   }
 
   .bti-hero-actions {
-    margin-top: 10px;
+    @apply mt-[10px];
   }
 
   .bti-hero-link {
-    font-size: 14px;
-    gap: 55px;
-    padding-bottom: 9px;
+    @apply text-[length:14px] gap-[55px] pb-[9px];
   }
 
   .bti-hero-bottom {
-    gap: 16px;
+    @apply gap-[16px];
   }
 
   .bti-hero-bottom > .eyebrow {
-    font-size: 9px;
+    @apply text-[length:9px];
   }
 
   .bti-hero-stats {
-    width: 100%;
-    justify-content: space-between;
-    gap: 16px;
+    @apply w-full justify-between gap-[16px];
   }
 
   .bti-hero-stats > span {
-    gap: 7px;
-    font-size: 9px;
+    @apply gap-[7px] text-[length:9px];
   }
 
   .bti-hero-stats b {
-    font-size: 24px;
+    @apply text-[length:24px];
   }
 }
 

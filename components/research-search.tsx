@@ -18,7 +18,7 @@ import { withBasePath } from "@/lib/paths";
 
 export default function ResearchSearch(props: SharedProps) {
   const { search, setSearch, query } = useDocsSearch({
-    client: staticClient({ from: withBasePath("/api/search") }),
+    client: staticClient({ from: withBasePath("/api/search.json") }),
   });
   const returnTarget = useRef<HTMLElement | null>(null);
   const openedAt = useRef<string | null>(null);

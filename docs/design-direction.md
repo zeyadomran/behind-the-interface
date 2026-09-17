@@ -4,7 +4,9 @@ Behind the Interface is Zeyad Omran's UI/UX research library. Its shared visual 
 
 ## Framework and content
 
-Fumadocs is the selected framework after considering OpenDocs. It supplies the documentation content pipeline, navigation, search, and table of contents. The custom library and shared theme provide the editorial presentation. Tailwind CSS is the styling foundation, with project-specific tokens and component rules in [`app/globals.css`](../app/globals.css).
+The application uses React and Vite with Yarn Classic 1.22.22. Fumadocs supplies the documentation content pipeline, navigation, search, and table of contents. The custom library and shared theme provide the editorial presentation. Vite builds the application, and each published route is prerendered so the research stays readable without JavaScript.
+
+Tailwind CSS powers the shared shell, library, documentation, stories, and interactive visuals. Project-specific tokens live in [`app/globals.css`](../app/globals.css); component styles compose Tailwind utilities with `@apply`. Dedicated stylesheets use `@reference "./globals.css"` to access the same theme. Keep custom CSS for precise animation geometry, transforms, custom properties, and progressive viewport fallbacks when a utility would obscure or change their behavior.
 
 Research lives in Markdown or MDX with validated metadata. Each website has a standalone `study` document; a shared `report` brings together comparisons and findings. Published studies and reports appear as independent library entries and peer documentation pages. The optional [`story registry`](../lib/study-stories.ts) adds a guided presentation that links back to the full evidence. New studies appear automatically and keep their direct documentation destination until a story is registered.
 
@@ -26,7 +28,7 @@ Fumadocs surfaces use related pale green tones so the sidebar, selected navigati
 
 ## Typography
 
-The project loads four supplied PP Neue Montreal files through `next/font/local`:
+The project loads four supplied PP Neue Montreal files through local `@font-face` declarations in [`app/fonts.css`](../app/fonts.css). Vite emits the referenced font assets with the production build:
 
 | Face                              | Weight | Role                                           |
 | --------------------------------- | ------ | ---------------------------------------------- |
