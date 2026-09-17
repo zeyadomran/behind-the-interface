@@ -1,6 +1,14 @@
 ---
 title: "Methodology"
 description: "How this collection separates observations, source evidence, and design interpretation."
+sites:
+  [
+    "https://acedesign.io/",
+    "https://arkon.digital/",
+    "https://neuemontreal.com/",
+    "https://bymonolog.com/",
+    "https://lamalama.com/",
+  ]
 ---
 
 The reports examine websites as designed products: what they communicate, how the visual system supports that purpose, what interaction adds, and where the experience becomes harder to use.

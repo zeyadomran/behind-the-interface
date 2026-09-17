@@ -7,7 +7,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link href="/" aria-label="Interesting Designs research library">
+        <Link href="/" aria-label="Behind the Interface research library">
           <Brand />
         </Link>
         <nav aria-label="Main navigation" className="site-navigation">

@@ -74,6 +74,6 @@ createServer((request, response) => {
   else createReadStream(file).pipe(response);
 }).listen(port, "127.0.0.1", () =>
   console.log(
-    `Interesting Designs preview: http://127.0.0.1:${port}${basePath}/`,
+    `Behind the Interface preview: http://127.0.0.1:${port}${basePath}/`,
   ),
 );

@@ -739,6 +739,44 @@ svg {
   flex: 1;
   padding: 100px var(--gutter);
 }
+.study-reading-paths {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 25px;
+  margin-top: 16px;
+}
+.study-reading-paths a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 10px;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 12px;
+}
+.study-reading-paths a:hover {
+  border-color: var(--color-ink);
+}
+.article-story-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin: 24px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--color-line);
+  background: var(--color-fd-card);
+  font-size: 14px;
+}
+.article-story-link > span {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+.article-story-link > svg {
+  margin-left: auto;
+}
+.article-story-link:hover {
+  border-color: var(--color-ink);
+}
 .not-found-page h1 {
   font-size: clamp(48px, 7vw, 96px);
   letter-spacing: -0.05em;

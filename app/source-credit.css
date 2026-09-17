@@ -1,0 +1,56 @@
+.source-credit {
+  margin-block: 24px;
+  padding-block: 16px;
+  border-block: 1px solid var(--story-line, var(--color-line));
+  color: var(--story-ink, var(--color-ink));
+}
+.source-credit .source-credit-label {
+  margin: 0 0 8px;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--story-muted, var(--color-muted));
+}
+.source-credit-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.source-credit .source-credit-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
+  gap: 18px;
+  padding: 10px 12px;
+  border: 1px solid var(--story-line, var(--color-line));
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.source-credit .source-credit-links a:hover {
+  background: var(--story-panel, var(--color-fd-muted));
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.source-credit .source-credit-note {
+  margin: 10px 0 0;
+  max-width: 65ch;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--story-muted, var(--color-muted));
+}
+.source-credit.story-source-credit {
+  max-width: 38rem;
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+.story-source-credit + .story-start {
+  margin-top: 24px;
+}

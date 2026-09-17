@@ -9,7 +9,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
         />
       </svg>
       <span className="brand-name">
-        Interesting Designs
+        Behind the Interface
         <span className={compact ? "sr-only" : "brand-caption"}>
           UI / UX RESEARCH
         </span>

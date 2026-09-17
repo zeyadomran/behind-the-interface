@@ -7,13 +7,26 @@ import {
   type ResearchSummary,
 } from "@/components/research-library";
 import { getResearchEntries } from "@/lib/source";
+import { getStudyStory } from "@/lib/study-stories";
+import { pageMetadata, websiteSchema } from "@/lib/seo";
+import { SITE_DESCRIPTION } from "@/lib/site";
+import { StructuredData } from "@/components/structured-data";
 import "./wordprints.css";
+
+export const metadata = pageMetadata({
+  title: "Website Design Stories & UI/UX Research",
+  description: SITE_DESCRIPTION,
+  path: "/",
+});
 
 export default function HomePage() {
   const entries: ResearchSummary[] = getResearchEntries().map((page) => ({
     title: page.data.title,
     description: page.data.description ?? "",
     url: page.url,
+    storyUrl: getStudyStory(page.slugs.join("/"))
+      ? `/studies/${page.slugs.join("/")}/`
+      : undefined,
     date: page.data.date!,
     tags: page.data.tags,
     sites: page.data.sites,
@@ -26,6 +39,7 @@ export default function HomePage() {
 
   return (
     <>
+      <StructuredData data={websiteSchema()} />
       <SiteHeader />
       <main id="main-content" className="home-main" tabIndex={-1}>
         <section className="library-hero" aria-labelledby="hero-heading">
@@ -44,8 +58,9 @@ export default function HomePage() {
             <div className="hero-aside">
               <span className="eyebrow">Observe. Question. Understand.</span>
               <p>
-                A growing collection of website studies, interaction details,
-                and the decisions that make an experience work.
+                Follow the stories behind interesting websites. Explore their
+                type, motion, and design decisions, then go deeper into the
+                research.
               </p>
               <Link className="text-link" href="/docs/methodology/">
                 The approach <ArrowUpRight size={19} aria-hidden="true" />
@@ -87,9 +102,10 @@ export default function HomePage() {
             </h2>
             <div>
               <p>
-                Each study looks at how a website communicates, how it behaves,
-                and what changes on a smaller screen. Screenshots and source
-                references keep the observations grounded.
+                Each story lets you explore a website through five interactive
+                chapters. Follow the sequence or skip to what interests you. The
+                full studies keep the screenshots, measurements, and source
+                references close by.
               </p>
               <div className="evidence-grid">
                 <div>

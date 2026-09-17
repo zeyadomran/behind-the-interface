@@ -1,4 +1,4 @@
-# Interesting Designs · UI/UX Research
+# Behind the Interface · UI/UX Research
 
 A growing research library by **Zeyad Omran**, exploring the decisions behind digital experiences: typography, layout, motion, navigation, and the details that make an interface easier to use.
 
@@ -22,9 +22,11 @@ Start with [Research findings](content/docs/research-findings.md), or go directl
 
 Each website document brings its findings, typography observations, and source evidence together, with route details where applicable. [Research findings](content/docs/research-findings.md) brings together the cross-site conclusions, typography comparison, source-audit guidance, and route-inventory summary.
 
-The website adds a filterable study index, full-text search, documentation navigation, and an article table of contents. The six homepage entries use original interactive SVG wordprints as typographic teasers, with direct title links to the articles. Click, tap, Enter, or Space changes each composition; reduced motion switches states instantly without pointer tracking. The shared paper, green frame, and PP Neue Montreal keep the artwork within the library's visual system. See the [wordprint direction](docs/design-direction.md#homepage-wordprints).
+The website adds a filterable study index, full-text search, documentation navigation, and an article table of contents. The five website titles open immersive stories at `/studies/<slug>/`; **Read research** links open their complete `/docs/<slug>/` articles directly. Research findings remains a documentation page. Each story follows five linked chapters: idea, typography, motion, mobile, and takeaways, with a distinct visual treatment, optional parallax, and original interactive demonstrations. Every chapter links to the supporting section of its research article.
 
-Original source screenshots remain inside the articles as evidence. Interactive studies let readers switch screenshot viewports, compare measured typography, and explore interaction evidence. Research is written in Markdown or MDX; the site generates the HTML. New studies appear from their metadata without editing a central list, and the existing `visual` key selects a wordprint with a generic fallback for future entries.
+The six homepage entries retain their original interactive SVG wordprints as typographic teasers. Click, tap, Enter, or Space changes each composition; reduced motion switches states instantly without pointer tracking. The shared paper, green frame, and PP Neue Montreal keep the artwork within the library's visual system. See the [wordprint direction](docs/design-direction.md#homepage-wordprints).
+
+Original source screenshots remain inside the articles as evidence and appear in the stories' responsive comparisons. Article explorers let readers switch screenshot viewports, compare measured typography, and explore interaction evidence. Full research is written in Markdown or MDX; the site generates the HTML. New studies appear from their metadata without editing a central list and open their documentation directly until an optional story is added to [`lib/study-stories.ts`](lib/study-stories.ts). The existing `visual` key selects a wordprint with a generic fallback for future entries.
 
 ## Run locally
 
@@ -62,19 +64,27 @@ pnpm build
 pnpm test
 ```
 
-The Node test suite checks the study-creation workflow and static-build, link, and asset invariants. Build first. Review the resulting pages in a browser for responsive layout, typography, navigation, and interaction changes.
+The Node test suite checks the study-creation workflow, readable story exports, chapter and research links, and static-build asset invariants. Build first. Review the resulting pages in a browser for responsive layout, keyboard navigation, reduced motion, and interaction changes.
 
 ## Static hosting
 
-Deploy the contents of `out/` to a static host. For a project URL under `/ui-ux-research`, set the same base path when building and previewing. In PowerShell:
+Deploy the contents of `out/` to a static host. For a project URL under `/behind-the-interface`, set the same base path when building and previewing. In PowerShell:
 
 ```powershell
-$env:NEXT_PUBLIC_BASE_PATH = '/ui-ux-research'
+$env:NEXT_PUBLIC_BASE_PATH = '/behind-the-interface'
 pnpm build
 pnpm preview
 ```
 
-Then preview [localhost:3000/ui-ux-research/](http://127.0.0.1:3000/ui-ux-research/). A root-domain deployment uses no base path. The [authoring guide](docs/authoring.md#static-builds-and-base-paths) explains how links and assets resolve. No deployment destination is configured by this repository.
+Then preview [localhost:3000/behind-the-interface/](http://127.0.0.1:3000/behind-the-interface/). A root-domain deployment uses no base path. The [authoring guide](docs/authoring.md#static-builds-and-base-paths) explains how links and assets resolve.
+
+The default public origin is `https://design.zeyadomran.com`, configured in [`lib/site.ts`](lib/site.ts). To use another domain, set `NEXT_PUBLIC_SITE_URL` before building; it accepts an HTTP(S) origin without a path. Keep any subdirectory in `NEXT_PUBLIC_BASE_PATH`. See [`.env.example`](.env.example). Domain attachment, DNS, and deployment still need to be configured with the host.
+
+## Search and sharing
+
+Published pages include descriptive titles, descriptions, canonical URLs, Open Graph and Twitter metadata, and JSON-LD. The generated `sitemap.xml` includes published pages and stories; a draft's story is excluded alongside its research document. `robots.txt` excludes API and 404 routes. Vercel preview builds (`VERCEL_ENV=preview`) use `noindex` and disallow crawling.
+
+The shared social image is [`public/og/behind-the-interface.png`](public/og/behind-the-interface.png). Run `pnpm generate:og` to regenerate it from the local font files. After connecting the production domain and deploying, verify the canonical URLs and sitemap; the sitemap can then be submitted to your search console. These settings make the site easier to discover and share but do not guarantee search rankings.
 
 Vercel Web Analytics is included. For a Vercel deployment, enable Web Analytics in the project's **Analytics** dashboard before the next deployment; visitor data is collected after deployment. See the [Vercel Web Analytics quickstart](https://vercel.com/docs/analytics/quickstart).
 
@@ -85,8 +95,8 @@ content/docs/       Research pages and sidebar metadata
 public/research/    Screenshots and measurement data served by the site
 assets/fonts/      Four supplied font files and their original EULA
 app/               Next.js pages, layouts, and Tailwind theme
-components/        Library, navigation, and article presentation
-lib/               Content loading and base-path helpers
+components/        Library, stories, navigation, and article presentation
+lib/               Content loading, story registry, and base-path helpers
 scripts/           Study creation and local static preview
 templates/         Research entry template
 docs/              Authoring and design guidance
@@ -97,8 +107,10 @@ archive/           Preserved original research bundle; not deployed
 
 Reports distinguish **observed**, **source-confirmed**, **hook-only**, and **interpretive** findings. Each study records its scope and date. Responsive browser inspection is not physical-device testing, and route response checks are not complete interaction audits. Live websites may have changed since the recorded sessions.
 
-The homepage wordprints are original interpretations of the research, not evidence captures or replicas of the reviewed websites. The article text remains the complete reading path.
+The homepage wordprints and story demonstrations are original interpretations of the research, not evidence captures or replicas of the reviewed websites. Story typography uses the library's supplied fonts rather than reproducing each source typeface. Recorded screenshots are identified separately. Story text, native chapter links, and links to the complete research remain available without JavaScript; motion and interactive controls enhance that reading path.
 
 The [original research bundle](archive/2026-09-five-websites/README.md) remains available as a historical snapshot. Edit the active Markdown pages for future updates; archived HTML editions are not maintained in parallel.
 
-Website designs, names, imagery, and content shown in research captures belong to their respective owners. Sources are credited within the reports; no affiliation or endorsement is implied. The four supplied PP Neue Montreal font files retain their [original Pangram Pangram EULA](assets/fonts/EULA-PangramPangram-FreeForPersonalUse-MAY2021.pdf). They are not covered by an open-source font license. No general reuse license has been specified for the original written analysis or this repository.
+Website designs, names, imagery, and content shown in research captures belong to their respective owners. Source credits near the start of every story and documentation page link to the websites examined. A document's `sites` frontmatter supplies these links; [`lib/research-sites.ts`](lib/research-sites.ts) supplies known display names, with a hostname fallback for new HTTP(S) sources. No affiliation or endorsement is implied.
+
+The four supplied PP Neue Montreal font files retain their [original Pangram Pangram EULA](assets/fonts/EULA-PangramPangram-FreeForPersonalUse-MAY2021.pdf). They are not covered by an open-source font license. No general reuse license has been specified for the original written analysis or this repository.

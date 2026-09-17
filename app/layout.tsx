@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import { Provider } from "./provider";
 import { withBasePath } from "@/lib/paths";
+import { AUTHOR, SITE_NAME, SITE_DESCRIPTION, SITE_ORIGIN } from "@/lib/site";
 import "./globals.css";
 
 const display = localFont({
@@ -41,14 +42,14 @@ const reading = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: {
-    default: "Interesting Designs — UI/UX research by Zeyad Omran",
-    template: "%s | Interesting Designs",
+    default: `${SITE_NAME} — Website Design Stories`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "An ongoing notebook of website studies, typography, interaction details, and the decisions behind digital experiences.",
-  applicationName: "Interesting Designs",
-  authors: [{ name: "Zeyad Omran", url: "https://zeyadomran.com" }],
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [AUTHOR],
   icons: { icon: withBasePath("/icon.svg") },
 };
 

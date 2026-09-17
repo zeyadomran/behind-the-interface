@@ -5,8 +5,8 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <span>
-        Interesting Designs <span className="footer-divider">/</span> A research
-        notebook by Zeyad Omran
+        Behind the Interface <span className="footer-divider">/</span> A
+        research notebook by Zeyad Omran
       </span>
       <div>
         <Link href="/docs/methodology/">How I research</Link>

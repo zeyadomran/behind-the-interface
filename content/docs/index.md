@@ -1,6 +1,14 @@
 ---
 title: "UI/UX research"
 description: "Studies of how websites use typography, layout, motion, and interaction to communicate."
+sites:
+  [
+    "https://acedesign.io/",
+    "https://arkon.digital/",
+    "https://neuemontreal.com/",
+    "https://bymonolog.com/",
+    "https://lamalama.com/",
+  ]
 ---
 
 This is my growing collection of website research: what I observed, what public source supports, and what I would take into a new design.

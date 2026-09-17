@@ -9,6 +9,7 @@ export interface ResearchSummary {
   title: string;
   description: string;
   url: string;
+  storyUrl?: string;
   date: string;
   tags: string[];
   sites: string[];
@@ -93,7 +94,7 @@ export function ResearchLibrary({ entries }: { entries: ResearchSummary[] }) {
                 </span>
               </div>
               <h3>
-                <Link href={study.url}>
+                <Link href={study.storyUrl ?? study.url}>
                   {study.title}
                   <ArrowUpRight aria-hidden="true" />
                 </Link>
@@ -104,6 +105,17 @@ export function ResearchLibrary({ entries }: { entries: ResearchSummary[] }) {
                   <span key={item}>{item}</span>
                 ))}
               </div>
+              {study.storyUrl && (
+                <div className="study-reading-paths">
+                  <Link href={study.storyUrl}>
+                    Explore the story{" "}
+                    <ArrowUpRight size={14} aria-hidden="true" />
+                  </Link>
+                  <Link href={study.url}>
+                    Read research <ArrowUpRight size={14} aria-hidden="true" />
+                  </Link>
+                </div>
+              )}
             </div>
             <StudyWordprint visual={study.visual} title={study.title} />
           </article>

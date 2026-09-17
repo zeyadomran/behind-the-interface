@@ -112,7 +112,7 @@ test("all published research has readable static HTML and navigation", () => {
     const html = readRoute(slug);
     assert.match(html, /<h1\b/);
     assert.match(html, /id="main-content"/);
-    assert.match(html, /Interesting Designs/);
+    assert.match(html, /Behind the Interface/);
   }
   const report = readRoute("docs/research-findings");
   assert.match(report, /Observed/);
@@ -187,7 +187,10 @@ test("the library publishes exactly six independent research entries with no for
   });
   assert.deepEqual(
     entryLinks.sort(),
-    researchSlugs.map((slug) => `${base}${researchPath}/${slug}/`).sort(),
+    [
+      ...websites.map((website) => `${base}/studies/${website.slug}/`),
+      `${base}${researchPath}/research-findings/`,
+    ].sort(),
   );
   assert.doesNotMatch(homepage, /Inside the study|class="study-reports"/i);
   for (const file of filesIn(output).filter((file) => file.endsWith(".html"))) {

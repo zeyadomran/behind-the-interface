@@ -1,5 +1,5 @@
 {
-  "name": "ui-ux-research",
+  "name": "behind-the-interface",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -16,6 +16,7 @@
     "preview": "node scripts/preview.mjs",
     "format": "prettier --write app components lib scripts tests \"*.{ts,mjs,json}\" README.md docs",
     "new:study": "node scripts/new-study.mjs",
+    "generate:og": "node scripts/generate-social-image.mjs",
     "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
