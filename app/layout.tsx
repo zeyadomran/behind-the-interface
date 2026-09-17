@@ -57,6 +57,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${reading.variable}`}>
+      <head>
+        <link
+          rel="describedby"
+          href={withBasePath("/llms.txt")}
+          type="text/plain"
+        />
+      </head>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <a className="skip-link" href="#main-content">
           Skip to content

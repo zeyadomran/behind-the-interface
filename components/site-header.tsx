@@ -17,6 +17,9 @@ export function SiteHeader() {
           <Link href="/docs/methodology/" className="desktop-nav-link">
             Approach
           </Link>
+          <Link href="/#contact" className="desktop-nav-link">
+            Contact
+          </Link>
           <SearchButton />
           <a href="https://zeyadomran.com" className="portfolio-link">
             Portfolio <ArrowUpRight aria-hidden="true" size={16} />

@@ -84,6 +84,8 @@ The default public origin is `https://design.zeyadomran.com`, configured in [`li
 
 Published pages include descriptive titles, descriptions, canonical URLs, Open Graph and Twitter metadata, and JSON-LD. The generated `sitemap.xml` includes published pages and stories; a draft's story is excluded alongside its research document. `robots.txt` excludes API and 404 routes. Vercel preview builds (`VERCEL_ENV=preview`) use `noindex` and disallow crawling.
 
+[`/llms.txt`](https://design.zeyadomran.com/llms.txt) gives agents a reading path through the methodology, findings, individual research articles, and interactive stories, with guidance on evidence, dates, citations, and original website credits. It follows the [llms.txt proposal](https://llmstxt.org/) and links to the site's readable HTML pages. The route regenerates from published content during every build, uses the configured public origin and base path, and excludes drafts. Add or publish research normally; no separate agent index needs updating. `robots.txt` remains the source of crawling directives.
+
 The shared social image is [`public/og/behind-the-interface.png`](public/og/behind-the-interface.png). Run `pnpm generate:og` to regenerate it from the local font files. After connecting the production domain and deploying, verify the canonical URLs and sitemap; the sitemap can then be submitted to your search console. These settings make the site easier to discover and share but do not guarantee search rankings.
 
 Vercel Web Analytics is included. For a Vercel deployment, enable Web Analytics in the project's **Analytics** dashboard before the next deployment; visitor data is collected after deployment. See the [Vercel Web Analytics quickstart](https://vercel.com/docs/analytics/quickstart).

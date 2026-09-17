@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { HeroStudy } from "@/components/hero-study";
 import {
   ResearchLibrary,
   type ResearchSummary,
@@ -12,6 +13,7 @@ import { pageMetadata, websiteSchema } from "@/lib/seo";
 import { SITE_DESCRIPTION } from "@/lib/site";
 import { StructuredData } from "@/components/structured-data";
 import "./wordprints.css";
+import "./home-hero.css";
 
 export const metadata = pageMetadata({
   title: "Website Design Stories & UI/UX Research",
@@ -42,36 +44,40 @@ export default function HomePage() {
       <StructuredData data={websiteSchema()} />
       <SiteHeader />
       <main id="main-content" className="home-main" tabIndex={-1}>
-        <section className="library-hero" aria-labelledby="hero-heading">
-          <div className="hero-topline">
-            <span className="eyebrow">
-              <span className="tiny-square" /> An open research notebook
-            </span>
-            <span className="eyebrow hero-byline">By Zeyad Omran</span>
+        <section id="home" className="bti-hero" aria-labelledby="hero-heading">
+          <div className="bti-hero-topline">
+            <span className="eyebrow">An open research notebook</span>
+            <span className="eyebrow">By Zeyad Omran</span>
           </div>
-          <div className="hero-grid">
-            <h1 id="hero-heading">
-              A closer look
-              <br />
-              at digital <span>design.</span>
-            </h1>
-            <div className="hero-aside">
-              <span className="eyebrow">Observe. Question. Understand.</span>
-              <p>
-                Follow the stories behind interesting websites. Explore their
-                type, motion, and design decisions, then go deeper into the
-                research.
-              </p>
-              <Link className="text-link" href="/docs/methodology/">
-                The approach <ArrowUpRight size={19} aria-hidden="true" />
-              </Link>
+          <div className="bti-hero-composition">
+            <div className="bti-hero-copy">
+              <h1 id="hero-heading">
+                A closer look
+                <br />
+                <span>at design.</span>
+              </h1>
+              <div className="bti-hero-intro">
+                <p>
+                  I’m Zeyad. I explore the type, motion, and ideas behind
+                  interesting websites, then share what I find.
+                </p>
+                <div className="bti-hero-actions">
+                  <a className="bti-hero-link" href="#library">
+                    Explore the studies{" "}
+                    <ArrowRight
+                      size={22}
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                  </a>
+                </div>
+              </div>
             </div>
+            <HeroStudy />
           </div>
-          <div className="hero-bottom">
-            <a className="browse-link" href="#library">
-              Explore the notebook <ArrowDown size={18} aria-hidden="true" />
-            </a>
-            <div className="library-stats">
+          <div className="bti-hero-bottom">
+            <span className="eyebrow">Observe. Question. Understand.</span>
+            <div className="bti-hero-stats" aria-label="Inside the notebook">
               <span>
                 <b>{String(studyCount).padStart(2, "0")}</b> Studies
               </span>
@@ -94,10 +100,8 @@ export default function HomePage() {
           </span>
           <div className="approach-grid">
             <h2 id="approach-heading">
-              The details.
-              <br />
-              And the reasons
-              <br />
+              The details. <br />
+              And the reasons <br />
               behind them.
             </h2>
             <div>

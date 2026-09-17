@@ -41,12 +41,14 @@
   --fd-sidebar-width: 268px;
   --fd-toc-width: 230px;
   --gutter: clamp(22px, 4.5vw, 76px);
+  --site-header-height: 88px;
+  --site-scroll-offset: 100px;
   color-scheme: light;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: var(--site-scroll-offset);
 }
 body {
   font-family: var(--font-neue-display), Arial, sans-serif;
@@ -130,7 +132,7 @@ svg {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 88px;
+  min-height: calc(var(--site-header-height) - 1px);
   gap: 28px;
   max-width: 1800px;
   margin: auto;
@@ -206,87 +208,6 @@ svg {
   max-width: 1800px;
   margin: 0 auto;
   padding: 0 var(--gutter);
-}
-.library-hero {
-  padding: 42px 0 0;
-}
-.hero-topline {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  color: var(--color-muted);
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  align-items: end;
-  gap: clamp(36px, 7vw, 130px);
-  margin: 64px 0 64px;
-}
-.hero-grid h1 {
-  font-size: clamp(68px, 7.65vw, 138px);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.061em;
-}
-.hero-grid h1 > span {
-  color: var(--color-green);
-}
-.hero-aside {
-  max-width: 360px;
-  padding-bottom: 7px;
-}
-.hero-aside > .eyebrow {
-  color: var(--color-muted);
-  font-size: 10px;
-}
-.hero-aside > p {
-  font-family: var(--font-neue-reading), Arial, sans-serif;
-  font-weight: 375;
-  font-size: clamp(18px, 1.6vw, 24px);
-  line-height: 1.42;
-  letter-spacing: -0.025em;
-  margin: 22px 0 22px;
-}
-.hero-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 0;
-  border-top: 1px solid var(--color-line);
-  border-bottom: 1px solid var(--color-line);
-}
-.browse-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 30px;
-  font-size: 14px;
-  min-height: 32px;
-}
-.browse-link:hover svg {
-  transform: translateY(3px);
-}
-.browse-link svg {
-  transition: transform 0.2s ease;
-}
-.library-stats {
-  display: flex;
-  gap: 42px;
-}
-.library-stats > span {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  color: var(--color-muted);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.library-stats b {
-  font-size: 25px;
-  font-weight: 400;
-  color: var(--color-ink);
-  letter-spacing: -0.035em;
 }
 .library-section {
   padding-top: 72px;
@@ -511,32 +432,6 @@ svg {
   font-size: 13px;
   line-height: 1.5;
 }
-.site-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  padding: 28px var(--gutter);
-  border-top: 1px solid var(--color-line);
-  color: var(--color-muted);
-  font-size: 11px;
-}
-.site-footer > div {
-  display: flex;
-  gap: 30px;
-}
-.site-footer a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.site-footer a:hover {
-  color: var(--color-ink);
-}
-.footer-divider {
-  margin: 0 12px;
-  color: #a1ada0;
-}
-
 /* Fumadocs supplies navigation, accessible disclosures, search and the TOC. */
 #nd-sidebar {
   background: #ebefe8;
@@ -788,12 +683,6 @@ svg {
   color: var(--color-muted);
 }
 
-@media (min-width: 1600px) {
-  .hero-grid {
-    margin-top: 85px;
-    margin-bottom: 85px;
-  }
-}
 @media (max-width: 1100px) {
   .site-navigation {
     gap: 20px;
@@ -805,13 +694,6 @@ svg {
   .search-button {
     padding: 12px;
     border-left: 0;
-  }
-  .hero-grid {
-    grid-template-columns: 1.5fr 1fr;
-    gap: 35px;
-  }
-  .hero-grid h1 {
-    font-size: clamp(63px, 7.7vw, 95px);
   }
   .study-entry {
     grid-template-columns: 35px minmax(0, 1.15fr) minmax(0, 1fr);
@@ -825,11 +707,11 @@ svg {
   }
 }
 @media (max-width: 767px) {
-  html {
-    scroll-padding-top: 85px;
+  :root {
+    --site-header-height: 72px;
+    --site-scroll-offset: 85px;
   }
   .site-header-inner {
-    min-height: 72px;
     gap: 15px;
   }
   .brand-mark {
@@ -846,8 +728,7 @@ svg {
     font-size: 7px;
   }
   .desktop-nav-link,
-  .portfolio-link,
-  .hero-byline {
+  .portfolio-link {
     display: none;
   }
   .site-navigation {
@@ -860,52 +741,6 @@ svg {
   .search-button svg {
     width: 20px;
     height: 20px;
-  }
-  .library-hero {
-    padding-top: 28px;
-  }
-  .hero-grid {
-    display: block;
-    margin: 40px 0 35px;
-  }
-  .hero-grid h1 {
-    font-size: clamp(53px, 10.5vw, 80px);
-    letter-spacing: -0.057em;
-    line-height: 1;
-  }
-  .hero-aside {
-    max-width: 40ch;
-    margin-top: 28px;
-    padding: 0;
-  }
-  .hero-aside > .eyebrow {
-    display: none;
-  }
-  .hero-aside > p {
-    font-size: 18px;
-    margin: 0 0 17px;
-  }
-  .hero-bottom {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 25px;
-    padding: 18px 0 24px;
-  }
-  .browse-link {
-    justify-content: space-between;
-    width: 100%;
-  }
-  .library-stats {
-    width: 100%;
-    justify-content: space-between;
-    gap: 18px;
-  }
-  .library-stats > span {
-    gap: 8px;
-    font-size: 9px;
-  }
-  .library-stats b {
-    font-size: 24px;
   }
   .library-section {
     padding-top: 44px;
@@ -1003,20 +838,6 @@ svg {
     font-size: 14px;
     max-width: 42ch;
   }
-  .site-footer {
-    flex-direction: column;
-    gap: 20px;
-    line-height: 1.6;
-    padding-top: 25px;
-    padding-bottom: 30px;
-  }
-  .site-footer > div {
-    justify-content: space-between;
-    gap: 15px;
-  }
-  .footer-divider {
-    margin: 0 5px;
-  }
   #nd-page {
     padding-top: 20px;
   }
@@ -1062,7 +883,7 @@ svg {
   #nd-sidebar,
   #nd-nav,
   #nd-toc,
-  .site-footer,
+  .bti-contact-screen,
   [data-toc-popover] {
     display: none !important;
   }
