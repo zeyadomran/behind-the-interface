@@ -88,6 +88,8 @@ The shared social image is [`public/og/behind-the-interface.png`](public/og/behi
 
 Vercel Web Analytics is included. For a Vercel deployment, enable Web Analytics in the project's **Analytics** dashboard before the next deployment; visitor data is collected after deployment. See the [Vercel Web Analytics quickstart](https://vercel.com/docs/analytics/quickstart).
 
+Vercel Speed Insights is also included in the root layout. After deploying to Vercel and receiving visits, view performance metrics in the project's **Speed Insights** dashboard. See the [Vercel Speed Insights quickstart](https://vercel.com/docs/speed-insights/quickstart).
+
 ## Project map
 
 ```text

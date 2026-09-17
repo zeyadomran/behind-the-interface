@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import { Provider } from "./provider";
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </a>
         <Provider>{children}</Provider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
