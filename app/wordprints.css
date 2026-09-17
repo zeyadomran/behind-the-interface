@@ -1,0 +1,160 @@
+@import "./wordprint-art.css";
+
+.wordprint-figure {
+  min-width: 0;
+  margin: 0 0 0 14px;
+}
+.study-wordprint {
+  --wp-paper: #e5ebdf;
+  --wp-ink: #183d2b;
+  --wp-accent: #687e46;
+  --wp-line: #bccbb5;
+  --wp-x: 0;
+  --wp-y: 0;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: var(--wp-paper);
+  color: var(--wp-ink);
+  border: 1px solid var(--wp-line);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.study-wordprint[data-motif="ace"] {
+  --wp-paper: #14271e;
+  --wp-ink: #d9edc7;
+  --wp-accent: #ccf277;
+  --wp-line: #3f5446;
+}
+.study-wordprint[data-motif="arkon"] {
+  --wp-paper: #e5e2ef;
+  --wp-ink: #303449;
+  --wp-accent: #7875a2;
+  --wp-line: #c4c0d4;
+}
+.study-wordprint[data-motif="neue"] {
+  --wp-paper: #f3c8a9;
+  --wp-ink: #503a2c;
+  --wp-accent: #a1472d;
+  --wp-line: #d5a98d;
+}
+.study-wordprint[data-motif="monolog"] {
+  --wp-paper: #e6dfd1;
+  --wp-ink: #342e29;
+  --wp-accent: #89705c;
+  --wp-line: #c4bbab;
+}
+.study-wordprint[data-motif="lama"] {
+  --wp-paper: #edcbd3;
+  --wp-ink: #253d31;
+  --wp-accent: #8a5666;
+  --wp-line: #cdaab4;
+}
+.study-wordprint[data-motif="synthesis"] {
+  --wp-paper: #244a36;
+  --wp-ink: #edf1d9;
+  --wp-accent: #c3d88e;
+  --wp-line: #57715b;
+}
+.wordprint-topline,
+.wordprint-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 20px;
+  padding: 16px 0;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+.wordprint-topline {
+  border-bottom: 1px solid var(--wp-line);
+}
+.wordprint-state {
+  font-variant-numeric: tabular-nums;
+}
+.wordprint-scene {
+  display: block;
+  width: 100%;
+}
+.wordprint-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.wordprint-footer {
+  border-top: 1px solid var(--wp-line);
+}
+.wordprint-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 12px;
+}
+.wordprint-action svg {
+  transition: transform 500ms ease;
+}
+.study-wordprint[data-active="true"] .wordprint-action svg {
+  transform: rotate(180deg);
+}
+.study-wordprint:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 5px;
+}
+.wordprint-figure > figcaption {
+  max-width: 52ch;
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .wordprint-scene {
+    transform: perspective(900px) rotateX(calc(var(--wp-y) * -2deg))
+      rotateY(calc(var(--wp-x) * 2deg))
+      translate(calc(var(--wp-x) * 3px), calc(var(--wp-y) * 3px));
+    transition: transform 160ms ease-out;
+  }
+}
+@media (max-width: 1100px) {
+  .wordprint-figure {
+    margin-left: 0;
+  }
+}
+@media (max-width: 767px) {
+  .wordprint-figure {
+    margin-top: 24px;
+  }
+  .wordprint-topline,
+  .wordprint-footer {
+    margin: 0 16px;
+    padding: 14px 0;
+    font-size: 9px;
+  }
+  .wordprint-action {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .study-wordprint *,
+  .study-wordprint *::before,
+  .study-wordprint *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .wordprint-scene {
+    transform: none !important;
+  }
+}

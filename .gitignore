@@ -1,0 +1,30 @@
+# Local operating-system and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local configuration and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Temporary research captures and exports
+/work/
+/tmp/
+
+# Application dependencies and generated output
+node_modules/
+.next/
+out/
+.source/
+*.tsbuildinfo
+.pnpm-store/
+playwright-report/
+test-results/

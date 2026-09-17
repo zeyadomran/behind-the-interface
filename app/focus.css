@@ -1,0 +1,85 @@
+/* One keyboard indicator, including controls supplied by Fumadocs. */
+:root {
+  --focus-color: var(--color-green);
+}
+
+:where(
+  a[href],
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex]:not([tabindex="-1"]),
+  [role="button"],
+  [role="link"],
+  [role="tab"],
+  [role="menuitem"],
+  [role="option"]
+):focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
+  /* Replace Tailwind's focus ring without removing a control's own shadow. */
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+}
+
+/* Keep the icon and text inside the same field indicator. */
+.library-filter:focus-within {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 4px;
+  border-color: transparent;
+  color: var(--color-ink);
+}
+
+.library-filter input:focus {
+  outline: none;
+}
+
+/* Fumadocs renders its search field directly inside the dialog header. */
+[role="dialog"] > div:has(> input:focus) {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -4px;
+}
+
+[role="dialog"] > div > input:focus {
+  outline: none;
+}
+
+/* Inset indicators remain visible inside scrolling and clipped surfaces. */
+:is(
+    #nd-sidebar,
+    #nd-sidebar-mobile,
+    #nd-toc,
+    [data-toc-popover],
+    [role="dialog"],
+    [role="menu"]
+  )
+  :is(
+    a[href],
+    button,
+    summary,
+    [role="menuitem"],
+    [role="option"]
+  ):focus-visible {
+  outline-offset: -2px;
+}
+
+.article-visual :is(input, select, textarea) {
+  accent-color: var(--color-green);
+}
+
+.article-visual input[type="range"]:focus-visible {
+  outline-offset: 4px;
+}
+
+/* Skip navigation focuses a reading target, not an interactive control. */
+#main-content[tabindex="-1"]:focus {
+  outline: none;
+}
+
+@media (forced-colors: active) {
+  :root {
+    --focus-color: Highlight;
+  }
+}

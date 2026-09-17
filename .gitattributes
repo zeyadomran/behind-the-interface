@@ -1,2 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Keep research documents consistent across operating systems.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.otf binary
+*.pdf binary
