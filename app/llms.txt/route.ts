@@ -9,7 +9,7 @@ function inline(value: string): string {
   return value
     .replace(/\s+/g, " ")
     .trim()
-    .replace(/[\\\[\]*_`]/g, "\\$&");
+    .replace(/[\\[\]*_`]/g, "\\$&");
 }
 
 function link(title: string, url: string, note: string): string {

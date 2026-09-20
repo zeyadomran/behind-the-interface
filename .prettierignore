@@ -1,0 +1,18 @@
+# Generated files, dependencies, and vendor code.
+node_modules/
+.yarn/
+.next/
+.source/
+.prerender/
+.pnpm-store/
+.vercel/
+.husky/_/
+dist/
+out/
+tmp/
+*.tsbuildinfo
+yarn.lock
+
+# Preserve archived and captured research evidence exactly as recorded.
+archive/
+public/research/

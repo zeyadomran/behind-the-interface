@@ -1,0 +1,5 @@
+node .yarn/releases/yarn-1.22.22.cjs lint:staged
+node .yarn/releases/yarn-1.22.22.cjs lint
+# Build includes typechecking and creates dist/ for the static-site tests.
+node .yarn/releases/yarn-1.22.22.cjs build
+node .yarn/releases/yarn-1.22.22.cjs test

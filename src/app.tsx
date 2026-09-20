@@ -1,4 +1,11 @@
-import { Component, Suspense, useEffect, useRef, type ReactNode } from "react";
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  type ReactNode,
+} from "react";
 import { useLocation, useNavigationType } from "react-router";
 import RootLayout from "@/app/layout";
 import { resolvePage } from "./routes";
@@ -37,7 +44,10 @@ export default function App() {
   const location = useLocation();
   const navigation = useNavigationType();
   const initial = useRef(true);
-  const page = resolvePage(location.pathname);
+  const page = useMemo(
+    () => resolvePage(location.pathname),
+    [location.pathname],
+  );
   useEffect(() => {
     updateMetadata(page.metadata);
     if (initial.current) {
@@ -75,7 +85,7 @@ export default function App() {
       }
     } else if (navigation !== "POP")
       window.scrollTo({ top: 0, behavior: "instant" });
-  }, [location.key]);
+  }, [location.key, location.hash, navigation, page.metadata]);
   return (
     <RootLayout>
       <PageBoundary key={location.pathname}>
