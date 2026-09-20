@@ -155,6 +155,22 @@ Account security should use strong two-factor authentication or a passkey,
 with recovery methods kept available. Account authentication was not inspected
 or changed.
 
+### AI Scan preview
+
+Separately, GitHub's AI Scan is enabled. It is advisory: GitHub does not currently
+support enforcing its findings through rulesets, and it only runs for eligible
+PR changes. It is not one of the seven required checks. CodeQL and the required
+validation checks remain the supported merge gates.
+
+AI Scan has separate licensing and AI-credit requirements; the free-feature
+statement above does not apply to it. During setup, its generated workflow
+[failed inside GitHub's scanner](https://github.com/zeyadomran/behind-the-interface/actions/runs/35521111049)
+with `CAPIError: 400 The requested model is not supported`. This is a scan
+execution failure, not a vulnerability finding or a successful security review.
+GitHub manages its model selection; no repository model override is documented.
+
+Source: [AI Scan availability and limitations](https://docs.github.com/en/code-security/concepts/code-scanning/ai-powered-security-detections).
+
 Sources: [feature availability](https://docs.github.com/en/code-security/getting-started/github-security-features),
 [Actions repository settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository),
 [generic secret patterns](https://docs.github.com/en/code-security/how-tos/secure-your-secrets/detect-secret-leaks/enabling-secret-scanning-for-generic-patterns),
