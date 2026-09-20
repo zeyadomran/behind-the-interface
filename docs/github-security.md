@@ -134,10 +134,11 @@ The Actions policy enforces:
   disabled. CodeQL receives its explicitly scoped upload permission.
 - Approval for all external contributors.
 - An explicit allowlist: `actions/checkout`, `actions/setup-node`,
-  `actions/dependency-review-action`, `github/codeql-action/init`, and
+  `actions/dependency-review-action`, `actions/upload-artifact`, `github/codeql-action/init`, and
   `github/codeql-action/analyze`. Broad GitHub-owned and verified-marketplace
   action allowances are disabled. Add new actions deliberately before using
-  them in workflows.
+  them in workflows. GitHub's generated security workflow needs the artifact
+  uploader; it remains subject to the same SHA requirement.
 - Full commit-SHA pins for actions. Dependabot maintains these pins, and its
   PRs still need review.
 
