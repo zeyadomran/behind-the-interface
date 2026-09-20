@@ -45,24 +45,38 @@ Sources: [secure workflow use](https://docs.github.com/en/actions/reference/secu
 [CodeQL setup](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/configure-code-scanning/configure-code-scanning),
 [Dependabot configuration](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file).
 
-## Proposed default-branch ruleset
+## Enforced default-branch ruleset
 
-These settings are recommendations, not settings applied by adding the workflow
-files. In Settings > Rules > Rulesets, create one active branch ruleset named
-`Protect main`, targeting the default branch. Public personal repositories
-support these rulesets on GitHub Free.
+The active [Protect main ruleset](https://github.com/zeyadomran/behind-the-interface/rules/23731338)
+targets both `main` and the default branch. It was enabled on September 20, 2026,
+after the workflow PR and first main-branch CI/CodeQL runs passed. Direct pushes
+are blocked, including pushes by the repository administrator. Public personal
+repositories support these rulesets on GitHub Free.
 
-| Setting                           | Recommendation                                                                                                                    |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Require a pull request            | On, with zero required approvals while there is one maintainer.                                                                   |
-| Require conversation resolution   | On.                                                                                                                               |
-| Require status checks             | Require `Site validation` and `Dependency review` after confirming successful runs. Select GitHub Actions as the expected source. |
-| Require branches to be up to date | On, so checks cover changes already merged into `main`.                                                                           |
-| Require code scanning results     | Add CodeQL after its first baseline completes; block high/critical security findings and error-level ordinary findings.           |
-| Block force pushes                | On.                                                                                                                               |
-| Restrict deletions                | On.                                                                                                                               |
-| Bypass list                       | Empty for routine work, including administrator roles and automation apps.                                                        |
-| Restrict updates/creation         | Off; these broad restrictions can prevent normal PR merges.                                                                       |
+| Setting                           | Recommendation                                                                                                        |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Require a pull request            | On, with zero required approvals while there is one maintainer.                                                       |
+| Require conversation resolution   | On.                                                                                                                   |
+| Require status checks             | All seven existing PR checks listed below, each bound to its producing GitHub App.                                    |
+| Require branches to be up to date | On, so checks cover changes already merged into `main`.                                                               |
+| Require code scanning results     | CodeQL must report results; block newly introduced high/critical security findings and error-level ordinary findings. |
+| Block force pushes                | On.                                                                                                                   |
+| Restrict deletions                | On.                                                                                                                   |
+| Bypass list                       | Empty for routine work, including administrator roles and automation apps.                                            |
+| Restrict updates/creation         | Off; these broad restrictions can prevent normal PR merges.                                                           |
+
+Required checks are `Site validation`, `Dependency review`,
+`CodeQL (javascript-typescript)`, and `CodeQL (actions)` from GitHub Actions;
+`CodeQL` from GitHub Advanced Security; and `Vercel` and `Vercel Preview Comments`
+from Vercel. The PR branch must be up to date with `main` before merging.
+No actor has bypass permission.
+
+GitHub records required checks by name; this is not a wildcard covering checks
+added later. Add any new check to this ruleset before relying on it as a merge
+gate. GitHub treats successful, neutral, or skipped conclusions as satisfying a
+required check, so keep required validation jobs unconditional and do not use
+`continue-on-error` to suppress failures. The workflows currently run every
+validation job on every PR to `main`.
 
 Keep the CI job names stable and unique. A successful CodeQL analysis job means
 the scanner completed; use the code-scanning results rule to enforce finding
@@ -135,17 +149,22 @@ Sources: [feature availability](https://docs.github.com/en/code-security/getting
 
 ## Rollout and verification
 
-1. Merge the workflow PR after its CI, dependency review, and CodeQL runs pass.
-   Confirm the first default-branch CodeQL baseline completes.
-2. Apply the proposed security settings and activate the default-branch
-   ruleset using the check names actually reported by GitHub.
-3. Use a disposable PR to confirm a failing test blocks merging, then fix it
-   and verify the merge becomes available. Inspect the ruleset for force-push,
-   deletion, and bypass settings without attempting destructive operations.
+1. Workflow setup was merged in [PR #1](https://github.com/zeyadomran/behind-the-interface/pull/1)
+   after all seven PR checks passed. Main-branch CI and CodeQL also passed.
+2. The `Protect main` ruleset is active. A harmless empty-commit direct push by
+   the administrator was rejected by GitHub with repository rule violations.
+3. [PR #5](https://github.com/zeyadomran/behind-the-interface/pull/5) verified the
+   failure case: six checks passed, the deliberate test failed, and GitHub
+   disabled merging. The temporary test was then removed. The final diff is
+   documentation only and must pass all seven checks before merge. Force-push,
+   deletion, and empty-bypass settings were inspected without attempting
+   destructive operations.
 4. If releases are introduced later, add a separate `v*` tag ruleset to prevent
    updates and deletions. Treat tag-creation permissions separately, so a
    release actor does not gain permission to rewrite existing release tags.
 
-Workflow execution and branch-rule enforcement are separate verification
-steps. Passing workflows do not block merges until the corresponding rules are
-enabled.
+The remaining security settings above are still recommendations. In particular,
+Dependabot alerts/security updates, secret scanning/push protection, private
+vulnerability reporting, and stricter repository-wide Actions policies have not
+been enabled by this ruleset. The dependency graph and the documented branch
+rules are enabled.
