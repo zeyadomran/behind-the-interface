@@ -68,7 +68,7 @@ yarn test
 
 The Node test suite checks the study-creation workflow, readable story exports, chapter and research links, and static-build asset invariants. Build first. Review the resulting pages in a browser for responsive layout, keyboard navigation, reduced motion, and interaction changes.
 
-GitHub Actions runs the build, typechecking, and tests on pull requests and pushes to `main`, with dependency review and CodeQL security checks. See [GitHub automation and proposed repository protections](docs/github-security.md) for the checks, maintenance schedule, and branch-rule rollout.
+GitHub Actions runs the build, typechecking, and tests on pull requests and pushes to `main`, with dependency review and CodeQL security checks. Direct pushes to `main` are blocked, and PRs require all configured checks to pass. See [GitHub automation and repository protections](docs/github-security.md) for the enforced rules, maintenance schedule, and remaining security recommendations.
 
 ## Static hosting
 
