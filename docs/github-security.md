@@ -153,9 +153,12 @@ Sources: [feature availability](https://docs.github.com/en/code-security/getting
    after all seven PR checks passed. Main-branch CI and CodeQL also passed.
 2. The `Protect main` ruleset is active. A harmless empty-commit direct push by
    the administrator was rejected by GitHub with repository rule violations.
-3. Verify a failing test blocks merging, remove the deliberate failure, then
-   confirm every check passes and the PR can merge. Inspect force-push and
-   deletion protection without attempting destructive operations.
+3. [PR #5](https://github.com/zeyadomran/behind-the-interface/pull/5) verified the
+   failure case: six checks passed, the deliberate test failed, and GitHub
+   disabled merging. The temporary test was then removed. The final diff is
+   documentation only and must pass all seven checks before merge. Force-push,
+   deletion, and empty-bypass settings were inspected without attempting
+   destructive operations.
 4. If releases are introduced later, add a separate `v*` tag ruleset to prevent
    updates and deletions. Treat tag-creation permissions separately, so a
    release actor does not gain permission to rewrite existing release tags.
