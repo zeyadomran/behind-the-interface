@@ -159,7 +159,7 @@ function buttonsIn(html) {
 test("visual data matches every curated article type role without rounding or replacing missing values", () => {
   assert.deepEqual(
     Object.keys(articleVisualData).sort(),
-    Object.keys(sites).sort(),
+    [...Object.keys(sites), "noho"].sort(),
   );
   let roleCount = 0;
   for (const key of Object.keys(sites)) {
@@ -351,7 +351,8 @@ test("Research findings provides the five-site explorer with Type scale selected
     5,
     "The synthesis explorer must retain all five websites",
   );
-  for (const [key, data] of Object.entries(articleVisualData)) {
+  for (const key of Object.keys(sites)) {
+    const data = articleVisualData[key];
     const option = options.find((match) => match[1].includes(`value="${key}"`));
     assert.ok(option, `Research findings: missing ${key} selection`);
     assert.equal(textContent(option[2]), data.name);
@@ -365,5 +366,43 @@ test("Research findings provides the five-site explorer with Type scale selected
     html.indexOf('id="measured-type-hierarchy"') >
       figure.index + figure[0].length,
     "The full comparison must remain after the explorer",
+  );
+});
+
+test("Noho keeps its own dated measurements, captures and evidence outside the historical comparison", () => {
+  const markdown = readFileSync(join(studyDirectory, "noho.md"), "utf8");
+  const data = articleVisualData.noho;
+  assert.deepEqual(data.typography, curatedTypography(markdown));
+  const samples = JSON.parse(
+    readFileSync("public/research/noho/typography-measurements.json", "utf8"),
+  );
+  for (const [index, viewport] of ["desktop", "mobile"].entries()) {
+    for (const role of data.typography) {
+      const raw = samples.samples[index].roles.find(
+        (item) => item.label === role.label,
+      );
+      assert.equal(role[viewport].size, raw.size);
+      assert.equal(role[viewport].lineHeight, parseFloat(raw.lineHeight));
+    }
+    const screenshot = data.screenshots[viewport];
+    assert.ok(markdown.includes(screenshot.src));
+    assert.ok(existsSync(join("public", screenshot.src)));
+  }
+  const html = builtArticle("noho");
+  assert.match(
+    textContent(visualFigure(html, "noho")[2]),
+    /Research captured September 20, 2026/,
+  );
+  assert.match(textContent(html), /design concept/);
+  assert.match(textContent(html), /not measured|did not measure/);
+  const story = readFileSync("dist/studies/noho/index.html", "utf8");
+  assert.match(
+    textContent(story),
+    /Based on research captured September 20, 2026/,
+  );
+  assert.doesNotMatch(textContent(story), /September 15–16/);
+  assert.doesNotMatch(
+    visualFigure(builtArticle("research-findings"), "collection")[2],
+    /value="noho"/,
   );
 });

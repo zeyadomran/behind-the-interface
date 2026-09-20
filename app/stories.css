@@ -54,6 +54,14 @@
 .study-story ::selection {
   @apply bg-[var(--story-ink)] text-[color:var(--story-paper)];
 }
+.study-story[data-theme="noho"] {
+  --story-paper: #eae7dc;
+  --story-ink: #313927;
+  --story-muted: #525b45;
+  --story-line: #b6bba4;
+  --story-accent: #465b28;
+  --story-panel: #dbe0c9;
+}
 .study-story :is(button, select, input) {
   @apply [font:inherit];
 }

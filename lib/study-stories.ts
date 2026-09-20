@@ -1,7 +1,7 @@
 import type { SiteKey } from "./article-visual-data";
 
-// Editorial paths through the existing September 15–16, 2026 research.
-// These stories summarize that dated evidence; they are not fresh site audits.
+// Editorial paths through dated research. Each subject's capture date lives in
+// article-visual-data; stories summarize the corresponding research document.
 export type StoryChapterId =
   "idea" | "type" | "motion" | "mobile" | "takeaways";
 
@@ -29,6 +29,92 @@ export interface StudyStory {
 }
 
 export const studyStories: StudyStory[] = [
+  {
+    slug: "noho",
+    name: "Noho",
+    edition: "06",
+    title: "Room for a Little Play",
+    subtitle:
+      "A furniture concept pairs playful images and generous type with a visible choice for a calmer experience.",
+    thesis: "A brand promise becomes more interesting when you can act on it.",
+    chapters: [
+      {
+        id: "idea",
+        label: "Idea",
+        title: "Give the object a personality.",
+        intro:
+          "A chair can be shown as an object, or as something that changes the mood of a room. Noho chooses the second approach. People lift it, frame themselves with it, and sit in unexpected ways. A steady block of type gives that playful photography a clear introduction.",
+        paragraphs: [
+          "The desktop hero divides the screen between a large statement and a staggered image grid. Warm neutral surfaces make the colorful photographs feel deliberate without competing with the furniture.",
+          "This is a study of noho.ink, a design concept credited to Eugene More. Its tested Buy action opened a disclosure about the concept and the original brand imagery. The interface should be read in that context, rather than as evidence of an operating store.",
+        ],
+        lesson:
+          "Show the character of the product, and make the status of the experience clear.",
+        researchAnchor: "website-review",
+      },
+      {
+        id: "type",
+        label: "Type",
+        title: "Large type can travel light.",
+        intro:
+          "The mobile headline stays almost the same size as the desktop headline. Noho changes the line breaks and moves the photographs beneath the introduction. The voice stays confident because the composition does the adapting.",
+        paragraphs: [
+          "The measured hero uses Switzer 600 at 60.048px on desktop and 60.6684px on mobile. Tighter mobile leading holds the short lines together. Regular-weight supporting text gives the reader a quieter second voice.",
+          "Utility text follows a different rule: the energy explanation grows from 10.512px to 16.2513px. These are exact computed samples at the two recorded widths, not fixed design tokens. The visible hero uses paragraph elements, so its visual hierarchy is stronger than its semantic heading structure.",
+        ],
+        lesson:
+          "Adapt each text role for its job; a smaller screen does not require every role to shrink.",
+        researchAnchor: "typography-and-pointer-behavior",
+      },
+      {
+        id: "motion",
+        label: "Motion",
+        title: "Make room for a calmer choice.",
+        intro:
+          "An energy panel puts two preferences beside the navigation: dark mode and reduced animation. It brings the site's environmental theme into a control the visitor can use. The useful idea is the choice itself, with clear limits on what its rating can prove.",
+        paragraphs: [
+          "Pointer testing changed the palette and switch states. Selecting both options made the displayed rating read Low, and the reduction preference survived navigation. Public code stores that preference and calls registered animation handlers.",
+          "No battery or rendering benchmark was performed. The site's battery-saving claim remains unverified, and the manual switches lacked native keyboard semantics in the inspected DOM. This original illustration uses named buttons and shows two independent visual choices without inventing an energy measurement.",
+        ],
+        lesson:
+          "Give visitors a useful preference, then describe its effect at the level the evidence supports.",
+        researchAnchor: "energy-controls-and-interaction-evidence",
+      },
+      {
+        id: "mobile",
+        label: "Mobile",
+        title: "A new arrangement, the same invitation.",
+        intro:
+          "The split desktop hero becomes a sequence: navigation, headline, supporting line, then photographs. Energy usage moves into the narrow top strip. The image grid retains its uneven rhythm while the introduction becomes easier to read in one direction.",
+        paragraphs: [
+          "At 390 × 844, the open menu uses product imagery and wide rows for section and social links. That is a distinct composition from the desktop's compact horizontal navigation strip.",
+          "The captures document Chromium viewports and pointer actions. They do not establish physical touch behavior, short-screen usability, or consistent keyboard exits across overlays. Those remain useful next checks before adapting the pattern for a production interface.",
+        ],
+        lesson:
+          "Preserve the voice by changing the order and arrangement around it.",
+        researchAnchor: "mobile-composition",
+      },
+      {
+        id: "takeaways",
+        label: "Takeaways",
+        title: "Play needs a clear explanation.",
+        intro:
+          "Noho's strongest connection is between the furniture's character and the interface's behavior. The pictures invite play; the energy panel offers a calmer mode. Both can belong to the same identity when the practical meaning stays clear.",
+        paragraphs: [
+          "Keep the product-led photography, large mobile type, and visible preferences. Improve the semantic headings and switch controls, and explain that the rating reflects selected preferences unless actual consumption is measured.",
+          "The September 20 review also found commercial copy that needs context: a store-closure article appears alongside shipping statements. Make the concept status clear early, then verify complete product, quiz, and overlay journeys before drawing conclusions about usability or conversion.",
+        ],
+        lesson:
+          "Let expressive design invite exploration, and let precise language protect trust.",
+        researchAnchor: "takeaways-and-test-priorities",
+      },
+    ],
+    keep: "Turn a brand value into an understandable choice within the interface.",
+    question:
+      "Does each control explain what it changes, without claiming more than was measured?",
+    closing:
+      "Give the product room to play. Give the visitor clear choices and dependable controls.",
+  },
   {
     slug: "ace",
     name: "Ace",

@@ -52,7 +52,7 @@ The schema is defined in [`source.config.ts`](../source.config.ts). The homepage
 
 Keep one document per website directly in `content/docs/`, with `kind: study`. Collect its findings, typography, interactions, source evidence, and applicable route details in that document. Keep the cross-site conclusions and comparisons in the single `research-findings.md` document with `kind: report`, linking to the website documents for their full analysis.
 
-The library currently contains six peer research articles: [Ace](../content/docs/ace.md), [Arkon Digital](../content/docs/arkon-digital.md), [Neue Montréal](../content/docs/neue-montreal.md), [MONOLOG](../content/docs/monolog.md), [Lama Lama](../content/docs/lama-lama.md), and [Research findings](../content/docs/research-findings.md). Each website is a separate homepage study entry. The shared findings document combines the collection overview, typography comparison, source-audit guidance, and route-inventory summary.
+The library currently contains seven peer research articles: [Ace](../content/docs/ace.md), [Arkon Digital](../content/docs/arkon-digital.md), [Neue Montréal](../content/docs/neue-montreal.md), [MONOLOG](../content/docs/monolog.md), [Lama Lama](../content/docs/lama-lama.md), [Noho](../content/docs/noho.md), and [Research findings](../content/docs/research-findings.md). Each website is a separate homepage study entry. The shared findings document retains the original five-site overview, typography comparison, source-audit guidance, and route-inventory summary.
 
 New website documents join these files as peers:
 
@@ -72,7 +72,7 @@ content/docs/
 
 Give each research document its own title, description, date, and appropriate `kind`. Identify each website's URL in its `sites` field; the shared findings can list all of its subjects. `index.md` and `methodology.md` remain general guides. Markdown works for normal prose, tables, links, and images. Use `.mdx` when a document needs supported React components or richer composition.
 
-The `sites` URLs also generate visible source credits near the beginning of documentation pages and their related stories. Use the original website's HTTP(S) URL to give readers a direct way to visit it. Known source names live in [`lib/research-sites.ts`](../lib/research-sites.ts); an unregistered source displays its hostname automatically. Add a registry entry when a more readable display name would help. The current collection guide, methodology, and shared findings list all five subjects. Keep credits and the research scope aligned as the library grows.
+The `sites` URLs also generate visible source credits near the beginning of documentation pages and their related stories. Use the original website's HTTP(S) URL to give readers a direct way to visit it. Known source names live in [`lib/research-sites.ts`](../lib/research-sites.ts); an unregistered source displays its hostname automatically. Add a registry entry when a more readable display name would help. The collection guide lists all six subjects; methodology and shared findings retain their original five-site scope. Keep credits and the research scope aligned as the library grows.
 
 Sidebar ordering lives in the root [`content/docs/meta.json`](../content/docs/meta.json):
 
@@ -96,7 +96,7 @@ Use filenames without extensions. The `...` placeholder includes new documents a
 
 ## Add or update a story
 
-The five current website studies have story pages at `/studies/ace/`, `/studies/arkon-digital/`, `/studies/neue-montreal/`, `/studies/monolog/`, and `/studies/lama-lama/`. Their full documentation stays at `/docs/<slug>/`, with an **Explore the story** link back to the presentation. Research findings stays at `/docs/research-findings/`.
+The six current website studies have story pages at `/studies/ace/`, `/studies/arkon-digital/`, `/studies/neue-montreal/`, `/studies/monolog/`, `/studies/lama-lama/`, and `/studies/noho/`. Their full documentation stays at `/docs/<slug>/`, with an **Explore the story** link back to the presentation. Research findings stays at `/docs/research-findings/`.
 
 Use [`lib/study-stories.ts`](../lib/study-stories.ts) for a story's introduction, chapter summaries, and evidence destinations. Keep these summaries consistent with the source article. The five chapter IDs are `idea`, `type`, `motion`, `mobile`, and `takeaways`; they form ordinary fragment links, so the complete sequence remains readable and navigable without JavaScript. Active chapter and progress feedback enhance those links.
 
@@ -145,9 +145,9 @@ visual: "ace"
 visualView: "type"
 ```
 
-`visual` accepts `ace`, `arkon-digital`, `neue-montreal`, `monolog`, `lama-lama`, or `collection`. A website key fixes the subject; `collection` adds a website selector. `visualView` chooses the opening view: `screens`, `type`, or `interactions`, defaulting to `screens`. The reusable [article explorer](../components/article-explorer.tsx) appears above the article body; the full research stays below it.
+`visual` accepts `ace`, `arkon-digital`, `neue-montreal`, `monolog`, `lama-lama`, `noho`, or `collection`. A website key fixes the subject; `collection` adds a selector scoped to the original five-site comparison. `visualView` chooses the opening view: `screens`, `type`, or `interactions`, defaulting to `screens`. The reusable [article explorer](../components/article-explorer.tsx) appears above the article body; the full research stays below it.
 
-The [visual data registry](../lib/article-visual-data.ts) holds screenshot paths, exact measured type roles, and interaction findings with their evidence categories. These visuals describe the dated September 15–16, 2026 research. They are not live website previews or simulations proving an interaction works today. Type bars compare computed CSS values using a shared scale; they do not reproduce the source websites' typefaces.
+The [visual data registry](../lib/article-visual-data.ts) holds screenshot paths, exact measured type roles, and interaction findings with their evidence categories. Its optional `researchDate` overrides the original September 15–16, 2026 capture date in both the article and story. Noho uses September 20, 2026. Set this for later studies, and retain the `comparisonSites` list unless the historical report is explicitly expanded. These visuals are not live website previews or simulations proving an interaction works today. Type bars compare computed CSS values using a shared scale; they do not reproduce the source websites' typefaces.
 
 The same `visual` key selects an original typographic wordprint on the homepage. A page without that key receives a composition based on its title initials. These interactive teasers are interpretations of the research; the original screenshots stay in the articles. To introduce a distinct wordprint, extend [`components/study-wordprint.tsx`](../components/study-wordprint.tsx) and the [SVG artwork](../components/wordprint-art.tsx). A homepage wordprint does not require a `cover` image.
 

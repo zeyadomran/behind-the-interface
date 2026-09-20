@@ -5,6 +5,7 @@ import { RotateCw } from "lucide-react";
 import { WordprintArt, type WordprintMotif } from "./wordprint-art";
 
 const motifs: Record<string, WordprintMotif> = {
+  noho: "noho",
   ace: "ace",
   "arkon-digital": "arkon",
   "neue-montreal": "neue",
@@ -15,6 +16,11 @@ const motifs: Record<string, WordprintMotif> = {
 
 const concepts: Record<WordprintMotif, { label: string; description: string }> =
   {
+    noho: {
+      label: "Room for play",
+      description:
+        "An original wordprint exploring Noho’s playful furniture and flexible composition.",
+    },
     ace: {
       label: "Precision / texture",
       description:

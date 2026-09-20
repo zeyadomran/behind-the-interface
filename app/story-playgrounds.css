@@ -1,5 +1,36 @@
 @reference "./globals.css";
 
+.story-noho-stage {
+  background: #f2eee5;
+  color: #35412b;
+  border: 1px solid var(--story-line);
+}
+.story-noho-stage[data-dark="true"] {
+  background: #30281f;
+  color: #eee9dd;
+}
+.story-noho-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.story-noho-stage text {
+  fill: currentColor;
+}
+.story-noho-chair {
+  transform-origin: 300px 180px;
+  transform: rotate(-8deg);
+  transition: transform 450ms ease;
+}
+.story-noho-stage[data-calm="true"] .story-noho-chair {
+  transform: rotate(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-noho-chair {
+    transition: none;
+  }
+}
+
 .study-story .story-playground {
   @apply min-w-0 w-full m-0 border-[1px] border-solid border-[color:var(--story-line)];
   @apply p-[clamp(16px,_3vw,_32px)] text-[color:var(--story-ink)] bg-[var(--story-panel)];

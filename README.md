@@ -8,23 +8,24 @@ Built with **React, Vite, Fumadocs, and Tailwind CSS**, using **Yarn Classic 1.2
 
 ## Inside the library
 
-The library examines **Ace, Arkon Digital, Neue Montréal, MONOLOG, and Lama Lama** in six peer research articles: one document per website and one shared **Research findings** document. The evidence includes 21 screenshots, computed typography samples, and an inventory of 65 additional public route requests.
+The library examines **Ace, Arkon Digital, Neue Montréal, MONOLOG, Lama Lama, and Noho** in seven peer research articles: one document per website and one shared **Research findings** document. The original five-site research includes 21 screenshots, computed typography samples, and an inventory of 65 additional public route requests. The September 20 Noho concept study adds five captures and a separate set of type measurements; the shared findings retain their original scope.
 
 Start with [Research findings](content/docs/research-findings.md), or go directly to a website:
 
-| Website                                        | Focus                                                            |
-| ---------------------------------------------- | ---------------------------------------------------------------- |
-| [Ace](content/docs/ace.md)                     | Technical editorial identity, typography, and mobile navigation  |
-| [Arkon Digital](content/docs/arkon-digital.md) | A shared 3D scene, interaction, and text legibility              |
-| [Neue Montréal](content/docs/neue-montreal.md) | Type specimens, editorial hierarchy, and product-led interaction |
-| [MONOLOG](content/docs/monolog.md)             | Studio storytelling, work presentation, and contextual previews  |
-| [Lama Lama](content/docs/lama-lama.md)         | Brand behavior, portfolio exploration, and secondary interfaces  |
+| Website                                        | Focus                                                             |
+| ---------------------------------------------- | ----------------------------------------------------------------- |
+| [Ace](content/docs/ace.md)                     | Technical editorial identity, typography, and mobile navigation   |
+| [Arkon Digital](content/docs/arkon-digital.md) | A shared 3D scene, interaction, and text legibility               |
+| [Neue Montréal](content/docs/neue-montreal.md) | Type specimens, editorial hierarchy, and product-led interaction  |
+| [MONOLOG](content/docs/monolog.md)             | Studio storytelling, work presentation, and contextual previews   |
+| [Lama Lama](content/docs/lama-lama.md)         | Brand behavior, portfolio exploration, and secondary interfaces   |
+| [Noho](content/docs/noho.md)                   | Playful furniture, responsive composition, and energy preferences |
 
 Each website document brings its findings, typography observations, and source evidence together, with route details where applicable. [Research findings](content/docs/research-findings.md) brings together the cross-site conclusions, typography comparison, source-audit guidance, and route-inventory summary.
 
-The website adds a filterable study index, full-text search, documentation navigation, and an article table of contents. The five website titles open immersive stories at `/studies/<slug>/`; **Read research** links open their complete `/docs/<slug>/` articles directly. Research findings remains a documentation page. Each story follows five linked chapters: idea, typography, motion, mobile, and takeaways, with a distinct visual treatment, optional parallax, and original interactive demonstrations. Every chapter links to the supporting section of its research article.
+The website adds a filterable study index, full-text search, documentation navigation, and an article table of contents. The six website titles open immersive stories at `/studies/<slug>/`; **Read research** links open their complete `/docs/<slug>/` articles directly. Research findings remains a documentation page. Each story follows five linked chapters: idea, typography, motion, mobile, and takeaways, with a distinct visual treatment, optional parallax, and original interactive demonstrations. Every chapter links to the supporting section of its research article.
 
-The six homepage entries retain their original interactive SVG wordprints as typographic teasers. Click, tap, Enter, or Space changes each composition; reduced motion switches states instantly without pointer tracking. The shared paper, green frame, and PP Neue Montreal keep the artwork within the library's visual system. See the [wordprint direction](docs/design-direction.md#homepage-wordprints).
+The seven homepage entries use original interactive SVG wordprints as typographic teasers. Noho's composition pairs tilted letterforms with chair-like linework. Click, tap, Enter, or Space changes each composition; reduced motion switches states instantly without pointer tracking. The shared paper, green frame, and PP Neue Montreal keep the artwork within the library's visual system. See the [wordprint direction](docs/design-direction.md#homepage-wordprints).
 
 Original source screenshots remain inside the articles as evidence and appear in the stories' responsive comparisons. Article explorers let readers switch screenshot viewports, compare measured typography, and explore interaction evidence. Full research is written in Markdown or MDX; the site generates the HTML. New studies appear from their metadata without editing a central list and open their documentation directly until an optional story is added to [`lib/study-stories.ts`](lib/study-stories.ts). The existing `visual` key selects a wordprint with a generic fallback for future entries.
 

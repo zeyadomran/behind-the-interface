@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import {
   articleVisualData,
+  originalResearchDate,
   type InteractionFinding,
   type SiteKey,
 } from "@/lib/article-visual-data";
@@ -18,6 +19,7 @@ const evidenceLabels: Record<InteractionFinding["evidence"], string> = {
 };
 
 const interactionLabels: Record<SiteKey, string> = {
+  noho: "Energy controls",
   ace: "Project image",
   "arkon-digital": "Shared scene",
   "neue-montreal": "Specimen controls",
@@ -30,6 +32,10 @@ const captureDimensions: Record<
   SiteKey,
   Record<Viewport, { width: number; height: number }>
 > = {
+  noho: {
+    desktop: { width: 1440, height: 1000 },
+    mobile: { width: 390, height: 844 },
+  },
   ace: {
     desktop: { width: 1425, height: 990 },
     mobile: { width: 375, height: 812 },
@@ -204,10 +210,10 @@ export function TypePlayground({ site }: { site: SiteKey }) {
         </p>
       </div>
       <p className="story-playground-footnote">
-        Measured at 1440 × 1000 desktop and 390 × 844 mobile, September 15–16,
-        2026. This scaled diagram uses the library’s PP Neue Montréal, not the
-        source typeface. Its SVG units show twice the recorded size; on-screen
-        pixels vary with the frame.
+        Measured at 1440 × 1000 desktop and 390 × 844 mobile,{" "}
+        {data.researchDate ?? originalResearchDate}. This scaled diagram uses
+        the library’s PP Neue Montréal, not the source typeface. Its SVG units
+        show twice the recorded size; on-screen pixels vary with the frame.
       </p>
     </figure>
   );
@@ -659,6 +665,74 @@ function LamaMotion() {
   );
 }
 
+function NohoPreferences() {
+  const [dark, setDark] = useState(false);
+  const [calm, setCalm] = useState(false);
+  return (
+    <>
+      <div className="story-noho-stage" data-dark={dark} data-calm={calm}>
+        <svg viewBox="0 0 600 340" aria-hidden="true" focusable="false">
+          <text x="32" y="40" className="story-diagram-label">
+            A PREFERENCE, MADE VISIBLE
+          </text>
+          <g
+            className="story-noho-chair"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="8"
+            strokeLinejoin="round"
+          >
+            <path d="M208 82Q300 62 392 82L380 180Q300 197 220 180ZM220 180L200 225H400L380 180M217 225L202 293M383 225L398 293" />
+            <path
+              d="M242 104L249 161M280 99L283 165M320 99L317 165M358 104L351 161"
+              strokeWidth="3"
+            />
+          </g>
+          <text x="32" y="316" className="story-diagram-label">
+            {dark ? "DARK SURFACE" : "LIGHT SURFACE"}
+          </text>
+          <text
+            x="568"
+            y="316"
+            textAnchor="end"
+            className="story-diagram-label"
+          >
+            {calm ? "SETTLED COMPOSITION" : "PLAYFUL COMPOSITION"}
+          </text>
+        </svg>
+      </div>
+      <div className="story-motion-controls">
+        <button
+          type="button"
+          className="story-playground-action"
+          aria-label="Noho illustration: dark surface"
+          aria-pressed={dark}
+          onClick={() => setDark(!dark)}
+        >
+          Dark surface
+        </button>
+        <button
+          type="button"
+          className="story-playground-action"
+          aria-label="Noho illustration: calmer composition"
+          aria-pressed={calm}
+          onClick={() => setCalm(!calm)}
+        >
+          Calmer composition
+        </button>
+      </div>
+      <p className="story-playground-note" aria-live="polite">
+        {dark ? "Dark" : "Light"} surface · {calm ? "Settled" : "Tilted"} chair.
+        Both choices remain independent.
+      </p>
+      <p className="story-playground-note">
+        Original illustration. These controls change this diagram only. They do
+        not estimate energy usage or reproduce Noho’s animation engine.
+      </p>
+    </>
+  );
+}
+
 export function MotionPlayground({ site }: { site: SiteKey }) {
   const id = useId();
   const data = articleVisualData[site];
@@ -682,6 +756,8 @@ export function MotionPlayground({ site }: { site: SiteKey }) {
         <NeueMotion />
       ) : site === "monolog" ? (
         <MonologMotion />
+      ) : site === "noho" ? (
+        <NohoPreferences />
       ) : (
         <LamaMotion />
       )}
@@ -698,7 +774,7 @@ export function MotionPlayground({ site }: { site: SiteKey }) {
         <p>{finding.response}</p>
         <p className="story-playground-note">{finding.detail}</p>
         <span className="story-playground-note">
-          Recorded September 15–16, 2026.
+          Recorded {data.researchDate ?? originalResearchDate}.
         </span>
       </div>
     </figure>
@@ -775,10 +851,10 @@ export function ResponsivePlayground({ site }: { site: SiteKey }) {
         </a>
       </div>
       <p className="story-playground-footnote">
-        Captured September 15–16, 2026. Image dimensions describe the saved
-        files. Mobile research used a 390 × 844 CSS-pixel viewport; saved images
-        may be resized. Each frame records one moment, not the complete
-        animation.
+        Captured {data.researchDate ?? originalResearchDate}. Image dimensions
+        describe the saved files. Mobile research used a 390 × 844 CSS-pixel
+        viewport; saved images may be resized. Each frame records one moment,
+        not the complete animation.
       </p>
     </figure>
   );

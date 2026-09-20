@@ -65,6 +65,7 @@ const websites = [
 ];
 const researchSlugs = [
   ...websites.map((website) => website.slug),
+  "noho",
   "research-findings",
 ];
 
@@ -138,7 +139,7 @@ test("prerendered pages finish suspended content without client-only fallbacks",
   }
 });
 
-test("the library publishes exactly six independent research entries with no former supplements", () => {
+test("the library publishes all independent research entries with no former supplements", () => {
   const sourceDirectory = resolve("content/docs");
   const researchFiles = filesIn(sourceDirectory)
     .filter((file) => /\.mdx?$/.test(file))
@@ -157,7 +158,7 @@ test("the library publishes exactly six independent research entries with no for
   assert.deepEqual(
     researchFiles.sort(),
     researchSlugs.map((slug) => `${slug}.md`).sort(),
-    "Research sources must be six flat documents without duplicate supplements",
+    "Research sources must be flat documents without duplicate supplements",
   );
   for (const slug of researchSlugs) {
     const frontmatter = readFileSync(
@@ -177,7 +178,7 @@ test("the library publishes exactly six independent research entries with no for
       "methodology/index.html",
       ...researchSlugs.map((slug) => `${slug}/index.html`),
     ].sort(),
-    "Only the six research pages and existing guides should be generated",
+    "Only the research pages and existing guides should be generated",
   );
 
   const homepage = readRoute("");
@@ -186,8 +187,8 @@ test("the library publishes exactly six independent research entries with no for
   ];
   assert.equal(
     entries.length,
-    6,
-    "All six research entries must be visible on the homepage",
+    researchSlugs.length,
+    "All research entries must be visible on the homepage",
   );
   const entryLinks = entries.map((entry) => {
     const heading = entry[1].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i)?.[1];
@@ -214,6 +215,7 @@ test("the library publishes exactly six independent research entries with no for
     entryLinks.sort(),
     [
       ...websites.map((website) => `${base}/studies/${website.slug}/`),
+      `${base}/studies/noho/`,
       `${base}${researchPath}/research-findings/`,
     ].sort(),
   );
@@ -405,7 +407,10 @@ test("static full-text search finds evidence on every website report", async () 
   const client = staticClient({
     from: `data:application/json,${encodeURIComponent(json)}`,
   });
-  for (const website of websites) {
+  for (const website of [
+    ...websites,
+    { slug: "noho", query: "nohoReduceAnimations" },
+  ]) {
     const matches = await client.search(website.query);
     const pageURL = `${researchPath}/${website.slug}`;
     assert.ok(

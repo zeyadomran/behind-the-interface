@@ -20,10 +20,15 @@ import {
   ResponsivePlayground,
 } from "./story-playgrounds";
 import type { StudyStory, StoryChapterId } from "@/lib/study-stories";
-import type { SiteKey } from "@/lib/article-visual-data";
+import {
+  articleVisualData,
+  originalResearchDate,
+  type SiteKey,
+} from "@/lib/article-visual-data";
 import { getResearchSite } from "@/lib/research-sites";
 
 const motifs: Record<SiteKey, WordprintMotif> = {
+  noho: "noho",
   ace: "ace",
   "arkon-digital": "arkon",
   "neue-montreal": "neue",
@@ -453,9 +458,10 @@ export function StudyStoryExperience({
             </Link>
           </div>
           <p className="story-evidence-note">
-            Based on research captured September 15–16, 2026. Interactive
-            illustrations explain design principles; the linked reports contain
-            the observations, screenshots, and source evidence.
+            Based on research captured{" "}
+            {articleVisualData[story.slug].researchDate ?? originalResearchDate}
+            . Interactive illustrations explain design principles; the linked
+            reports contain the observations, screenshots, and source evidence.
           </p>
         </section>
 

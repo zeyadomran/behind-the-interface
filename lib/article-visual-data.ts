@@ -1,10 +1,20 @@
 // Dated research data from content/docs/<site>.md.
 // Typography is the complete curated table for each site: computed CSS pixels at
 // 1440x1000 desktop and 390x844 mobile, not an exhaustive design-token inventory.
-// Interaction evidence retains the limits of the September 15-16, 2026 study.
+// Interaction evidence retains each study's recorded scope and date.
 
 export type SiteKey =
-  "ace" | "arkon-digital" | "neue-montreal" | "monolog" | "lama-lama";
+  "ace" | "arkon-digital" | "neue-montreal" | "monolog" | "lama-lama" | "noho";
+
+// Preserve the scope of the original September 15–16 comparison.
+export const comparisonSites: SiteKey[] = [
+  "ace",
+  "arkon-digital",
+  "neue-montreal",
+  "monolog",
+  "lama-lama",
+];
+export const originalResearchDate = "September 15–16, 2026";
 
 export interface TypeRole {
   label: string;
@@ -24,6 +34,7 @@ export interface InteractionFinding {
 
 export interface ArticleVisualData {
   name: string;
+  researchDate?: string;
   screenshots: {
     desktop: { src: string; alt: string };
     mobile: { src: string; alt: string };
@@ -33,6 +44,79 @@ export interface ArticleVisualData {
 }
 
 export const articleVisualData: Record<SiteKey, ArticleVisualData> = {
+  noho: {
+    name: "Noho",
+    researchDate: "September 20, 2026",
+    screenshots: {
+      desktop: {
+        src: "/research/noho/screenshots/noho-desktop.jpg",
+        alt: "Noho at 1440 × 1000: large type and a staggered furniture image grid share a split hero.",
+      },
+      mobile: {
+        src: "/research/noho/screenshots/noho-mobile.jpg",
+        alt: "Noho at 390 × 844: the energy control sits in the header, with large type above the image grid.",
+      },
+    },
+    typography: [
+      {
+        label: "Noho hero",
+        family: "Switzer 600",
+        desktop: { size: 60.048, lineHeight: 60.048 },
+        mobile: { size: 60.6684, lineHeight: 57.635 },
+        note: "Keeps the headline large while changing its line breaks and composition",
+      },
+      {
+        label: "Noho section heading",
+        family: "Switzer 600",
+        desktop: { size: 60.048, lineHeight: 60.048 },
+        mobile: { size: 51.9987, lineHeight: 49.3988 },
+        note: "Gives section openings a smaller but still emphatic mobile scale",
+      },
+      {
+        label: "Noho supporting line",
+        family: "Switzer 400",
+        desktop: { size: 18.72, lineHeight: 18.72 },
+        mobile: { size: 16.2513, lineHeight: 16.2513 },
+        note: "Preserves a quieter reading voice below the headline",
+      },
+      {
+        label: "Noho energy note",
+        family: "Switzer 400",
+        desktop: { size: 10.512, lineHeight: 10.512 },
+        mobile: { size: 16.2513, lineHeight: 16.2513 },
+        note: "Enlarges explanatory utility text in the narrow energy panel",
+      },
+    ],
+    interactions: [
+      {
+        label: "Energy controls",
+        trigger: "Open Energy usage and select its two switches.",
+        response:
+          "Dark mode changes the palette; selecting both preferences changes the displayed rating to Low.",
+        evidence: "observed",
+        detail:
+          "Pointer controls and preference persistence were exercised. Battery savings and complete animation suppression were not measured.",
+      },
+      {
+        label: "Concept disclosure",
+        trigger: "Select Buy on the first product.",
+        response:
+          "A centered overlay identifies the site as a design concept and credits the brand imagery.",
+        evidence: "observed",
+        detail:
+          "No purchase was made. The tested action opened a disclosure, not a checkout.",
+      },
+      {
+        label: "Reduction storage",
+        trigger: "Toggle the manual reduced-animation preference.",
+        response:
+          "The public bundle stores nohoReduceAnimations and invokes registered reduction or restoration handlers.",
+        evidence: "source-confirmed",
+        detail:
+          "The handler was inspected; operating-system preference support and renderer power consumption remain untested.",
+      },
+    ],
+  },
   ace: {
     name: "Ace",
     screenshots: {
