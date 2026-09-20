@@ -2300,10 +2300,10 @@ longest-streak@^3.0.0:
   resolved "https://registry.npmjs.org/longest-streak/-/longest-streak-3.1.0.tgz#62fa67cd958742a1574af9f39866364102d90cd4"
   integrity sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==
 
-lucide-react@1.46.0, lucide-react@^1.43.0:
-  version "1.46.0"
-  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-1.46.0.tgz#f485e29a7b448250ca96977450e529c473b5b496"
-  integrity sha512-Bv+FZXgZPrxc/NCl1e7JJVQFLdiCxYgxNVhqoV7X0p6I8ADJo8DxBnK1auH0fZz4AmqOJ3jgneL4f1i8LJQRAA==
+lucide-react@1.47.0, lucide-react@^1.43.0:
+  version "1.47.0"
+  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-1.47.0.tgz#a358c1362b0377928ce58908ed9c884937d5b026"
+  integrity sha512-o8C23aXpNQypRY73W7fW02EyvWJinEMXgKeGjFoKym0zj3Q73hD97A1IQps1g8C14HTGsOpZL0Am+xjfgFZAbg==
 
 magic-string@^0.30.21:
   version "0.30.21"
@@ -3035,10 +3035,10 @@ postcss@^8.5.28:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-prettier@3.9.6:
-  version "3.9.6"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.9.6.tgz#b3ea5146515d40fc53f18aa63f74dfab1e10dbf6"
-  integrity sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==
+prettier@3.9.7:
+  version "3.9.7"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.9.7.tgz#dfc831d49deeece0505b692d516ef6f39ec874a5"
+  integrity sha512-T3mF5P7HFzZVLDQuCUNtJj6WK1pcpLMweMNUVwGb01bLNkH9AkKxtZvmInw8K6bnn2O3d6/5RHl6zSHiBAD0Og==
 
 property-information@^7.0.0:
   version "7.2.0"
