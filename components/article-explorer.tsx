@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import {
   articleVisualData,
+  comparisonSites,
+  originalResearchDate,
   type ArticleVisualData,
   type SiteKey,
 } from "@/lib/article-visual-data";
@@ -69,9 +71,9 @@ export function ArticleExplorer({
             value={selectedSite}
             onChange={(event) => setSelectedSite(event.target.value as SiteKey)}
           >
-            {Object.entries(articleVisualData).map(([key, item]) => (
+            {comparisonSites.map((key) => (
               <option key={key} value={key}>
-                {item.name}
+                {articleVisualData[key].name}
               </option>
             ))}
           </select>
@@ -104,8 +106,8 @@ export function ArticleExplorer({
       <div className="visual-footer">
         <span className="visual-dot" aria-hidden="true" />
         <span>
-          Research captured September 15–16, 2026. Full evidence continues
-          below.
+          Research captured {data.researchDate ?? originalResearchDate}. Full
+          evidence continues below.
         </span>
       </div>
     </figure>

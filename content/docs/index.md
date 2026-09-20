@@ -8,6 +8,7 @@ sites:
     "https://neuemontreal.com/",
     "https://bymonolog.com/",
     "https://lamalama.com/",
+    "https://noho.ink/",
   ]
 ---
 
@@ -23,13 +24,16 @@ Use it to compare the websites and understand the lessons across them. Follow th
 
 ## Explore each website
 
-| Website                               | Research focus                                                   |
-| ------------------------------------- | ---------------------------------------------------------------- |
-| [Ace](/docs/ace/)                     | Technical editorial identity, typography, and mobile navigation  |
-| [Arkon Digital](/docs/arkon-digital/) | A shared 3D scene, interaction, and text legibility              |
-| [Neue Montréal](/docs/neue-montreal/) | Type specimens, editorial hierarchy, and product-led interaction |
-| [MONOLOG](/docs/monolog/)             | Studio storytelling, work presentation, and contextual previews  |
-| [Lama Lama](/docs/lama-lama/)         | Brand behavior, portfolio exploration, and secondary interfaces  |
+| Website                               | Research focus                                                            |
+| ------------------------------------- | ------------------------------------------------------------------------- |
+| [Ace](/docs/ace/)                     | Technical editorial identity, typography, and mobile navigation           |
+| [Arkon Digital](/docs/arkon-digital/) | A shared 3D scene, interaction, and text legibility                       |
+| [Neue Montréal](/docs/neue-montreal/) | Type specimens, editorial hierarchy, and product-led interaction          |
+| [MONOLOG](/docs/monolog/)             | Studio storytelling, work presentation, and contextual previews           |
+| [Lama Lama](/docs/lama-lama/)         | Brand behavior, portfolio exploration, and secondary interfaces           |
+| [Noho](/docs/noho/)                   | Playful furniture, responsive composition, and visible energy preferences |
+
+The [Noho story](/studies/noho/) and its research were added on September 20, 2026. The shared findings retain the scope of the original five-site study.
 
 ## How to read the findings
 

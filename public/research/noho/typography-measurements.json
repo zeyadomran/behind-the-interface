@@ -1,0 +1,123 @@
+{
+  "date": "2026-09-20",
+  "source": "https://noho.ink/",
+  "method": "Computed CSS in Chromium; browser viewports, not physical devices. Energy note measured with its panel available in the document.",
+  "samples": [
+    {
+      "date": "2026-09-20",
+      "roles": [
+        {
+          "display": "flex",
+          "family": "Switzer, sans-serif",
+          "label": "Noho hero",
+          "letterSpacing": "-2.40192px",
+          "lineHeight": "60.048px",
+          "selector": ".hero-title-parent.not-mobile .title-line",
+          "size": 60.048,
+          "text": "We make furniture",
+          "weight": "600",
+          "width": 470.46875
+        },
+        {
+          "display": "block",
+          "family": "Switzer, sans-serif",
+          "label": "Noho section heading",
+          "letterSpacing": "-2.40192px",
+          "lineHeight": "60.048px",
+          "selector": ".advantages-title",
+          "size": 60.048,
+          "text": "Chairs that care",
+          "weight": "600",
+          "width": 1380.03125
+        },
+        {
+          "display": "block",
+          "family": "Switzer, sans-serif",
+          "label": "Noho supporting line",
+          "letterSpacing": "-0.1872px",
+          "lineHeight": "18.72px",
+          "selector": ".hero-slogan",
+          "size": 18.72,
+          "text": "New design from New Zealand",
+          "weight": "400",
+          "width": 252.109375
+        },
+        {
+          "display": "block",
+          "family": "Switzer, sans-serif",
+          "label": "Noho energy note",
+          "letterSpacing": "normal",
+          "lineHeight": "10.512px",
+          "selector": ".energy-menu-info-description.desktop",
+          "size": 10.512,
+          "text": "Dark mode and reduce animation options allow you to save about 35% of your device battery, reducing the ecological footprint.",
+          "weight": "400",
+          "width": 230.25
+        }
+      ],
+      "url": "https://noho.ink/",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "date": "2026-09-20",
+      "roles": [
+        {
+          "display": "flex",
+          "family": "Switzer, sans-serif",
+          "label": "Noho hero",
+          "letterSpacing": "-2.42674px",
+          "lineHeight": "57.635px",
+          "selector": ".hero-title-parent.mobile .title-line",
+          "size": 60.6684,
+          "text": "We make",
+          "weight": "600",
+          "width": 350.015625
+        },
+        {
+          "display": "block",
+          "family": "Switzer, sans-serif",
+          "label": "Noho section heading",
+          "letterSpacing": "-2.07995px",
+          "lineHeight": "49.3988px",
+          "selector": ".advantages-title",
+          "size": 51.9987,
+          "text": "Chairs that care",
+          "weight": "600",
+          "width": 368.34375
+        },
+        {
+          "display": "block",
+          "family": "Switzer, sans-serif",
+          "label": "Noho supporting line",
+          "letterSpacing": "normal",
+          "lineHeight": "16.2513px",
+          "selector": ".hero-slogan",
+          "size": 16.2513,
+          "text": "New design from New Zealand",
+          "weight": "400",
+          "width": 223.34375
+        },
+        {
+          "display": "block",
+          "family": "Switzer, sans-serif",
+          "label": "Noho energy note",
+          "letterSpacing": "normal",
+          "lineHeight": "16.2513px",
+          "selector": ".energy-menu-info-description.tablet",
+          "size": 16.2513,
+          "text": "Dark mode and reduce animation options allow you to save 35% of your device battery, reducing the ecological footprint.",
+          "weight": "400",
+          "width": 346.671875
+        }
+      ],
+      "url": "https://noho.ink/",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  ]
+}

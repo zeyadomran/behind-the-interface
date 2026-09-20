@@ -7,6 +7,16 @@ const base = (process.env.VITE_BASE_PATH || "").replace(/\/+$/, "");
 const chapterIDs = ["idea", "type", "motion", "mobile", "takeaways"];
 const stories = [
   {
+    slug: "noho",
+    name: "Noho",
+    capture: "noho",
+    captureDirectory: "noho",
+    motion: [
+      "Noho illustration: dark surface",
+      "Noho illustration: calmer composition",
+    ],
+  },
+  {
     slug: "ace",
     name: "Ace",
     capture: "ace",
@@ -125,7 +135,7 @@ function buttonWithName(html, name) {
   return button;
 }
 
-test("all five stories export readable chapters and native chapter navigation", () => {
+test("all stories export readable chapters and native chapter navigation", () => {
   const storyTitles = new Set();
   for (const story of stories) {
     const html = builtRoute(`studies/${story.slug}`);
@@ -302,7 +312,7 @@ test("story responsive chapters expose recorded captures and both full-size link
     const figure = figureWithTitle(section.body, "The recorded view.");
     const links = elements(figure.body, "a");
     for (const viewport of ["desktop", "mobile"]) {
-      const source = `${base}/research/five-websites/screenshots/${story.capture}-${viewport}.jpg`;
+      const source = `${base}/research/${story.captureDirectory ?? "five-websites"}/screenshots/${story.capture}-${viewport}.jpg`;
       const link = links.find(
         (entry) => attribute(entry.attributes, "href") === source && entry.text,
       );

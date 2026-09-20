@@ -21,6 +21,7 @@ const researchPageSchema = pageSchema
         "neue-montreal",
         "monolog",
         "lama-lama",
+        "noho",
       ])
       .optional(),
     visualView: z.enum(["screens", "type", "interactions"]).default("screens"),

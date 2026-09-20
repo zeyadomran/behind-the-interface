@@ -269,6 +269,22 @@
   transform: translate(413px, 292px);
 }
 
+.wp-noho-first {
+  transform-origin: 150px 224px;
+  transform: rotate(-9deg);
+}
+.wp-noho-last {
+  transform-origin: 390px 315px;
+  transform: rotate(8deg);
+}
+.study-wordprint[data-active="true"] .wp-noho-first,
+.study-wordprint[data-active="true"] .wp-noho-last {
+  transform: rotate(0);
+}
+.study-wordprint[data-active="true"] .wp-noho-seat {
+  transform: translateY(8px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .wordprint-art g,
   .wordprint-art .wp-pixel {

@@ -12,6 +12,7 @@ const origin = new URL(
 const brand = "Behind the Interface";
 const preview = process.env.VERCEL_ENV === "preview";
 const websites = [
+  { slug: "noho", url: "https://noho.ink/" },
   { slug: "ace", url: "https://acedesign.io/" },
   { slug: "arkon-digital", url: "https://arkon.digital/" },
   { slug: "neue-montreal", url: "https://neuemontreal.com/" },
@@ -411,6 +412,8 @@ test("each story and research document visibly credits its original website", ()
       .filter(Boolean)
       .map((href) => new URL(href, publicURL(route)).href);
     for (const website of websites) {
+      // The comparison and methodology retain the original five-site scope.
+      if (route !== "/docs/" && website.slug === "noho") continue;
       assert.ok(
         destinations.includes(website.url),
         `${route}: missing original website credit for ${website.slug}`,

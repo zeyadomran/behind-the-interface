@@ -1,5 +1,12 @@
 export type WordprintMotif =
-  "ace" | "arkon" | "neue" | "monolog" | "lama" | "synthesis" | "generic";
+  | "ace"
+  | "arkon"
+  | "neue"
+  | "monolog"
+  | "lama"
+  | "noho"
+  | "synthesis"
+  | "generic";
 
 const pixelAlphabet: Record<string, string[]> = {
   A: ["01110", "11011", "11011", "11111", "11011", "11011", "11011"],
@@ -341,6 +348,30 @@ function SynthesisArt() {
   );
 }
 
+function NohoArt() {
+  return (
+    <>
+      <Registration label="ROOM FOR A LITTLE PLAY" code="NOHO / 06" />
+      <g className="wp-noho-first">
+        <text x="46" y="224" fontSize="170" letterSpacing="-12">
+          no
+        </text>
+      </g>
+      <g className="wp-noho-last wp-accent-fill">
+        <text x="290" y="315" fontSize="170" letterSpacing="-12">
+          ho
+        </text>
+      </g>
+      <g className="wp-noho-seat wp-accent-stroke" strokeWidth="3">
+        <path d="M78 246H258M96 246L80 324M238 246L254 324M334 126H498M348 126L338 74M484 126L494 74" />
+      </g>
+      <text x="32" y="356" className="wp-annotation">
+        FLEXIBLE FORM / A CALMER CHOICE
+      </text>
+    </>
+  );
+}
+
 function GenericArt({ title }: { title: string }) {
   const words = title.match(/[\p{L}\p{N}]+/gu) ?? ["Interesting", "Designs"];
   const first = Array.from(words[0])[0].toUpperCase();
@@ -397,6 +428,8 @@ export function WordprintArt({
         <MonologArt />
       ) : motif === "lama" ? (
         <LamaArt />
+      ) : motif === "noho" ? (
+        <NohoArt />
       ) : motif === "synthesis" ? (
         <SynthesisArt />
       ) : (

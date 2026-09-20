@@ -6,6 +6,7 @@ export interface ResearchSite {
 
 // Original website URLs recorded in the corresponding research documents.
 export const researchSites: ResearchSite[] = [
+  { slug: "noho", name: "Noho", url: "https://noho.ink/" },
   { slug: "ace", name: "Ace", url: "https://acedesign.io/" },
   {
     slug: "arkon-digital",
