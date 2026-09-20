@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "jsx-a11y", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "no-debugger": "error",
+    "no-unused-vars": "error",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/jsx-key": "error",
+    "react/jsx-no-target-blank": "error",
+    "typescript/no-explicit-any": "error",
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/anchor-has-content": "error",
+    "jsx-a11y/aria-props": "error",
+    "jsx-a11y/aria-proptypes": "error",
+    "jsx-a11y/aria-role": "error",
+    "jsx-a11y/click-events-have-key-events": "error",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/no-noninteractive-tabindex": [
+      "error",
+      { "roles": ["tabpanel", "region"] }
+    ]
+  },
+  "ignorePatterns": [
+    "node_modules/**",
+    ".yarn/**",
+    ".next/**",
+    ".source/**",
+    ".prerender/**",
+    ".pnpm-store/**",
+    ".vercel/**",
+    "dist/**",
+    "out/**",
+    "tmp/**",
+    "archive/**",
+    "public/research/**"
+  ]
+}

@@ -231,7 +231,7 @@ test("every published content page has unique, public search and social metadata
     assertExportedImage(metaValue(meta, "twitter:image", route), route);
     assert.doesNotMatch(
       head,
-      /https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?[\/"<]/i,
+      /https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?[/"<]/i,
     );
     assert.doesNotMatch(head, /Interesting Designs|Field[ -]?notes/i);
     for (const directive of meta.filter((item) =>
@@ -263,7 +263,7 @@ test("published pages include parseable structured data and accurate breadcrumbs
     );
     assert.doesNotMatch(
       JSON.stringify(nodes),
-      /https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?[\/"<]/i,
+      /https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?[/"<]/i,
     );
     if (route === "/") {
       const website = nodes.find((node) => isType(node, "WebSite"));

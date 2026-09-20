@@ -9,6 +9,9 @@ updates:
       timezone: America/Toronto
     open-pull-requests-limit: 5
     groups:
+      security-updates:
+        applies-to: security-updates
+        patterns: ["*"]
       production-minor-patch:
         dependency-type: production
         update-types: [minor, patch]

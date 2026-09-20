@@ -8,12 +8,12 @@ This repository is public, uses `main`, and currently has one maintainer.
 The workflows in `.github/workflows/` provide these checks on every pull request
 to `main`, including documentation changes:
 
-| Check                            | What it verifies                                                                                                                                                   |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `Site validation`                | Node.js 22, bundled Yarn 1.22.22, frozen dependency installation, production build with typechecking, and the existing Node test suite against the generated site. |
-| `Dependency review`              | Newly introduced dependencies with known high or critical vulnerabilities. Existing dependency vulnerabilities need Dependabot alerts separately.                  |
-| `CodeQL (javascript-typescript)` | CodeQL analysis of application and build code.                                                                                                                     |
-| `CodeQL (actions)`               | CodeQL analysis of GitHub Actions workflows.                                                                                                                       |
+| Check                            | What it verifies                                                                                                                                                           |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Site validation`                | Node.js 22, bundled Yarn 1.22.22, frozen dependency installation, Oxlint, production build with typechecking, and the existing Node test suite against the generated site. |
+| `Dependency review`              | Newly introduced dependencies with known high or critical vulnerabilities. Existing dependency vulnerabilities need Dependabot alerts separately.                          |
+| `CodeQL (javascript-typescript)` | CodeQL analysis of application and build code.                                                                                                                             |
+| `CodeQL (actions)`               | CodeQL analysis of GitHub Actions workflows.                                                                                                                               |
 
 CI and CodeQL also run on pushes to `main`. CodeQL runs weekly, and CI and
 CodeQL support manual dispatch after their workflow files reach the default
@@ -31,10 +31,12 @@ on GitHub-hosted runners using `pull_request`, with no deployment secrets.
 Timeouts bound each job; a newer PR revision cancels its older runs.
 
 `.github/dependabot.yml` checks npm/Yarn dependencies and action pins weekly.
-Minor and patch updates are grouped; major updates remain separate. Its default
-branch configuration activates after merge. This file configures version
-updates; Dependabot alerts and security updates require separate repository
-settings. Dependency review uses `high` as its initial failure threshold.
+Minor and patch version updates are grouped; major version updates remain
+separate. npm/Yarn security updates have their own group. Dependabot alerts and
+automatic security updates are enabled in repository settings, in addition to
+the weekly version updates. Dependency review uses `high` as its failure
+threshold. Update PRs must satisfy the same branch rules as other contributions;
+they are not automatically merged.
 
 The existing Vercel Git integration owns deployments. These workflows do not
 need a Vercel token or duplicate deployment steps. A passing build is not a
@@ -53,7 +55,7 @@ after the workflow PR and first main-branch CI/CodeQL runs passed. Direct pushes
 are blocked, including pushes by the repository administrator. Public personal
 repositories support these rulesets on GitHub Free.
 
-| Setting                           | Recommendation                                                                                                        |
+| Setting                           | Enforced setting                                                                                                      |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Require a pull request            | On, with zero required approvals while there is one maintainer.                                                       |
 | Require conversation resolution   | On.                                                                                                                   |
@@ -93,8 +95,8 @@ manifests, and hosting configuration. Activate required code-owner review only
 when another eligible reviewer can approve those changes.
 
 Use short-lived feature branches into `main`; a long-lived development branch
-adds little value for this site. Enable automatic deletion of merged feature
-branches. Keep merge methods flexible initially. Squash merges can simplify
+adds little value for this site. Merged feature branches are deleted
+automatically. Keep merge methods flexible initially. Squash merges can simplify
 history, but verify Dependabot merges with CodeQL before enforcing squash-only
 and linear history. Defer signed-commit requirements until the maintainer and
 automation signing paths have been tested. Merge queues are not available to
@@ -112,40 +114,85 @@ Sources: [rulesets and availability](https://docs.github.com/en/repositories/con
 [Dependabot CodeQL permissions](https://docs.github.com/en/code-security/reference/code-scanning/troubleshoot-analysis-errors/resource-not-accessible),
 [merge queue availability](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue).
 
-## Proposed repository security settings
+## Enabled repository security settings
 
-In Settings > Advanced Security:
+Verified in repository settings on September 20, 2026:
 
-- Enable secret scanning and repository push protection. Review findings and
+- Secret scanning and repository push protection are enabled. Review findings and
   rotate exposed credentials if any are found; a scan is not proof that the
   repository never contained a secret.
-- Enable Dependabot alerts and security updates, in addition to the weekly
+- Dependabot alerts and security updates are enabled, in addition to the weekly
   version-update configuration. Review high/critical alerts promptly, including
   vulnerable development dependencies used during builds.
-- Enable private vulnerability reporting and add a `SECURITY.md` that points to
-  the private reporting form once it is active.
+- Private vulnerability reporting is enabled. [SECURITY.md](../SECURITY.md)
+  explains the reporting process and supported scope.
+- Merged feature branches are deleted automatically.
 
-In Settings > Actions > General:
+The Actions policy enforces:
 
-- Keep restricted workflow token permissions and keep workflow PR
-  creation/approval disabled. Both were already configured this way at review.
-- Require approval for all external contributors, rather than first-time
-  contributors only.
-- Allow only the required GitHub actions (`actions/checkout`,
-  `actions/setup-node`, `actions/dependency-review-action`, and
-  `github/codeql-action`), expanding the allowlist deliberately when needed.
-- Require full commit-SHA pins after confirming the workflows pass. Dependabot
-  maintains the pins, but its PRs still need review.
-- Keep public PR validation on hosted runners. Keep deployment credentials out
-  of PR workflows and grant production access only to the deployment system.
+- Restricted workflow token permissions; workflow PR creation/approval is
+  disabled. CodeQL receives its explicitly scoped upload permission.
+- Approval for all external contributors.
+- An explicit allowlist: `actions/checkout`, `actions/setup-node`,
+  `actions/dependency-review-action`, `actions/upload-artifact`, `github/codeql-action/init`, and
+  `github/codeql-action/analyze`. Broad GitHub-owned and verified-marketplace
+  action allowances are disabled. Add new actions deliberately before using
+  them in workflows. GitHub's generated security workflow needs the artifact
+  uploader; it remains subject to the same SHA requirement.
+- Full commit-SHA pins for actions. Dependabot maintains these pins, and its
+  PRs still need review.
 
-Secret scanning and push protection are available for this public repository;
-the proposal does not require buying a paid security plan. Account security
-should use strong two-factor authentication or a passkey, with recovery methods
-kept available. Account authentication was not inspected.
+Public PR validation uses hosted runners. Deployment remains with the existing
+Vercel integration, with no deployment credentials in PR workflows.
+
+These enabled features do not require purchasing a paid security plan for this
+public repository. Generic/non-provider secret scanning and partner-token
+validity checks are not enabled: their documented eligibility requires an
+organization with the appropriate paid Secret Protection plan. GitHub's own
+token validity checking is handled separately by the service.
+
+Account security should use strong two-factor authentication or a passkey,
+with recovery methods kept available. Account authentication was not inspected
+or changed.
+
+### AI Scan preview
+
+Separately, GitHub's AI Scan is enabled. It is advisory: GitHub does not currently
+support enforcing its findings through rulesets, and it only runs for eligible
+PR changes. It is not one of the seven required checks. CodeQL and the required
+validation checks remain the supported merge gates.
+
+AI Scan has separate licensing and AI-credit requirements; the free-feature
+statement above does not apply to it. During setup, its generated workflow
+[failed inside GitHub's scanner](https://github.com/zeyadomran/behind-the-interface/actions/runs/35521111049)
+with `CAPIError: 400 The requested model is not supported`. This is a scan
+execution failure, not a vulnerability finding or a successful security review.
+GitHub manages its model selection; no repository model override is documented.
+
+Source: [AI Scan availability and limitations](https://docs.github.com/en/code-security/concepts/code-scanning/ai-powered-security-detections).
 
 Sources: [feature availability](https://docs.github.com/en/code-security/getting-started/github-security-features),
-[Actions repository settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository).
+[Actions repository settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository),
+[generic secret patterns](https://docs.github.com/en/code-security/how-tos/secure-your-secrets/detect-secret-leaks/enabling-secret-scanning-for-generic-patterns),
+[validity checks](https://docs.github.com/en/code-security/tutorials/remediate-leaked-secrets/evaluating-alerts).
+
+## Local commit checks
+
+Install dependencies using the bundled Yarn to activate Husky. Before a commit,
+lint-staged formats supported staged files with Prettier, then the hook runs
+linting, a fresh build with typechecking, and the tests against generated output.
+Build-before-test matters because the tests read `dist/`; stale output must not
+stand in for current code. These local checks inspect the working tree, which
+can include unstaged changes. CI validates the pushed PR revision independently.
+
+Oxlint checks the maintained application, build scripts, and tests. Archived
+research, vendored files, and generated output are outside the lint target.
+The lint configuration retains intentional ARIA groups/status roles and allows
+named scroll regions to receive keyboard focus; it still enforces the configured
+accessibility and React hook correctness checks.
+CI repeats lint/build/test in the required `Site validation` job. Local hooks
+can be bypassed on a developer's machine; the server-side PR rules remain the
+enforcement boundary.
 
 ## Rollout and verification
 
@@ -155,16 +202,15 @@ Sources: [feature availability](https://docs.github.com/en/code-security/getting
    the administrator was rejected by GitHub with repository rule violations.
 3. [PR #5](https://github.com/zeyadomran/behind-the-interface/pull/5) verified the
    failure case: six checks passed, the deliberate test failed, and GitHub
-   disabled merging. The temporary test was then removed. The final diff is
-   documentation only and must pass all seven checks before merge. Force-push,
+   disabled merging. The temporary test was then removed, all seven checks
+   passed, and the documentation-only final change merged. Force-push,
    deletion, and empty-bypass settings were inspected without attempting
    destructive operations.
 4. If releases are introduced later, add a separate `v*` tag ruleset to prevent
    updates and deletions. Treat tag-creation permissions separately, so a
    release actor does not gain permission to rewrite existing release tags.
 
-The remaining security settings above are still recommendations. In particular,
-Dependabot alerts/security updates, secret scanning/push protection, private
-vulnerability reporting, and stricter repository-wide Actions policies have not
-been enabled by this ruleset. The dependency graph and the documented branch
-rules are enabled.
+Dependency graph, the documented branch rules, and the repository security
+settings above are enabled. Local hook and lint configuration is versioned with
+the repository. Review the GitHub Security tab for findings; enabling scanners
+does not establish that every existing finding has been remediated.
