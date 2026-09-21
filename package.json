@@ -46,7 +46,7 @@
     "husky": "9.1.7",
     "lint-staged": "17.5.1",
     "oxlint": "1.83.0",
-    "prettier": "3.9.7",
+    "prettier": "3.9.8",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
     "vite": "8.3.0"
