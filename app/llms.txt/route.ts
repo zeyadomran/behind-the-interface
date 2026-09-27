@@ -78,7 +78,7 @@ export function GET() {
         link(
           "Homepage and library",
           absoluteURL(),
-          "Browse and filter the published studies and reports.",
+          "Browse the studies by website, or compare one story chapter across all of them with ?lens=idea, type, motion, mobile or takeaways. Includes sourced findings and the measured type scale.",
         ),
         link(
           "Sitemap",

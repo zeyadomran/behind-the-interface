@@ -1,11 +1,11 @@
 ---
 title: "Neue Montréal"
-description: "A living type specimen: editorial hierarchy, interactive typography, responsive behavior, and public-source evidence for Neue Montréal."
+description: "A type specimen shaped like a travel guide, where scrolling, splitting and swapping letters show what the typeface can do."
 date: "2026-09-16"
 kind: "study"
 cover: "/research/five-websites/screenshots/neue-desktop.jpg"
 visual: "neue-montreal"
-tags: ["Creative direction", "Typography", "Interaction", "Responsive design"]
+tags: ["Type specimen", "Product education", "Variable weights"]
 sites: ["https://neuemontreal.com/"]
 ---
 

@@ -1,11 +1,11 @@
 ---
 title: "Noho"
-description: "Playful furniture, oversized type, and visible energy controls: a study of the Noho design concept and its responsive interface."
+description: "A furniture concept with playful photography, a headline that stays about 60px on mobile, and an energy panel that makes calm a visible choice."
 date: "2026-09-20"
 kind: "study"
 cover: "/research/noho/screenshots/noho-desktop.jpg"
 visual: "noho"
-tags: ["Creative direction", "Typography", "Interaction", "Responsive design"]
+tags: ["Playful product", "Preference controls", "Concept disclosure"]
 sites: ["https://noho.ink/"]
 ---
 

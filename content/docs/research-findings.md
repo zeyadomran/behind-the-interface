@@ -1,6 +1,6 @@
 ---
 title: "Research findings"
-description: "Cross-site findings on creative direction, measured typography, hierarchy, interaction, responsive design, public-source evidence, and route coverage."
+description: "What five distinctive websites share: typography as identity, motion with a job, deliberate mobile redesign, and unfinished edges that undo the polish."
 date: "2026-09-16"
 kind: "report"
 visual: "collection"

@@ -1,0 +1,105 @@
+@reference "./globals.css";
+
+/* Inspect mode draws redlines over the page itself: a dashed box around each
+   measured element and a label with its computed type. */
+html[data-inspecting] [data-inspect-label] {
+  position: relative;
+  outline: 1px dashed var(--inspect-color);
+  outline-offset: 3px;
+}
+html[data-inspecting] [data-inspect-label]::after {
+  content: attr(data-inspect-label);
+  position: absolute;
+  z-index: 20;
+  left: -4px;
+  bottom: calc(100% + 5px);
+  padding: 2px 6px;
+  background: var(--inspect-color);
+  color: #fff;
+  font:
+    500 10px/1.35 ui-monospace,
+    "SFMono-Regular",
+    Menlo,
+    Consolas,
+    monospace;
+  letter-spacing: 0;
+  text-transform: none;
+  font-style: normal;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: inspect-label-in 240ms ease-out both;
+}
+html[data-inspecting] body {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--inspect-color) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--inspect-color) 7%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 8px 8px;
+}
+@keyframes inspect-label-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+.inspect-legend {
+  @apply fixed z-[60] left-[16px] bottom-[16px] flex items-start gap-[16px] max-w-[min(560px,_calc(100vw_-_32px))] py-[14px] pr-[14px] pl-[18px] text-white;
+  background: var(--inspect-color);
+  box-shadow: 0 18px 40px rgb(20 40 110 / 0.28);
+  animation: inspect-legend-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.inspect-legend p {
+  @apply m-0 font-[family-name:var(--font-neue-reading),_Arial,_sans-serif] font-[375] text-[length:13px] leading-[1.45];
+}
+.inspect-legend strong {
+  @apply font-[family-name:var(--font-neue-display),_Arial,_sans-serif] font-semibold;
+}
+.inspect-legend-code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+.inspect-legend button {
+  @apply inline-flex items-center gap-[6px] shrink-0 min-h-[36px] py-[6px] px-[12px] border border-solid border-white/70 text-[length:13px] text-white;
+}
+.inspect-legend button:hover {
+  @apply bg-white/15;
+}
+.inspect-legend button:focus-visible {
+  @apply outline-white;
+}
+@keyframes inspect-legend-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-inspecting] [data-inspect-label]::after,
+  .inspect-legend {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  html[data-inspecting] [data-inspect-label] {
+    outline-color: Highlight;
+  }
+  html[data-inspecting] [data-inspect-label]::after {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
+  }
+}
+@media print {
+  html[data-inspecting] [data-inspect-label]::after {
+    display: none;
+  }
+}

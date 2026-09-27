@@ -22,9 +22,10 @@ export default function StudyPage({ slug }: { slug: string }) {
   const story = getStudyStory(slug);
   const research = source.getPage([slug]);
   if (!story || !research) return <NotFound />;
-  const publishedStories = studyStories.filter((item) =>
-    source.getPage([item.slug]),
-  );
+  // Follow the library's numbered order, wrapping from the last study.
+  const publishedStories = studyStories
+    .filter((item) => source.getPage([item.slug]))
+    .sort((left, right) => left.edition.localeCompare(right.edition));
   const next =
     publishedStories[
       (publishedStories.indexOf(story) + 1) % publishedStories.length

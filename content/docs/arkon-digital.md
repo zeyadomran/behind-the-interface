@@ -1,11 +1,11 @@
 ---
 title: "Arkon Digital"
-description: "A portfolio as a real-time scene: typography, 3D interaction, responsive behavior, and public-source evidence for Arkon Digital."
+description: "A developer portfolio built as one persistent 3D scene, with a 162px script title and a 12px biography that has to read over the sphere."
 date: "2026-09-16"
 kind: "study"
 cover: "/research/five-websites/screenshots/arkon-desktop.jpg"
 visual: "arkon-digital"
-tags: ["Creative direction", "Typography", "Interaction", "Responsive design"]
+tags: ["3D scene", "Type contrast", "Text over motion"]
 sites: ["https://arkon.digital/"]
 ---
 

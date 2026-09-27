@@ -42,11 +42,11 @@ The values above illustrate the format; use the actual research date, sites, and
 | `kind`        | `study` for a website document, `report` for shared research findings, or `guide` for general documentation. Defaults to `guide`. |
 | `date`        | Required for studies and reports, in quoted `YYYY-MM-DD` form. Optional for guides.                                               |
 | `draft`       | `true` hides the page from the published content collection. Defaults to `false`.                                                 |
-| `tags`        | An array of topic strings. Study tags supply the homepage filters.                                                                |
+| `tags`        | An array of topic strings shown on the research page and indexed by search. Name what is distinctive about the study.             |
 | `sites`       | An array of valid website URL strings. Identify the website examined, or all subjects in the shared findings.                     |
 | `cover`       | Optional image path beginning with `/research/`, without a deployment prefix.                                                     |
 
-The schema is defined in [`source.config.ts`](../source.config.ts). The homepage selects published pages with `kind: study` or `kind: report`, ordered by date from newest to oldest, then by title. No manual homepage entry is needed. A registered story changes its study's title link to `/studies/<slug>/`; its **Read research** link still opens `/docs/<slug>/`. Unregistered studies and Research findings open their documentation directly.
+The schema is defined in [`source.config.ts`](../source.config.ts). The homepage selects published pages with `kind: study` or `kind: report` and lists the studies as a numbered series, oldest first, with reports after them; [`lib/library.ts`](../lib/library.ts) defines that order. No manual homepage entry is needed. A registered story changes its study's title link to `/studies/<slug>/`; its **Read research** link still opens `/docs/<slug>/`. Unregistered studies and Research findings open their documentation directly. The `description` appears on the study's homepage card, so make it specific: what the website does and the one finding a reader should know.
 
 ## Organize website documents and shared findings
 
@@ -96,16 +96,18 @@ Use filenames without extensions. The `...` placeholder includes new documents a
 
 ## Add or update a story
 
-The six current website studies have story pages at `/studies/ace/`, `/studies/arkon-digital/`, `/studies/neue-montreal/`, `/studies/monolog/`, `/studies/lama-lama/`, and `/studies/noho/`. Their full documentation stays at `/docs/<slug>/`, with an **Explore the story** link back to the presentation. Research findings stays at `/docs/research-findings/`.
+The six current website studies have story pages at `/studies/ace/`, `/studies/arkon-digital/`, `/studies/neue-montreal/`, `/studies/monolog/`, `/studies/lama-lama/`, and `/studies/noho/`. Their full documentation stays at `/docs/<slug>/`. A **Story / Research** switch at the top of both pages joins the two. Research findings stays at `/docs/research-findings/`.
 
-Use [`lib/study-stories.ts`](../lib/study-stories.ts) for a story's introduction, chapter summaries, and evidence destinations. Keep these summaries consistent with the source article. The five chapter IDs are `idea`, `type`, `motion`, `mobile`, and `takeaways`; they form ordinary fragment links, so the complete sequence remains readable and navigable without JavaScript. Active chapter and progress feedback enhance those links.
+Use [`lib/study-stories.ts`](../lib/study-stories.ts) for a story's introduction, chapter summaries, lessons, and evidence destinations. Keep these summaries consistent with the source article. The five chapter IDs are `idea`, `type`, `motion`, `mobile`, and `takeaways`; they form ordinary fragment links, so the complete sequence remains readable and navigable without JavaScript. Active chapter and progress feedback enhance those links. The `edition` sets the study's number in the series.
 
 To extend the stories:
 
 1. Publish the complete study and verify its evidence first. A story is optional; the new-study command does not create one.
-2. Add its recorded screenshots, typography, and interaction evidence to the [visual data registry](../lib/article-visual-data.ts), following [Reuse an article visual](#reuse-an-article-visual). Register the story's slug and write all five chapters, linking each to a real heading anchor in its `/docs/<slug>/` article. Keep paths unprefixed, including fragment destinations.
-3. Add an appropriate visual treatment and illustrative controls using [`study-story.tsx`](../components/study-story.tsx) and [`story-playgrounds.tsx`](../components/story-playgrounds.tsx). Keep demonstrations separate from measured source behavior. Reuse recorded desktop and mobile captures with descriptive alternatives and captions.
-4. Extend [`tests/story-pages.test.mjs`](../tests/story-pages.test.mjs) for its exported route, readable chapters, navigation, evidence links, and controls. Build and inspect the page at desktop and narrow widths, with a keyboard, JavaScript disabled, and reduced motion enabled.
+2. Add its recorded screenshots, typography, interaction evidence and capture dimensions to the [visual data registry](../lib/article-visual-data.ts), following [Reuse an article visual](#reuse-an-article-visual). Register the story's slug and write all five chapters, linking each to a real heading anchor in its `/docs/<slug>/` article. Keep paths unprefixed, including fragment destinations.
+3. Add a profile to [`lib/study-profiles.ts`](../lib/study-profiles.ts): the style-map row, what changes between desktop and mobile, and three to five notes pinned to the desktop capture. Pin coordinates are percentages of the image. Label each note with its evidence kind, and keep interpretation separate from what was observed.
+4. Add a few findings to [`lib/findings.ts`](../lib/findings.ts): one sentence each, with its evidence kind and the anchor of the section that supports it. The tests check every anchor.
+5. Add an illustrative motion demonstration to [`story-playgrounds.tsx`](../components/story-playgrounds.tsx) and name the recorded interaction it explains. The idea, type, mobile and takeaways chapters draw on the data above and need no new code. Keep demonstrations separate from measured source behavior, and label them as illustrations.
+6. Extend [`tests/story-pages.test.mjs`](../tests/story-pages.test.mjs) for its exported route, readable chapters, navigation, evidence links, and controls. Build and inspect the page at desktop and narrow widths (including 320px), with a keyboard, JavaScript disabled, and reduced motion enabled.
 
 Editing a documentation heading can break a story's research link. Update the registry in the same change and run the static link checks. Search continues to index the complete documentation, which is the authoritative reading path for measurements and limitations.
 

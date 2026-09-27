@@ -1,7 +1,7 @@
 @reference "./globals.css";
 
 .article-visual {
-  @apply w-full min-w-0 mt-[30px] mx-0 mb-[42px] border-[1px] border-solid border-line bg-[#f7f8f4];
+  @apply w-full min-w-0 mt-[6px] mx-0 mb-[42px] border-[1px] border-solid border-line bg-[#f7f8f4];
   @apply text-ink;
   @apply font-sans;
   @apply text-[length:14px] leading-[1.5] font-normal;

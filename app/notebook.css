@@ -1,0 +1,154 @@
+@reference "./globals.css";
+
+/* Pocket buttons save a lesson; the notebook collects them for this browser. */
+.pocket-button {
+  @apply inline-flex items-center gap-[7px] min-h-[36px] py-[6px] px-[12px] border border-solid border-current text-[length:12px] leading-none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+.pocket-button:hover {
+  @apply bg-[color-mix(in_srgb,_currentColor_10%,_transparent)];
+}
+.pocket-button:active {
+  transform: scale(0.96);
+}
+.pocket-button[aria-pressed="true"] {
+  @apply bg-[var(--pocket-active-bg,_currentColor)];
+}
+.pocket-button[aria-pressed="true"] > :not(.sr-only) {
+  color: var(--pocket-active-fg, var(--color-paper));
+}
+.pocket-button[aria-pressed="true"] svg {
+  animation: pocket-pop 360ms cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+@keyframes pocket-pop {
+  from {
+    transform: scale(0.5) rotate(-12deg);
+  }
+}
+
+.notebook-dialog,
+.shortcuts-dialog {
+  @apply m-auto p-0 border-0 bg-transparent text-ink max-h-[min(760px,_calc(100dvh_-_32px))] w-[min(620px,_calc(100vw_-_32px))];
+}
+.notebook-dialog::backdrop,
+.shortcuts-dialog::backdrop {
+  background: rgb(12 30 20 / 0.42);
+  backdrop-filter: blur(3px);
+}
+.notebook-dialog[open],
+.shortcuts-dialog[open] {
+  animation: dialog-in 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+}
+.notebook-panel,
+.shortcuts-panel {
+  @apply flex flex-col max-h-[inherit] bg-paper border border-solid border-line;
+  box-shadow: 0 30px 70px rgb(10 30 20 / 0.28);
+}
+.notebook-header,
+.shortcuts-panel > header {
+  @apply flex items-start justify-between gap-[20px] pt-[22px] pb-[16px] px-[24px] border-b border-solid border-line;
+}
+.notebook-eyebrow {
+  @apply text-[length:11px] uppercase tracking-[0.07em] text-muted mb-[6px];
+}
+.notebook-header h2,
+.shortcuts-panel h2 {
+  @apply text-[length:32px] leading-[1.05] tracking-[-0.04em] font-normal;
+}
+.notebook-close {
+  @apply inline-flex items-center justify-center w-[40px] h-[40px] border border-solid border-line;
+}
+.notebook-close:hover {
+  @apply border-ink;
+}
+.notebook-empty {
+  @apply grid justify-items-start gap-[12px] py-[30px] px-[24px] text-body;
+}
+.notebook-empty p {
+  @apply max-w-[44ch] font-[family-name:var(--font-neue-reading),_Arial,_sans-serif] font-[375] text-[length:17px] leading-[1.5];
+}
+.notebook-empty .notebook-note,
+.notebook-status {
+  @apply text-[length:13px] text-muted;
+}
+.notebook-list {
+  @apply m-0 py-[4px] px-[24px] list-none overflow-y-auto;
+  counter-reset: notebook;
+}
+.notebook-list > li {
+  @apply py-[16px] border-b border-solid border-line;
+  counter-increment: notebook;
+}
+.notebook-list > li > p {
+  @apply font-[family-name:var(--font-neue-reading),_Arial,_sans-serif] font-[375] text-[length:18px] leading-[1.4] text-body;
+}
+.notebook-list > li > p::before {
+  content: counter(notebook, decimal-leading-zero) " ";
+  @apply text-[length:11px] text-muted mr-[6px] align-[0.15em];
+}
+.notebook-item-meta {
+  @apply flex items-center justify-between gap-[16px] mt-[6px];
+}
+.notebook-item-meta a {
+  @apply text-[length:12px] text-muted underline underline-offset-[3px];
+}
+.notebook-item-meta button {
+  @apply inline-flex items-center justify-center w-[36px] h-[36px] text-muted;
+}
+.notebook-item-meta button:hover {
+  @apply text-orange bg-fd-accent;
+}
+.notebook-actions {
+  @apply flex flex-wrap items-center gap-[10px] py-[16px] px-[24px] border-t border-solid border-line;
+}
+.notebook-actions button {
+  @apply inline-flex items-center gap-[8px] min-h-[40px] py-[8px] px-[14px] border border-solid border-line text-[length:13px];
+}
+.notebook-actions button:first-child {
+  @apply bg-ink text-paper border-ink;
+}
+.notebook-actions button:hover {
+  @apply border-ink;
+}
+.notebook-status {
+  @apply basis-full m-0 min-h-[1.4em];
+}
+
+.shortcuts-panel dl {
+  @apply m-0 py-[10px] px-[24px] pb-[22px];
+}
+.shortcuts-panel dl > div {
+  @apply grid grid-cols-[110px_1fr] items-center gap-[14px] py-[10px] border-b border-solid border-line;
+}
+.shortcuts-panel dt {
+  @apply flex gap-[6px];
+}
+.shortcuts-panel kbd {
+  @apply text-[length:13px] min-w-[2em] opacity-100 bg-fd-card;
+}
+.shortcuts-panel dd {
+  @apply m-0 text-[length:15px] text-body;
+}
+.shortcuts-button {
+  @apply inline-flex items-center gap-[8px] min-h-[44px] text-inherit text-[length:inherit];
+}
+.shortcuts-button:hover {
+  @apply underline underline-offset-[5px];
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notebook-dialog[open],
+  .shortcuts-dialog[open],
+  .pocket-button[aria-pressed="true"] svg {
+    animation: none;
+  }
+}
