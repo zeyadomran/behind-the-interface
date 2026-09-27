@@ -46,13 +46,12 @@ function attribute(html, name) {
   );
 }
 
+// The sections under test contain no scripts, so the prerendered HTML is read
+// as exported rather than filtered.
 function builtRoute(route) {
   const file = resolve("dist", route, "index.html");
   assert.ok(existsSync(file), `Run yarn build before these tests: ${file}`);
-  return readFileSync(file, "utf8").replace(
-    /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-    "",
-  );
+  return readFileSync(file, "utf8");
 }
 
 /** The element whose opening tag matches, including nested same-name tags. */
