@@ -12,10 +12,11 @@ export function SearchButton() {
       onClick={() => setOpenSearch(true)}
       aria-label="Search all research"
       aria-haspopup="dialog"
+      title="Search all research (/)"
     >
       <Search size={17} strokeWidth={1.5} aria-hidden="true" />
-      <span>Search research</span>
-      <kbd>⌘ K</kbd>
+      <span>Search</span>
+      <kbd>/</kbd>
     </button>
   );
 }

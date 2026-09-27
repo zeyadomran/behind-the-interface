@@ -1,11 +1,11 @@
 ---
 title: "Ace"
-description: "Technical editorial precision: typography, interaction, responsive behavior, and public-source evidence for Ace."
+description: "A dark technical studio where narrow type, fine rules and rationed lime carry the identity, and a 640px box clips the mobile introduction."
 date: "2026-09-16"
 kind: "study"
 cover: "/research/five-websites/screenshots/ace-desktop.jpg"
 visual: "ace"
-tags: ["Creative direction", "Typography", "Interaction", "Responsive design"]
+tags: ["Technical editorial", "Fixed rail", "Responsive defects"]
 sites: ["https://acedesign.io/"]
 ---
 

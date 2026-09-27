@@ -70,8 +70,9 @@
   @apply outline-offset-[4px];
 }
 
-/* Skip navigation focuses a reading target, not an interactive control. */
-#main-content[tabindex="-1"]:focus {
+/* Skip navigation and chapter links focus a reading target, not a control. */
+#main-content[tabindex="-1"]:focus,
+[data-story-chapter][tabindex="-1"]:focus {
   @apply outline-none;
 }
 

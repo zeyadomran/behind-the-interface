@@ -1,11 +1,11 @@
 ---
 title: "Lama Lama"
-description: "A complete brand behavior system: typography, layered interactions, responsive behavior, and public-source evidence for Lama Lama."
+description: "An agency identity carried by pixels, mono labels and hidden layers, from a ten-slide pitch deck in the menu to a camera grid on the contact page."
 date: "2026-09-16"
 kind: "study"
 cover: "/research/five-websites/screenshots/lama-desktop.jpg"
 visual: "lama-lama"
-tags: ["Creative direction", "Typography", "Interaction", "Responsive design"]
+tags: ["Brand behavior", "Hidden layers", "Modal exits"]
 sites: ["https://lamalama.com/"]
 ---
 

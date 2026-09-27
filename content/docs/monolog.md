@@ -1,11 +1,11 @@
 ---
 title: "MONOLOG"
-description: "Warm editorial confidence: typography, narrative, interaction, responsive behavior, and public-source evidence for MONOLOG."
+description: "A studio site that builds trust in order, from atmosphere to founder, work, process and answers, while seven sitemap case URLs return generic shells."
 date: "2026-09-16"
 kind: "study"
 cover: "/research/five-websites/screenshots/monolog-desktop.jpg"
 visual: "monolog"
-tags: ["Creative direction", "Typography", "Interaction", "Responsive design"]
+tags: ["Narrative sequence", "Warm editorial", "Route completeness"]
 sites: ["https://bymonolog.com/"]
 ---
 

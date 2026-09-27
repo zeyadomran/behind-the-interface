@@ -1,72 +1,17 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { X } from "lucide-react";
 import {
   articleVisualData,
   originalResearchDate,
-  type InteractionFinding,
   type SiteKey,
 } from "@/lib/article-visual-data";
-import { withBasePath } from "@/lib/paths";
+import { EvidenceBadge } from "./evidence-badge";
 
-type Viewport = "desktop" | "mobile";
+export type Viewport = "desktop" | "mobile";
 
-const evidenceLabels: Record<InteractionFinding["evidence"], string> = {
-  observed: "Observed",
-  "source-confirmed": "Source-confirmed",
-  "hook-only": "Hook only",
-  mixed: "Observed + source",
-};
-
-const interactionLabels: Record<SiteKey, string> = {
-  noho: "Energy controls",
-  ace: "Project image",
-  "arkon-digital": "Shared scene",
-  "neue-montreal": "Specimen controls",
-  monolog: "Service preview",
-  "lama-lama": "Camera grid",
-};
-
-// These are the dimensions of the published JPEG files, not CSS viewports.
-const captureDimensions: Record<
-  SiteKey,
-  Record<Viewport, { width: number; height: number }>
-> = {
-  noho: {
-    desktop: { width: 1440, height: 1000 },
-    mobile: { width: 390, height: 844 },
-  },
-  ace: {
-    desktop: { width: 1425, height: 990 },
-    mobile: { width: 375, height: 812 },
-  },
-  "arkon-digital": {
-    desktop: { width: 1280, height: 720 },
-    mobile: { width: 390, height: 844 },
-  },
-  "neue-montreal": {
-    desktop: { width: 1265, height: 712 },
-    mobile: { width: 375, height: 812 },
-  },
-  monolog: {
-    desktop: { width: 1265, height: 712 },
-    mobile: { width: 375, height: 812 },
-  },
-  "lama-lama": {
-    desktop: { width: 1280, height: 720 },
-    mobile: { width: 390, height: 844 },
-  },
-};
-
-function cssPixels(value: number | "normal" | null): string {
-  return value === null
-    ? "Not displayed"
-    : value === "normal"
-      ? "normal"
-      : `${value}px`;
-}
-
-function ViewportControls({
+export function ViewportControls({
   name,
   context,
   selected,
@@ -98,224 +43,127 @@ function ViewportControls({
   );
 }
 
-export function TypePlayground({ site }: { site: SiteKey }) {
-  const id = useId();
-  const data = articleVisualData[site];
-  const [selectedRole, setSelectedRole] = useState(0);
-  const [viewport, setViewport] = useState<Viewport>("desktop");
-  const role = data.typography[selectedRole] ?? data.typography[0];
-  const measurement = role[viewport];
+// The recorded finding each demonstration explains.
+const interactionLabels: Record<SiteKey, string> = {
+  noho: "Energy controls",
+  ace: "Project image",
+  "arkon-digital": "Shared scene",
+  "neue-montreal": "Variable weights",
+  monolog: "Service preview",
+  "lama-lama": "Pitch deck exits",
+};
 
-  return (
-    <figure
-      className="story-playground story-type-playground"
-      aria-labelledby={`${id}-title`}
-    >
-      <figcaption className="story-playground-heading">
-        <strong id={`${id}-title`}>Type, in proportion.</strong>
-        <span>Change a role. Compare the scale.</span>
-      </figcaption>
-      <div className="story-playground-toolbar">
-        <label className="story-playground-field" htmlFor={`${id}-role`}>
-          <span>{data.name} text role</span>
-          <select
-            id={`${id}-role`}
-            value={selectedRole}
-            onChange={(event) => setSelectedRole(Number(event.target.value))}
-          >
-            {data.typography.map((item, index) => (
-              <option key={item.label} value={index}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <ViewportControls
-          name={data.name}
-          context="typography"
-          selected={viewport}
-          onChange={setViewport}
-        />
-      </div>
+const prompts: Record<SiteKey, string> = {
+  noho: "Two preferences that change this page.",
+  ace: "Where should a hover response happen? Try each answer.",
+  "arkon-digital": "Change the route. Keep the world.",
+  "neue-montreal": "Scrub the scroll and watch the weights trade places.",
+  monolog: "Point at a service. Everything else steps back.",
+  "lama-lama": "Open a layer, then find every way out.",
+};
 
-      <div className="story-type-stage">
-        <svg viewBox="0 0 600 320" aria-hidden="true" focusable="false">
-          <path d="M36 246H564M36 38V274" className="story-diagram-rule" />
-          <path
-            d="M30 246H42M30 46H42M558 246H570"
-            className="story-diagram-ink-rule"
-          />
-          <text x="564" y="39" textAnchor="end" className="story-diagram-label">
-            RELATIVE SIZE / 2× DRAWING
-          </text>
-          {measurement.size === null ? (
-            <>
-              <path
-                d="M225 97H375V217H225ZM225 97L375 217M375 97L225 217"
-                className="story-diagram-rule"
-              />
-              <text
-                x="300"
-                y="285"
-                textAnchor="middle"
-                className="story-diagram-label"
-              >
-                NOT DISPLAYED AT THIS VIEWPORT
-              </text>
-            </>
-          ) : (
-            <>
-              <text
-                x="50"
-                y="246"
-                fontSize={measurement.size * 2}
-                className="story-type-specimen"
-              >
-                Aa
-              </text>
-              <text
-                x="564"
-                y="285"
-                textAnchor="end"
-                className="story-diagram-label"
-              >
-                {cssPixels(measurement.size)} RECORDED
-              </text>
-            </>
-          )}
-        </svg>
-      </div>
+const asciiRows = [
+  "..:-=+*#%%#*+=-:..",
+  ".:=*%@@@@@@@@%*=:.",
+  ":+%@@%*+==+*%@@%+:",
+  "=#@@*-::..::-*@@#=",
+  "=#@@*-::..::-*@@#=",
+  ":+%@@%*+==+*%@@%+:",
+  ".:=*%@@@@@@@@%*=:.",
+  "..:-=+*#%%#*+=-:..",
+];
 
-      <div className="story-type-readout" aria-live="polite" aria-atomic="true">
-        <dl className="story-type-stats">
-          <div>
-            <dt>Font size</dt>
-            <dd>{cssPixels(measurement.size)}</dd>
-          </div>
-          <div>
-            <dt>Line height</dt>
-            <dd>{cssPixels(measurement.lineHeight)}</dd>
-          </div>
-          <div className="story-type-family">
-            <dt>Recorded source family / weight</dt>
-            <dd>{role.family}</dd>
-          </div>
-        </dl>
-        <p className="story-playground-insight">{role.note}.</p>
-        <p className="story-playground-note">
-          Desktop {cssPixels(role.desktop.size)} → mobile{" "}
-          {cssPixels(role.mobile.size)}.
-          {measurement.lineHeight === "normal" &&
-            " “normal” is the recorded CSS value; no pixel line height was established."}
-        </p>
-      </div>
-      <p className="story-playground-footnote">
-        Measured at 1440 × 1000 desktop and 390 × 844 mobile,{" "}
-        {data.researchDate ?? originalResearchDate}. This scaled diagram uses
-        the library’s PP Neue Montréal, not the source typeface. Its SVG units
-        show twice the recorded size; on-screen pixels vary with the frame.
-      </p>
-    </figure>
-  );
-}
+type ZoomStrategy = "image" | "card" | "room";
+const zoomStrategies: { id: ZoomStrategy; label: string; note: string }[] = [
+  {
+    id: "image",
+    label: "Inner image",
+    note: "The image grows to 1.05 inside a fixed frame. The card, its label and its neighbors stay put: Ace’s recorded response.",
+  },
+  {
+    id: "card",
+    label: "Whole card",
+    note: "The whole card grows to 1.05. Its edges leave the grid’s alignment and its label rescales with it.",
+  },
+  {
+    id: "room",
+    label: "More room",
+    note: "The card takes more space in the row, so its neighbors move. Every hover now rearranges the layout.",
+  },
+];
 
 function AceMotion() {
-  const clipId = `story-ace-${useId().replace(/:/g, "")}`;
-  const [zoomed, setZoomed] = useState(false);
-  const rows = [
-    "....................:--==--:....................",
-    "...............:-=+*#%%%%%%#*+=-:...............",
-    "...........:-=*#%%@@@@@@@@@@@@%%#*=-:...........",
-    ".........:=*#%@@@@%#**++++**#%@@@@%#*=:.........",
-    "........-+#%@@@%*=-:......:-=*%@@@%#+-........",
-    ".......=*%@@@#+:....::--::....:+#@@@%*=.......",
-    "......-#%@@@#-...:=*#%%%%#*=:...-#@@@%#-......",
-    "......+%@@@%=...-*%@@@@@@%*-...=%@@@%+......",
-    "......+%@@@%=...-*%@@@@@@%*-...=%@@@%+......",
-    "......-#%@@@#-...:=*#%%%%#*=:...-#@@@%#-......",
-    ".......=*%@@@#+:....::--::....:+#@@@%*=.......",
-    "........-+#%@@@%*=-:......:-=*%@@@%#+-........",
-    ".........:=*#%@@@@%#**++++**#%@@@@%#*=:.........",
-    "...........:-=*#%%@@@@@@@@@@@@%%#*=-:...........",
-    "...............:-=+*#%%%%%%#*+=-:...............",
+  const [strategy, setStrategy] = useState<ZoomStrategy>("image");
+  const [pinned, setPinned] = useState(false);
+  const current = zoomStrategies.find((item) => item.id === strategy)!;
+  const cards = [
+    ["Project one", "Product design"],
+    ["Project two", "Design system"],
+    ["Project three", "Research"],
   ];
   return (
     <>
-      <div className="story-motion-stage story-ace-stage" data-active={zoomed}>
-        <svg viewBox="0 0 600 340" aria-hidden="true" focusable="false">
-          <defs>
-            <clipPath id={clipId}>
-              <rect x="68" y="52" width="464" height="236" />
-            </clipPath>
-          </defs>
-          <path
-            d="M36 52H54M68 20V38M546 288H564M532 302V320"
-            className="story-diagram-ink-rule"
-          />
-          <g clipPath={`url(#${clipId})`}>
-            <rect
-              x="68"
-              y="52"
-              width="464"
-              height="236"
-              className="story-ace-image-paper"
-            />
-            <g className="story-ace-image">
-              {rows.map((row, index) => (
-                <text
-                  key={index}
-                  x="86"
-                  y={78 + index * 13}
-                  className="story-ace-ascii"
-                >
-                  {row}
-                </text>
-              ))}
-              <path
-                d="M300 64V276M80 170H520"
-                className="story-ace-crosshair"
-              />
-            </g>
-          </g>
-          <rect
-            x="68"
-            y="52"
-            width="464"
-            height="236"
-            className="story-diagram-ink-rule"
-          />
-          <text x="68" y="316" className="story-diagram-label">
-            FRAME / FIXED
-          </text>
-          <text
-            x="532"
-            y="316"
-            textAnchor="end"
-            className="story-diagram-label"
-          >
-            IMAGE / {zoomed ? "1.05" : "1.00"}
-          </text>
-        </svg>
+      <div className="ace-zoom-stage" data-strategy={strategy}>
+        <div className="ace-zoom-grid">
+          {cards.map(([title, category], index) => {
+            const content = (
+              <>
+                <span className="ace-zoom-frame" aria-hidden="true">
+                  <span className="ace-zoom-image">
+                    {asciiRows.map((row, rowIndex) => (
+                      <span key={rowIndex}>{row}</span>
+                    ))}
+                  </span>
+                </span>
+                <span className="ace-zoom-label">
+                  <strong>{title}</strong>
+                  <span>{category}</span>
+                </span>
+              </>
+            );
+            return index === 1 ? (
+              <button
+                key={title}
+                type="button"
+                className="ace-zoom-card ace-zoom-card--hot"
+                aria-pressed={pinned}
+                aria-label="Ace illustration: hover this card, or press to hold the hover"
+                onClick={() => setPinned(!pinned)}
+              >
+                {content}
+              </button>
+            ) : (
+              <span key={title} className="ace-zoom-card" aria-hidden="true">
+                {content}
+              </span>
+            );
+          })}
+        </div>
       </div>
       <div className="story-motion-controls">
-        <button
-          type="button"
-          className="story-playground-action"
-          aria-pressed={zoomed}
-          aria-label="Ace illustration: zoom image"
-          onClick={() => setZoomed(!zoomed)}
+        <div
+          className="story-playground-switch"
+          role="group"
+          aria-label="Ace illustration: where the zoom happens"
         >
-          Zoom image <span aria-hidden="true">↗</span>
-        </button>
-        <p className="story-playground-note" aria-live="polite">
-          {zoomed
-            ? "1.05× image. Same frame, same place."
-            : "1.00× image. Try a small change of scale."}
-        </p>
+          {zoomStrategies.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              aria-pressed={strategy === item.id}
+              onClick={() => setStrategy(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
       </div>
+      <p className="story-playground-insight" aria-live="polite">
+        {current.note}
+      </p>
       <p className="story-playground-note">
-        Original illustration. The button demonstrates the recorded hover zoom
-        using an invented ASCII image.
+        Original illustration with invented projects. Hover or focus the middle
+        card; press it to hold the state on touch screens.
       </p>
     </>
   );
@@ -368,6 +216,7 @@ function ArkonMotion() {
                     cx={(Math.cos(angle) * radius).toFixed(4)}
                     cy={(Math.sin(angle) * radius).toFixed(4)}
                     r={index % 4 === 0 ? 3.5 : 1.9}
+                    style={{ transitionDelay: `${(index % 12) * 18}ms` }}
                   />
                 );
               })}
@@ -384,100 +233,161 @@ function ArkonMotion() {
           </text>
         </svg>
       </div>
-      <div
-        className="story-playground-switch story-motion-routes"
-        role="group"
-        aria-label="Arkon Digital illustration routes"
-      >
-        {["Home", "Projects", "Services"].map((item) => (
-          <button
-            key={item}
-            type="button"
-            aria-pressed={route === item}
-            aria-label={`Arkon Digital illustration: ${item}`}
-            onClick={() => setRoute(item)}
-          >
-            {item}
-          </button>
-        ))}
+      <div className="story-motion-controls">
+        <div
+          className="story-playground-switch story-motion-routes"
+          role="group"
+          aria-label="Arkon Digital illustration routes"
+        >
+          {["Home", "Projects", "Services"].map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={route === item}
+              aria-label={`Arkon Digital illustration: ${item}`}
+              onClick={() => setRoute(item)}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </div>
-      <p className="story-playground-note" aria-live="polite">
+      <p className="story-playground-insight" aria-live="polite">
         {route === "Home"
           ? "Home holds a solid form at the center."
-          : `${route} reframes the same form as a field of particles.`}
+          : `${route} reframes the same form as a field of particles, in a new position.`}
       </p>
       <p className="story-playground-note">
-        Original illustration of scene continuity. This diagram is not Arkon’s
-        renderer or a reconstruction of its timing.
+        Original illustration of scene continuity. It is not Arkon’s renderer or
+        a reconstruction of its timing.
       </p>
     </>
   );
 }
 
+/** Faux weight: an ink stroke thickens the glyph, a paper stroke erodes it. */
+function weightStroke(weight: number) {
+  return weight >= 400
+    ? { stroke: "var(--story-ink)", width: ((weight - 400) / 500) * 10 }
+    : { stroke: "var(--story-paper)", width: ((400 - weight) / 300) * 7 };
+}
+
 function NeueMotion() {
-  const [weight, setWeight] = useState<400 | 600>(400);
+  const [progress, setProgress] = useState(0);
+  const frame = useRef(0);
+  const share = Math.min(1, progress / 70);
+  const display = Math.round(900 - 800 * share);
+  const text = Math.round(200 + 500 * share);
+  const displayStroke = weightStroke(display);
+  const textStroke = weightStroke(text);
+
+  useEffect(() => () => window.cancelAnimationFrame(frame.current), []);
+
+  function play() {
+    window.cancelAnimationFrame(frame.current);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setProgress(progress >= 100 ? 0 : 100);
+      return;
+    }
+    const start = performance.now();
+    const from = progress >= 100 ? 0 : progress;
+    const step = (now: number) => {
+      const value = Math.min(100, from + ((now - start) / 2400) * 100);
+      setProgress(Math.round(value));
+      if (value < 100) frame.current = window.requestAnimationFrame(step);
+    };
+    frame.current = window.requestAnimationFrame(step);
+  }
+
   return (
     <>
       <div className="story-motion-stage story-neue-stage">
-        <svg viewBox="0 0 600 340" aria-hidden="true" focusable="false">
+        <svg viewBox="0 0 600 330" aria-hidden="true" focusable="false">
           <path
-            d="M36 91H564M36 254H564M54 68V272M546 68V272"
+            d="M36 70H564M36 250H564M300 70V250"
             className="story-diagram-rule"
           />
-          <text x="36" y="39" className="story-diagram-label">
-            THE LETTER IS THE INTERFACE
+          <text x="36" y="44" className="story-diagram-label">
+            DISPLAY
           </text>
+          <text x="564" y="44" textAnchor="end" className="story-diagram-label">
+            TEXT
+          </text>
+          {[
+            { x: 168, weight: display, stroke: displayStroke },
+            { x: 432, weight: text, stroke: textStroke },
+          ].map((glyph) => (
+            <g key={glyph.x}>
+              <text
+                x={glyph.x}
+                y="224"
+                textAnchor="middle"
+                fontSize="176"
+                letterSpacing="-8"
+                className="story-neue-specimen"
+                stroke={glyph.stroke.stroke}
+                strokeWidth={glyph.stroke.width.toFixed(2)}
+                strokeLinejoin="round"
+                paintOrder={glyph.weight >= 400 ? "stroke fill" : "fill stroke"}
+              >
+                Aa
+              </text>
+              <text
+                x={glyph.x}
+                y="286"
+                textAnchor="middle"
+                className="story-neue-weight"
+              >
+                {glyph.weight}
+              </text>
+            </g>
+          ))}
+          <path d="M36 310H564" className="story-diagram-rule" />
+          <path
+            d={`M36 310H${36 + (528 * progress) / 100}`}
+            className="story-neue-progress"
+          />
+          <path d="M405.6 302V318" className="story-diagram-ink-rule" />
           <text
-            x="300"
-            y="254"
+            x="405.6"
+            y="298"
             textAnchor="middle"
-            fontSize="265"
-            fontWeight={weight}
-            letterSpacing="-12"
-            className="story-neue-specimen"
-          >
-            Aa
-          </text>
-          <text x="36" y="314" className="story-diagram-label">
-            PP NEUE MONTRÉAL
-          </text>
-          <text
-            x="564"
-            y="314"
-            textAnchor="end"
             className="story-diagram-label"
           >
-            {weight} / {weight === 400 ? "REGULAR" : "SEMIBOLD"}
+            0.7
           </text>
         </svg>
       </div>
-      <div
-        className="story-playground-switch"
-        role="group"
-        aria-label="Neue Montréal illustration font weight"
-      >
-        {([400, 600] as const).map((value) => (
-          <button
-            key={value}
-            type="button"
-            aria-pressed={weight === value}
-            aria-label={`Neue Montréal illustration: ${value === 400 ? "Regular" : "Semibold"} weight`}
-            onClick={() => setWeight(value)}
-          >
-            {value === 400 ? "Regular" : "Semibold"}
-            <span>{value}</span>
-          </button>
-        ))}
+      <div className="story-motion-controls story-neue-controls">
+        <label className="story-range">
+          <span>Scroll progress</span>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={progress}
+            aria-valuetext={`${progress}%: Display weight ${display}, Text weight ${text}`}
+            onChange={(event) => setProgress(Number(event.target.value))}
+          />
+        </label>
+        <button
+          type="button"
+          className="story-playground-action"
+          onClick={play}
+        >
+          {progress >= 100 ? "Scroll again" : "Play the scroll"}
+        </button>
       </div>
-      <p className="story-playground-note" aria-live="polite">
-        {weight === 400
-          ? "Regular: open, even and quiet."
-          : "Semibold: the same letters carry more emphasis."}
+      <p className="story-playground-insight" aria-live="polite">
+        Display {display} · Text {text}
+        {progress >= 70
+          ? ". The trade is complete at 70% of the scroll."
+          : ". The heavier face thins while the lighter one gains weight."}
       </p>
       <p className="story-playground-note">
-        Original illustration using this library’s two installed PP Neue
-        Montréal weights. The source specimen offers its own families and weight
-        choices.
+        Original illustration. Endpoints follow the recorded source mapping; the
+        straight line between them is assumed. This library has two static
+        weights, so stroke thickness stands in for the variable axis.
       </p>
     </>
   );
@@ -501,10 +411,16 @@ function MonologMotion() {
               aria-pressed={service === index}
               aria-label={`MONOLOG illustration: ${name}`}
               onClick={() => setService(index)}
+              onFocus={() => setService(index)}
+              onPointerEnter={(event) => {
+                if (event.pointerType === "mouse") setService(index);
+              }}
             >
               <span className="story-monolog-number">0{index + 1}</span>
               <span>{name}</span>
-              <span aria-hidden="true">↗</span>
+              <span className="story-monolog-opacity" aria-hidden="true">
+                {service === index ? "1.0" : "0.3"}
+              </span>
             </button>
           ))}
         </div>
@@ -584,90 +500,169 @@ function MonologMotion() {
           </svg>
         </div>
       </div>
-      <p className="story-playground-note" aria-live="polite">
-        {names[service]} sets the emphasis and the accompanying image.
+      <p className="story-playground-insight" aria-live="polite">
+        {names[service]} stays at full opacity; the others fall to 0.3, the
+        values recorded on MONOLOG. The preview follows the active name.
       </p>
       <p className="story-playground-note">
         Original illustration with three sample services and invented previews.
-        Select a row to explore the relationship observed on hover.
+        Point at a row, focus it or tap it.
       </p>
     </>
   );
 }
 
-function LamaMotion() {
-  const [reframed, setReframed] = useState(false);
+// Two pixel Ls, an original nod to a pixel identity rather than its logo.
+const pixelLetters = ["1000010000", "1000010000", "1000010000", "1110011100"];
+
+type Exit = "button" | "escape" | "outside";
+const exits: { id: Exit; label: string }[] = [
+  { id: "button", label: "A visible close button" },
+  { id: "escape", label: "The Escape key" },
+  { id: "outside", label: "A click outside the layer" },
+];
+
+function LamaExits() {
+  const id = useId();
+  const cases = ["Case 01", "Case 02", "Case 03"];
+  const [open, setOpen] = useState<number | null>(null);
+  const [found, setFound] = useState<Exit[]>([]);
+  const openers = useRef<(HTMLButtonElement | null)[]>([]);
+  const closeButton = useRef<HTMLButtonElement>(null);
+
+  const close = useCallback(
+    (exit: Exit) => {
+      const opener = open;
+      setFound((current) =>
+        current.includes(exit) ? current : [...current, exit],
+      );
+      setOpen(null);
+      if (opener !== null) openers.current[opener]?.focus();
+    },
+    [open],
+  );
+
+  // Like a real layer: focus moves in, and Escape works wherever focus is.
+  useEffect(() => {
+    if (open === null) return;
+    closeButton.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      close("escape");
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, close]);
+
   return (
     <>
-      <div
-        className="story-motion-stage story-lama-stage"
-        data-active={reframed}
-      >
-        <svg viewBox="0 0 600 340" aria-hidden="true" focusable="false">
-          <text x="36" y="39" className="story-diagram-label">
-            AN IMAGE, BUILT FROM MODULES
-          </text>
-          <g className="story-lama-pixels">
-            {Array.from({ length: 198 }, (_, index) => {
-              const column = index % 22;
-              const row = Math.floor(index / 22);
-              const x = 45 + column * 23;
-              const y = 65 + row * 23;
-              const shape = Math.hypot(column - 10.5, (row - 4) * 1.45);
-              const accent = shape < 5.6 && shape > 2.6;
-              const shift = (column + row) % 3;
-              return (
-                <rect
-                  key={index}
-                  x={x}
-                  y={y}
-                  width="19"
-                  height="19"
-                  className={`story-lama-pixel story-lama-pixel--${shift}${accent ? " story-lama-pixel-accent" : ""}`}
-                />
-              );
-            })}
-          </g>
-          <text x="36" y="314" className="story-diagram-label">
-            GENERATED GRID / NO CAMERA
-          </text>
-          <text
-            x="564"
-            y="314"
-            textAnchor="end"
-            className="story-diagram-label"
+      <div className="lama-exits-stage" data-open={open !== null}>
+        <ul className="lama-exits-rows">
+          {cases.map((name, index) => (
+            <li key={name}>
+              <button
+                ref={(element) => {
+                  openers.current[index] = element;
+                }}
+                type="button"
+                aria-expanded={open === index}
+                aria-controls={`${id}-layer`}
+                aria-label={`Lama Lama illustration: open ${name}`}
+                onClick={() => setOpen(index)}
+              >
+                <span>[ {name} ]</span>
+                <span aria-hidden="true">+</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        {open !== null && (
+          <div className="lama-exits-layer" id={`${id}-layer`}>
+            <button
+              type="button"
+              className="lama-exits-backdrop"
+              tabIndex={-1}
+              aria-label="Close by clicking outside the layer"
+              onClick={() => close("outside")}
+            />
+            <div
+              className="lama-exits-panel"
+              role="group"
+              aria-label={`${cases[open]} preview layer`}
+            >
+              <div className="lama-exits-panel-top">
+                <span>[ {cases[open]} ]</span>
+                <button
+                  ref={closeButton}
+                  type="button"
+                  onClick={() => close("button")}
+                  aria-label="Close the preview"
+                >
+                  <X size={16} aria-hidden="true" />
+                </button>
+              </div>
+              <div className="lama-exits-pixels" aria-hidden="true">
+                {pixelLetters.flatMap((row, rowIndex) =>
+                  [...row].map((pixel, column) => (
+                    <i
+                      key={`${rowIndex}-${column}`}
+                      data-on={pixel === "1" || undefined}
+                    />
+                  )),
+                )}
+              </div>
+              <p>A preview layer. Now leave it another way.</p>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="lama-exits-score">
+        <ul aria-label="Exits found">
+          {exits.map((exit) => (
+            <li key={exit.id} data-found={found.includes(exit.id)}>
+              <span className="lama-exits-check" aria-hidden="true" />
+              {exit.label}
+              <span className="sr-only">
+                {found.includes(exit.id) ? ", found" : ", not found yet"}
+              </span>
+            </li>
+          ))}
+        </ul>
+        {found.length > 0 && (
+          <button
+            type="button"
+            className="story-playground-action"
+            onClick={() => setFound([])}
           >
-            {reframed ? "REFRAMED" : "ALIGNED"}
-          </text>
-        </svg>
+            Reset
+          </button>
+        )}
       </div>
-      <div className="story-motion-controls">
-        <button
-          type="button"
-          className="story-playground-action"
-          aria-pressed={reframed}
-          aria-label="Lama Lama illustration: reframe the grid"
-          onClick={() => setReframed(!reframed)}
-        >
-          Reframe the grid <span aria-hidden="true">↗</span>
-        </button>
-        <p className="story-playground-note" aria-live="polite">
-          {reframed
-            ? "The modules move; the visual language stays."
-            : "Small repeated units make one image."}
-        </p>
-      </div>
+      <p className="story-playground-insight" aria-live="polite">
+        {found.length === 3
+          ? "All three found. Lama Lama’s deck offered the first; in the tested desktop state, Escape did not close it."
+          : `${found.length} of 3 exits found. Open a case, then leave the layer.`}
+      </p>
       <p className="story-playground-note">
-        Original abstract illustration of the grid idea. These generated shapes
-        do not use a camera or reproduce the source shader.
+        Original illustration with invented cases. On a touch screen, two of the
+        three exits apply.
       </p>
     </>
   );
 }
 
-function NohoPreferences() {
-  const [dark, setDark] = useState(false);
-  const [calm, setCalm] = useState(false);
+export interface NohoControls {
+  dark: boolean;
+  calm: boolean;
+  setDark: (value: boolean) => void;
+  setCalm: (value: boolean) => void;
+}
+
+function NohoPreferences({ dark, calm, setDark, setCalm }: NohoControls) {
+  const chosen = [dark && "a dark surface", calm && "calmer motion"].filter(
+    Boolean,
+  );
   return (
     <>
       <div className="story-noho-stage" data-dark={dark} data-calm={calm}>
@@ -697,43 +692,51 @@ function NohoPreferences() {
             textAnchor="end"
             className="story-diagram-label"
           >
-            {calm ? "SETTLED COMPOSITION" : "PLAYFUL COMPOSITION"}
+            {calm ? "SETTLED" : "PLAYFUL"}
           </text>
         </svg>
       </div>
-      <div className="story-motion-controls">
+      <div className="story-motion-controls noho-switches">
         <button
           type="button"
-          className="story-playground-action"
-          aria-label="Noho illustration: dark surface"
-          aria-pressed={dark}
+          role="switch"
+          aria-checked={dark}
           onClick={() => setDark(!dark)}
         >
-          Dark surface
+          <span className="noho-switch-track" aria-hidden="true" />
+          Dark surface for this page
         </button>
         <button
           type="button"
-          className="story-playground-action"
-          aria-label="Noho illustration: calmer composition"
-          aria-pressed={calm}
+          role="switch"
+          aria-checked={calm}
           onClick={() => setCalm(!calm)}
         >
-          Calmer composition
+          <span className="noho-switch-track" aria-hidden="true" />
+          Calmer motion for this page
         </button>
       </div>
-      <p className="story-playground-note" aria-live="polite">
-        {dark ? "Dark" : "Light"} surface · {calm ? "Settled" : "Tilted"} chair.
-        Both choices remain independent.
+      <p className="story-playground-insight" aria-live="polite">
+        {chosen.length
+          ? `This page now uses ${chosen.join(" and ")}. Each switch works on its own.`
+          : "Try either switch. Each one changes this whole story page."}
       </p>
       <p className="story-playground-note">
-        Original illustration. These controls change this diagram only. They do
-        not estimate energy usage or reproduce Noho’s animation engine.
+        Original illustration. These switches change this story, not Noho, and
+        estimate nothing about energy. Noho’s own panel showed a rating that the
+        research did not measure.
       </p>
     </>
   );
 }
 
-export function MotionPlayground({ site }: { site: SiteKey }) {
+export function MotionPlayground({
+  site,
+  noho,
+}: {
+  site: SiteKey;
+  noho?: NohoControls;
+}) {
   const id = useId();
   const data = articleVisualData[site];
   const finding = data.interactions.find(
@@ -746,7 +749,7 @@ export function MotionPlayground({ site }: { site: SiteKey }) {
     >
       <figcaption className="story-playground-heading">
         <strong id={`${id}-title`}>A small interaction, explained.</strong>
-        <span>Click or tap. The change has a purpose.</span>
+        <span>{prompts[site]}</span>
       </figcaption>
       {site === "ace" ? (
         <AceMotion />
@@ -757,19 +760,14 @@ export function MotionPlayground({ site }: { site: SiteKey }) {
       ) : site === "monolog" ? (
         <MonologMotion />
       ) : site === "noho" ? (
-        <NohoPreferences />
+        noho && <NohoPreferences {...noho} />
       ) : (
-        <LamaMotion />
+        <LamaExits />
       )}
       <div className="story-finding-caption">
         <div className="story-finding-label">
-          <strong>{finding.label}</strong>
-          <span
-            className="story-evidence-badge"
-            data-evidence={finding.evidence}
-          >
-            {evidenceLabels[finding.evidence]}
-          </span>
+          <strong>What the research recorded: {finding.label}</strong>
+          <EvidenceBadge kind={finding.evidence} describe />
         </div>
         <p>{finding.response}</p>
         <p className="story-playground-note">{finding.detail}</p>
@@ -777,85 +775,6 @@ export function MotionPlayground({ site }: { site: SiteKey }) {
           Recorded {data.researchDate ?? originalResearchDate}.
         </span>
       </div>
-    </figure>
-  );
-}
-
-export function ResponsivePlayground({ site }: { site: SiteKey }) {
-  const id = useId();
-  const data = articleVisualData[site];
-  const [viewport, setViewport] = useState<Viewport>("desktop");
-  const screenshot = data.screenshots[viewport];
-  const dimensions = captureDimensions[site][viewport];
-  return (
-    <figure
-      className="story-playground story-responsive-playground"
-      aria-labelledby={`${id}-title`}
-    >
-      <figcaption className="story-playground-heading">
-        <strong id={`${id}-title`}>The recorded view.</strong>
-        <span>Real captures, two compositions.</span>
-      </figcaption>
-      <div className="story-playground-toolbar">
-        <ViewportControls
-          name={data.name}
-          context="screenshots"
-          selected={viewport}
-          onChange={setViewport}
-        />
-        <span className="story-playground-note" aria-live="polite">
-          {dimensions.width} × {dimensions.height} image pixels
-        </span>
-      </div>
-      <div className="story-capture-stage" data-viewport={viewport}>
-        <div className="story-capture-registration">
-          <span>{data.name}</span>
-          <span>{viewport === "desktop" ? "01 / Desktop" : "02 / Mobile"}</span>
-        </div>
-        <a
-          href={withBasePath(screenshot.src)}
-          target="_blank"
-          rel="noreferrer"
-          className="story-capture-image-link"
-          aria-label={`Open ${data.name} ${viewport} screenshot at full size in a new tab`}
-        >
-          <img
-            src={withBasePath(screenshot.src)}
-            alt={screenshot.alt}
-            width={dimensions.width}
-            height={dimensions.height}
-            loading="lazy"
-            decoding="async"
-          />
-        </a>
-      </div>
-      <p className="story-playground-insight" aria-live="polite">
-        {screenshot.alt}
-      </p>
-      <div className="story-capture-links">
-        <a
-          href={withBasePath(data.screenshots.desktop.src)}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Desktop full size <span aria-hidden="true">↗</span>
-          <span className="story-visually-hidden"> (new tab)</span>
-        </a>
-        <a
-          href={withBasePath(data.screenshots.mobile.src)}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Mobile full size <span aria-hidden="true">↗</span>
-          <span className="story-visually-hidden"> (new tab)</span>
-        </a>
-      </div>
-      <p className="story-playground-footnote">
-        Captured {data.researchDate ?? originalResearchDate}. Image dimensions
-        describe the saved files. Mobile research used a 390 × 844 CSS-pixel
-        viewport; saved images may be resized. Each frame records one moment,
-        not the complete animation.
-      </p>
     </figure>
   );
 }

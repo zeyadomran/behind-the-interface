@@ -23,11 +23,15 @@ Start with [Research findings](content/docs/research-findings.md), or go directl
 
 Each website document brings its findings, typography observations, and source evidence together, with route details where applicable. [Research findings](content/docs/research-findings.md) brings together the cross-site conclusions, typography comparison, source-audit guidance, and route-inventory summary.
 
-The website adds a filterable study index, full-text search, documentation navigation, and an article table of contents. The six website titles open immersive stories at `/studies/<slug>/`; **Read research** links open their complete `/docs/<slug>/` articles directly. Research findings remains a documentation page. Each story follows five linked chapters: idea, typography, motion, mobile, and takeaways, with a distinct visual treatment, optional parallax, and original interactive demonstrations. Every chapter links to the supporting section of its research article.
+The site presents that research as **six websites, taken apart**. The homepage opens with a deck of sourced findings: one claim per card, each labelled with its kind of evidence and linked to the paragraph that supports it. The studies follow as a numbered series. Readers can open one study end to end, or choose a **lens** (Idea, Type, Motion, Mobile, Takeaways) to compare that chapter across every study; `?lens=type` and `?view=index` make a comparison shareable. A dumbbell chart plots all 21 measured type roles on one pixel scale, desktop to mobile, with a table view.
 
-The seven homepage entries use original interactive SVG wordprints as typographic teasers. Noho's composition pairs tilted letterforms with chair-like linework. Click, tap, Enter, or Space changes each composition; reduced motion switches states instantly without pointer tracking. The shared paper, green frame, and PP Neue Montreal keep the artwork within the library's visual system. See the [wordprint direction](docs/design-direction.md#homepage-wordprints).
+Each website has two reading depths: an immersive story at `/studies/<slug>/` and its complete research at `/docs/<slug>/`, joined by a **Story / Research** switch. Stories follow five chapters: an annotated capture of the recorded desktop view, every measured type role drawn at its recorded size, a hands-on demonstration of one recorded interaction, desktop and mobile captures side by side, and the lessons worth keeping. Every chapter links to its supporting research and to the same chapter across all studies.
 
-Original source screenshots remain inside the articles as evidence and appear in the stories' responsive comparisons. Article explorers let readers switch screenshot viewports, compare measured typography, and explore interaction evidence. Full research is written in Markdown or MDX; the site generates the HTML. New studies appear from their metadata without editing a central list and open their documentation directly until an optional story is added to [`lib/study-stories.ts`](lib/study-stories.ts). The existing `visual` key selects a wordprint with a generic fallback for future entries.
+Three behaviors run across the whole site. **Inspect** (press `I`) labels headings and reading text with their computed size, line height, weight and tracking, the same measurement the research made on each website. **Pocket** saves a lesson to a notebook kept in the browser, which can be copied as Markdown. The **Studies** menu reaches every study, chapter and comparison from any page. Press `?` for keyboard shortcuts.
+
+The homepage entries use original interactive SVG wordprints as typographic teasers; click, tap, Enter, or Space recomposes each one. Original source screenshots remain evidence, shown inside the articles and the story chapters with their capture dates, and never used as decoration. Story demonstrations are labelled illustrations, separate from recorded behavior. See the [design direction](docs/design-direction.md).
+
+Full research is written in Markdown or MDX; the site generates the HTML. New studies appear from their metadata without editing a central list and open their documentation directly until an optional story is added to [`lib/study-stories.ts`](lib/study-stories.ts). The existing `visual` key selects a wordprint with a generic fallback for future entries.
 
 ## Run locally
 
@@ -68,7 +72,7 @@ yarn build
 yarn test
 ```
 
-The Node test suite checks the study-creation workflow, readable story exports, chapter and research links, and static-build asset invariants. Build first. Review the resulting pages in a browser for responsive layout, keyboard navigation, reduced motion, and interaction changes.
+The Node test suite checks the study-creation workflow, readable story exports, chapter and research links, that every finding in the homepage deck points to an existing research section, and static-build asset invariants. Build first. Review the resulting pages in a browser for responsive layout, keyboard navigation, reduced motion, and interaction changes.
 
 Installing dependencies activates Husky's pre-commit hook. It formats staged files, then runs linting, a fresh build with typechecking, and tests. GitHub Actions repeats lint/build/test on pull requests and pushes to `main`, with dependency review and CodeQL security checks. Direct pushes to `main` are blocked, and PRs require all configured checks to pass. See [GitHub automation and repository protections](docs/github-security.md) for the enforced rules and maintenance schedule. Report vulnerabilities privately using [SECURITY.md](SECURITY.md).
 
@@ -108,8 +112,9 @@ public/research/    Screenshots and measurement data served by the site
 assets/fonts/      Four supplied font files and their original EULA
 src/               Vite entry points, routing, and metadata rendering
 app/               React application shell and Tailwind styles
-components/        Library, stories, navigation, and article presentation
-lib/               Content loading, story registry, and base-path helpers
+components/        Library, stories, navigation, Inspect, notebook, and articles
+lib/               Content loading, story registry, findings deck, study
+                   profiles, evidence vocabulary, and base-path helpers
 scripts/           Prerendering, study creation, and local static preview
 templates/         Research entry template
 docs/              Authoring and design guidance

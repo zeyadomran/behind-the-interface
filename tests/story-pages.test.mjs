@@ -11,16 +11,18 @@ const stories = [
     name: "Noho",
     capture: "noho",
     captureDirectory: "noho",
-    motion: [
-      "Noho illustration: dark surface",
-      "Noho illustration: calmer composition",
-    ],
+    motion: ["Dark surface for this page", "Calmer motion for this page"],
   },
   {
     slug: "ace",
     name: "Ace",
     capture: "ace",
-    motion: ["Ace illustration: zoom image"],
+    motion: [
+      "Ace illustration: hover this card, or press to hold the hover",
+      "Inner image",
+      "Whole card",
+      "More room",
+    ],
   },
   {
     slug: "arkon-digital",
@@ -36,10 +38,7 @@ const stories = [
     slug: "neue-montreal",
     name: "Neue Montréal",
     capture: "neue",
-    motion: [
-      "Neue Montréal illustration: Regular weight",
-      "Neue Montréal illustration: Semibold weight",
-    ],
+    motion: ["Play the scroll"],
   },
   {
     slug: "monolog",
@@ -55,7 +54,11 @@ const stories = [
     slug: "lama-lama",
     name: "Lama Lama",
     capture: "lama",
-    motion: ["Lama Lama illustration: reframe the grid"],
+    motion: [
+      "Lama Lama illustration: open Case 01",
+      "Lama Lama illustration: open Case 02",
+      "Lama Lama illustration: open Case 03",
+    ],
   },
 ];
 
@@ -244,41 +247,93 @@ test("every story chapter links to an existing section of the complete research"
         `${story.slug}/${id}: missing research anchor ${fragment}`,
       );
     }
-    const backLink = elements(research, "a").find((link) =>
-      link.text.startsWith("Explore the story"),
-    );
-    assert.ok(backLink, `${story.slug}: research readers need a story link`);
-    assert.equal(
-      attribute(backLink.attributes, "href"),
-      `${base}/studies/${story.slug}/`,
-    );
+    // Both pages offer the same Story / Research switch, marking where you are.
+    for (const [page, current] of [
+      [research, "Research"],
+      [html, "Story"],
+    ]) {
+      const modes = elements(page, "nav").find((entry) =>
+        attribute(entry.attributes, "aria-label").endsWith("reading mode"),
+      );
+      assert.ok(modes, `${story.slug}: missing the Story / Research switch`);
+      const links = elements(modes.body, "a");
+      assert.deepEqual(
+        links.map((link) => [link.text, attribute(link.attributes, "href")]),
+        [
+          ["Story", `${base}/studies/${story.slug}/`],
+          ["Research", researchURL],
+        ],
+        `${story.slug}: the switch must link both reading modes`,
+      );
+      for (const link of links)
+        assert.equal(
+          attribute(link.attributes, "aria-current"),
+          link.text === current ? "page" : "",
+          `${story.slug}: mark only the current reading mode`,
+        );
+    }
   }
 });
 
-test("story illustrations export labelled native controls and a readable default state", () => {
+test("idea chapters annotate the recorded capture with readable, evidence-labelled notes", () => {
   for (const story of stories) {
     const html = builtRoute(`studies/${story.slug}`);
-    const type = figureWithTitle(html, "Type, in proportion.");
-    const select = elements(type.body, "select")[0];
-    assert.ok(select, `${story.slug}: type roles need a native select`);
-    const selectID = attribute(select.attributes, "id");
-    assert.ok(selectID, `${story.slug}: name the type-role select`);
-    const label = elements(type.body, "label").find(
-      (entry) => attribute(entry.attributes, "for") === selectID,
+    const figure = figureWithTitle(
+      chapters(html).get("idea").body,
+      "Look where I looked.",
     );
+    const source = `${base}/research/${story.captureDirectory ?? "five-websites"}/screenshots/${story.capture}-desktop.jpg`;
+    const image = [...figure.body.matchAll(/<img\b([^>]*)>/gi)].find(
+      (match) => attribute(match[1], "src") === source,
+    );
+    assert.ok(image, `${story.slug}: annotate the recorded desktop capture`);
     assert.ok(
-      label?.text,
-      `${story.slug}: associate a visible label with the type roles`,
+      attribute(image[1], "alt"),
+      `${story.slug}: describe the capture`,
     );
-    assert.ok(
-      elements(select.body, "option").length >= 2,
-      `${story.slug}: preserve measured role choices`,
+
+    // Every note is printed; pins only point at it.
+    const notes = elements(figure.body, "li");
+    assert.ok(notes.length >= 3, `${story.slug}: provide several notes`);
+    const ids = new Set(
+      [...figure.body.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),
     );
-    assert.match(
-      type.text,
-      /\d+(?:\.\d+)?px/,
-      `${story.slug}: show a type measurement before interaction`,
+    const pins = elements(figure.body, "button").filter((button) =>
+      attribute(button.attributes, "aria-label").startsWith("Note "),
     );
+    assert.equal(pins.length, notes.length, `${story.slug}: one pin per note`);
+    for (const pin of pins)
+      assert.ok(
+        ids.has(attribute(pin.attributes, "aria-describedby")),
+        `${story.slug}: each pin must describe itself with its note`,
+      );
+    for (const note of notes)
+      assert.match(
+        note.text,
+        /Observed|Source-confirmed|Hook only|Interpretation/,
+        `${story.slug}: label the evidence behind every note`,
+      );
+  }
+});
+
+test("type chapters draw every measured role at its recorded size", () => {
+  for (const story of stories) {
+    const html = builtRoute(`studies/${story.slug}`);
+    const type = figureWithTitle(html, "Type, at recorded size.");
+    const roles = elements(type.body, "li");
+    assert.ok(roles.length >= 2, `${story.slug}: show every measured role`);
+    for (const role of roles) {
+      assert.match(
+        role.text,
+        /\d+(?:\.\d+)?px \/ (?:\d+(?:\.\d+)?px|normal)|Not displayed/,
+        `${story.slug}: show size / line height before interaction`,
+      );
+      assert.match(
+        role.body,
+        /--size:\s*\d+(?:\.\d+)?px/,
+        `${story.slug}: set each specimen at its recorded desktop size`,
+      );
+    }
     for (const viewport of ["desktop", "mobile"]) {
       const button = buttonWithName(
         type.body,
@@ -289,7 +344,13 @@ test("story illustrations export labelled native controls and a readable default
         String(viewport === "desktop"),
       );
     }
+    assert.match(type.text, /not the source typeface/);
+  }
+});
 
+test("motion demonstrations export labelled native controls and name their evidence", () => {
+  for (const story of stories) {
+    const html = builtRoute(`studies/${story.slug}`);
     const motion = figureWithTitle(html, "A small interaction, explained.");
     assert.match(
       motion.text,
@@ -298,14 +359,33 @@ test("story illustrations export labelled native controls and a readable default
     );
     for (const name of story.motion) buttonWithName(motion.body, name);
     assert.match(
-      motion.body,
-      /<svg\b/,
-      `${story.slug}: the initial demonstration must render statically`,
+      motion.text,
+      /What the research recorded: .+(?:Observed|Source-confirmed|Hook only)/,
+      `${story.slug}: pair the demonstration with its recorded finding`,
     );
   }
+  const noho = figureWithTitle(
+    builtRoute("studies/noho"),
+    "A small interaction, explained.",
+  );
+  for (const name of stories[0].motion) {
+    const control = buttonWithName(noho.body, name);
+    assert.equal(attribute(control.attributes, "role"), "switch");
+    assert.equal(attribute(control.attributes, "aria-checked"), "false");
+  }
+  assert.match(noho.text, /estimate nothing about energy/);
+  const neue = figureWithTitle(
+    builtRoute("studies/neue-montreal"),
+    "A small interaction, explained.",
+  );
+  assert.match(
+    neue.body,
+    /<input\b[^>]*type="range"[^>]*aria-valuetext="0%: Display weight 900, Text weight 200"/,
+    "Neue Montréal: the scrubber starts at the recorded mapping endpoints",
+  );
 });
 
-test("story responsive chapters expose recorded captures and both full-size links without JavaScript", () => {
+test("story responsive chapters show both recorded captures and full-size links without JavaScript", () => {
   for (const story of stories) {
     const html = builtRoute(`studies/${story.slug}`);
     const section = chapters(html).get("mobile");
@@ -320,27 +400,48 @@ test("story responsive chapters expose recorded captures and both full-size link
         link?.text,
         `${story.slug}: preserve the ${viewport} capture as an ordinary named link`,
       );
-      const button = buttonWithName(
-        figure.body,
-        `${story.name} screenshots: ${viewport} capture`,
+      const image = [...figure.body.matchAll(/<img\b([^>]*)>/gi)].find(
+        (match) => attribute(match[1], "src") === source,
       );
+      assert.ok(
+        image,
+        `${story.slug}: render the ${viewport} evidence before JavaScript runs`,
+      );
+      assert.ok(
+        attribute(image[1], "alt"),
+        `${story.slug}: describe the recorded screenshot`,
+      );
+    }
+    for (const label of ["Navigation", "Composition", "Watch for"])
+      assert.ok(
+        elements(figure.body, "dt").some((term) => term.text === label),
+        `${story.slug}: explain what changed (${label})`,
+      );
+  }
+});
+
+test("takeaways and chapter lessons can be pocketed, and each chapter offers a cross-study comparison", () => {
+  for (const story of stories) {
+    const html = builtRoute(`studies/${story.slug}`);
+    const takeaways = figureWithTitle(html, "Pocket the lessons.");
+    const pockets = elements(takeaways.body, "button").filter(
+      (button) => attribute(button.attributes, "aria-pressed") === "false",
+    );
+    assert.equal(
+      pockets.length,
+      2 + chapterIDs.length,
+      `${story.slug}: keep, question and five lessons need pocket buttons`,
+    );
+    for (const [id, section] of chapters(html)) {
+      const compare = elements(section.body, "a").find((link) =>
+        link.text.startsWith("Compare "),
+      );
+      // Under a base path, the router writes the root route as /base?lens=…
       assert.equal(
-        attribute(button.attributes, "aria-pressed"),
-        String(viewport === "desktop"),
+        attribute(compare?.attributes ?? "", "href").replace(/(.)\/\?/, "$1?"),
+        `${base || "/"}?lens=${id}#studies`,
+        `${story.slug}/${id}: link the chapter to its comparison lens`,
       );
-      if (viewport === "desktop") {
-        const image = [...figure.body.matchAll(/<img\b([^>]*)>/gi)].find(
-          (match) => attribute(match[1], "src") === source,
-        );
-        assert.ok(
-          image,
-          `${story.slug}: render the desktop evidence before JavaScript runs`,
-        );
-        assert.ok(
-          attribute(image[1], "alt"),
-          `${story.slug}: describe the recorded screenshot`,
-        );
-      }
     }
   }
 });

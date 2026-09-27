@@ -16,6 +16,37 @@ export const comparisonSites: SiteKey[] = [
 ];
 export const originalResearchDate = "September 15–16, 2026";
 
+// Pixel dimensions of the published JPEG files, not CSS viewports.
+export const captureDimensions: Record<
+  SiteKey,
+  Record<"desktop" | "mobile", { width: number; height: number }>
+> = {
+  noho: {
+    desktop: { width: 1440, height: 1000 },
+    mobile: { width: 390, height: 844 },
+  },
+  ace: {
+    desktop: { width: 1425, height: 990 },
+    mobile: { width: 375, height: 812 },
+  },
+  "arkon-digital": {
+    desktop: { width: 1280, height: 720 },
+    mobile: { width: 390, height: 844 },
+  },
+  "neue-montreal": {
+    desktop: { width: 1265, height: 712 },
+    mobile: { width: 375, height: 812 },
+  },
+  monolog: {
+    desktop: { width: 1265, height: 712 },
+    mobile: { width: 375, height: 812 },
+  },
+  "lama-lama": {
+    desktop: { width: 1280, height: 720 },
+    mobile: { width: 390, height: 844 },
+  },
+};
+
 export interface TypeRole {
   label: string;
   family: string;
@@ -588,6 +619,15 @@ export const articleVisualData: Record<SiteKey, ArticleVisualData> = {
         evidence: "mixed",
         detail:
           "The live follow-up observed both people and their different captions. Source also confirms hover can temporarily override the scroll-selected team member.",
+      },
+      {
+        label: "Pitch deck exits",
+        trigger: "Open Our pitchdeck from the menu, then try to leave it.",
+        response:
+          "The explicit X closed the ten-slide deck; Escape did not close it in the tested desktop state.",
+        evidence: "observed",
+        detail:
+          "ArrowDown advanced the desktop deck. Source defines swipe and tap zones below 1000px; touch navigation on a physical device was not fully verified.",
       },
       {
         label: "Camera grid",

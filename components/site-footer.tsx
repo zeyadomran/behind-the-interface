@@ -1,6 +1,7 @@
 import Link from "@/components/link";
 import { ArrowUp } from "lucide-react";
 import { CopyContactEmail } from "./copy-contact-email";
+import { ShortcutsButton } from "./keyboard-shortcuts";
 import "@/app/site-footer.css";
 
 const email = "ziomran@gmail.com";
@@ -23,18 +24,18 @@ export function SiteFooter() {
       >
         <p className="bti-contact-label">
           <span className="tiny-square" aria-hidden="true" />
-          <span>03</span>
+          <span>04</span>
           <span>Start a conversation</span>
         </p>
         <div className="bti-contact-intro">
           <h2 id="contact-heading">
-            Something worth a closer look?
+            Know a site worth
             <br />
-            <span>Let’s talk design.</span>
+            <span>taking apart?</span>
           </h2>
           <p>
-            Found a website I should study, have a different take, or want to
-            build something thoughtful? I’d love to hear from you.
+            Send me a website I should study, a finding you read differently, or
+            a product you want to make clearer. I’d love to hear from you.
           </p>
         </div>
         <a className="bti-contact-email" href={`mailto:${email}`}>
@@ -82,6 +83,7 @@ export function SiteFooter() {
         <div className="bti-footer-meta">
           <span>© {new Date().getFullYear()} Zeyad Omran</span>
           <Link href="/docs/methodology/">How I research</Link>
+          <ShortcutsButton />
           <a href="#main-content" className="bti-footer-top">
             Back to top <ArrowUp size={14} aria-hidden="true" />
           </a>
