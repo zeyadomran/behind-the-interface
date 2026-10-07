@@ -5,6 +5,7 @@ import { ShortcutsButton } from "./keyboard-shortcuts";
 import "@/app/site-footer.css";
 
 const email = "ziomran@gmail.com";
+const copyrightYear = new Date().getFullYear();
 
 function ContactArrow() {
   return (
@@ -81,7 +82,7 @@ export function SiteFooter() {
           <span>Interface</span>
         </p>
         <div className="bti-footer-meta">
-          <span>© {new Date().getFullYear()} Zeyad Omran</span>
+          <span>© {copyrightYear} Zeyad Omran</span>
           <Link href="/docs/methodology/">How I research</Link>
           <ShortcutsButton />
           <a href="#main-content" className="bti-footer-top">
