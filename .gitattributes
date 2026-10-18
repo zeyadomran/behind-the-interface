@@ -4,3 +4,5 @@
 *.jpg binary
 *.otf binary
 *.pdf binary
+
+scripts/git-hooks/pre-commit text eol=lf
