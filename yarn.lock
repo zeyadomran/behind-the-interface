@@ -186,10 +186,10 @@
   resolved "https://registry.npmjs.org/@fuma-translate/react/-/react-1.0.2.tgz#4cc88e6a873ab78a8e974a73c722048f82dc8d0f"
   integrity sha512-uOiOtBx3nRXR8Nu1GzBf1tApgF1FErDBTHxRIAQeyQdyOoZbrNRN6H4kDCWObY4qyGeGbHydG0DHzgeUgFDMIw==
 
-"@fumadocs/tailwind@0.1.3":
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/@fumadocs/tailwind/-/tailwind-0.1.3.tgz#65e42832bb607db22b220afc9d6cec50cc7af3a4"
-  integrity sha512-gDgLbTnY5b+nogCg2y/pP7GsaQS4Zt/0vftJAu07Wy7Wsb3/lwd9GwoGqccCnPElTFwMG+pPwrmHXBPexEfE8A==
+"@fumadocs/tailwind@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@fumadocs/tailwind/-/tailwind-0.1.4.tgz#d04160f7e0f8a056f5d4445788211dc1853ea62c"
+  integrity sha512-1LAmuroJ6TJoQodyODRhMC9ThAkfrV2N5vZjaj4KKs+dpF2bs0d/2z0604iMKBLv2BKstR7zE9TUa/L0pxGnhA==
 
 "@fumari/image-size@^0.1.1":
   version "0.1.1"
@@ -1748,10 +1748,10 @@ fsevents@~2.3.3:
   resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
-fumadocs-core@16.17.1:
-  version "16.17.1"
-  resolved "https://registry.npmjs.org/fumadocs-core/-/fumadocs-core-16.17.1.tgz#02c1d7f306318cfb5ae949b9f52096472b2fe45b"
-  integrity sha512-zquUMPZaCEdsxFZ6ReZPzVN2yCP9tS3GZRndK0WtxbsvZ9KvvUDCeoLIpOZ6d3JU0uwSsclaIUGxI5ifvTftOQ==
+fumadocs-core@16.17.5:
+  version "16.17.5"
+  resolved "https://registry.npmjs.org/fumadocs-core/-/fumadocs-core-16.17.5.tgz#93101bbf807a9d33df0806940b8f76f3818d3dd4"
+  integrity sha512-aCLv7ccoLt2/HCPdXc8llJmzxVwDTWcf26LhMuObMpYYsHL4f6BkKRB+6i8lmYFxjzPU7xEOT06/VNvgeRC3Mg==
   dependencies:
     "@fumari/image-size" "^0.1.1"
     estree-util-value-to-estree "^3.5.0"
@@ -1798,13 +1798,13 @@ fumadocs-mdx@15.4.7:
     yuku-analyzer "^0.17.0"
     zod "^4.6.5"
 
-fumadocs-ui@16.17.1:
-  version "16.17.1"
-  resolved "https://registry.npmjs.org/fumadocs-ui/-/fumadocs-ui-16.17.1.tgz#49c1a24e5e98eb02da080a762f1b405f59756a78"
-  integrity sha512-ByW1NbvEbMfsZfW+DkWewSEX7Ituv732K0y2ga1ri+Zghf+4zu2sa0QjJetC3DaKffyvx5vbPVxwjyYCeNtRhg==
+fumadocs-ui@16.17.5:
+  version "16.17.5"
+  resolved "https://registry.npmjs.org/fumadocs-ui/-/fumadocs-ui-16.17.5.tgz#8b8f2ebf0bfa410d58b94dfeecbc291c3a402db6"
+  integrity sha512-aAM5dMHsOYlIMdR/mxiHILeZp0rrnWFkJ0VTiwp2uSbkYunMwrpTbK0La62AWI9z9ha0nB6l2fGjg9lS5iHj7g==
   dependencies:
     "@fuma-translate/react" "^1.0.2"
-    "@fumadocs/tailwind" "0.1.3"
+    "@fumadocs/tailwind" "0.1.4"
     "@radix-ui/react-accordion" "^1.2.20"
     "@radix-ui/react-collapsible" "^1.1.20"
     "@radix-ui/react-dialog" "^1.1.23"
@@ -2164,15 +2164,10 @@ longest-streak@^3.0.0:
   resolved "https://registry.npmjs.org/longest-streak/-/longest-streak-3.1.0.tgz#62fa67cd958742a1574af9f39866364102d90cd4"
   integrity sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==
 
-lucide-react@1.55.0:
-  version "1.55.0"
-  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-1.55.0.tgz#20d7410a79317ee32e8116fc38c813aba005af10"
-  integrity sha512-bSozQHiI3/8q7JvgoqVRGOYUi7fYT3siAZwmZsljjsOH2Husp/2ODdFf/leD+ZC/2yKfn7r8oh6yeoR3ITR5vA==
-
-lucide-react@^1.50.0:
-  version "1.56.0"
-  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-1.56.0.tgz#1c684f72de7cd423ccf618115a85a69b54b45602"
-  integrity sha512-b+hqj30/trHBma5r1zlKb6yLewQp6tUtnz9loc3xdrYerPmvLYhlEbyPVCJ8DOg2/blBf6lwPLznftFVACka6A==
+lucide-react@1.58.0, lucide-react@^1.50.0:
+  version "1.58.0"
+  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-1.58.0.tgz#21b74da96eb9021d2b960b9223362a581e7c4e76"
+  integrity sha512-hXaFNm6mk6QVtBnDGBn1YAs8j2tGUk0A4s/CpclIcczfxeXiW1rdOLVo6zCsoIih9XXsGvDODQerl749a2n7bA==
 
 magic-string@^0.30.21:
   version "0.30.21"
@@ -2903,10 +2898,10 @@ property-information@^7.0.0:
   resolved "https://registry.npmjs.org/property-information/-/property-information-7.2.0.tgz#0809b34264e995c0bfcd3227028a1e35210af80a"
   integrity sha512-IAtzIB6sUiWaJYrX9smp3V46pBGbBeLFRGdh25kg1334VcBlD8HzhPeNIWQH9zhGmo2itIe25EHt9dQP7G5hmg==
 
-react-dom@19.3.0:
-  version "19.3.0"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.3.0.tgz#a0ff19161d7f4e9be5469a07278b0c06e00f9001"
-  integrity sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==
+react-dom@19.3.1:
+  version "19.3.1"
+  resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.3.1.tgz#b384c53cfcbe9c2a5d09d863b98455de9d68afe2"
+  integrity sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==
   dependencies:
     scheduler "^0.28.0"
 
@@ -2945,10 +2940,10 @@ react-style-singleton@^2.2.2, react-style-singleton@^2.2.3:
     get-nonce "^1.0.0"
     tslib "^2.0.0"
 
-react@19.3.0:
-  version "19.3.0"
-  resolved "https://registry.npmjs.org/react/-/react-19.3.0.tgz#e20aa3a14687075ce863351b5878b0608c3fbfb2"
-  integrity sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==
+react@19.3.1:
+  version "19.3.1"
+  resolved "https://registry.npmjs.org/react/-/react-19.3.1.tgz#26e9523fc36ea06be5050ebb780249a133260ad7"
+  integrity sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==
 
 readdirp@^5.0.0:
   version "5.1.1"
@@ -3192,12 +3187,7 @@ shiki@^4.5.0:
     "@shikijs/vscode-textmate" "^10.0.2"
     "@types/hast" "^3.0.5"
 
-source-map-js@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.2.tgz#79fb88d97535a21cb27162cb05d211b67acea4ab"
-  integrity sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==
-
-source-map-js@^1.2.2:
+source-map-js@^1.2.1, source-map-js@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.2.tgz#79fb88d97535a21cb27162cb05d211b67acea4ab"
   integrity sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==
@@ -3492,10 +3482,10 @@ zbsearch@^4.0.1:
   resolved "https://registry.npmjs.org/zbsearch/-/zbsearch-4.0.1.tgz#280750e0073da234f172d4b2fea1131d6acaf773"
   integrity sha512-lmnEEnb93QQcNv7qARDr7jBVPxYdZbZ9XdZ0dbZ0qaOvGne4jJMW4fjwPfVaUKQXv3FNWvGbDwRDgyaSb1pc8w==
 
-zod@4.6.5, zod@^4.6.5:
-  version "4.6.5"
-  resolved "https://registry.npmjs.org/zod/-/zod-4.6.5.tgz#e3af3edbdc260239c52f73caad05dbbffe6e82cd"
-  integrity sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==
+zod@4.6.7, zod@^4.6.5:
+  version "4.6.7"
+  resolved "https://registry.npmjs.org/zod/-/zod-4.6.7.tgz#e806cf64a7f4e37635ce9f2f52c04c3766f75e5b"
+  integrity sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==
 
 zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"
