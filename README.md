@@ -35,7 +35,7 @@ Full research is written in Markdown or MDX; the site generates the HTML. New st
 
 ## Run locally
 
-Use **Node.js 22.12 or later** and **Yarn Classic 1.22.22**, as specified in [package.json](package.json). Keep `yarn.lock` in version control and use `yarn install --frozen-lockfile` in CI.
+Use **Node.js 22.22 or later** and **Yarn Classic 1.22.22**, as specified in [package.json](package.json). Keep `yarn.lock` in version control and use `yarn install --frozen-lockfile` in CI.
 
 ```sh
 yarn install
